@@ -29,8 +29,11 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 
         queryset = GetAdesaPurchases.objects.all()
         # https://docs.djangoproject.com/en/2.1/topics/http/shortcuts/#get-object-or-404
-        record = get_list_or_404(queryset, pk=pk)
-        serializer = PurchasesSerializer(record)
+        record = get_list_or_404(queryset, vin__exact=pk)
+        # To serialize a queryset or list of objects instead of a single object instance,
+        # you should pass the many=True flag when instantiating the serializer
+        # https://www.django-rest-framework.org/api-guide/serializers/#dealing-with-multiple-objects
+        serializer = PurchasesSerializer(record, many=True)
 
         return Response(serializer.data)
 
@@ -41,7 +44,7 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 
 
 class GetCarFax(viewsets.ModelViewSet):
-    ''' This view will be used for POSTing new carfax reports tot he database '''
+    ''' This view will be used for POSTing new carfax reports to he database '''
 
     queryset = CarFax.objects.all()
     serializer_class = CarFaxSerializer

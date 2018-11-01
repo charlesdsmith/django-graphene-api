@@ -29,3 +29,4 @@ class CarFaxSerializer(serializers.ModelSerializer):
         fields = ('vin', 'structural_damage', 'total_loss',
                   'accident', 'airbags', 'odometer', 'recalls',
                   'last_updated')
+
