@@ -16,6 +16,7 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 
     queryset = GetAdesaPurchases.objects.all()
     serializer_class = PurchasesSerializer
+    authentication_classes = []
 
     def list(self, request):
         # accessed at url: ^api/v1/purchases/$
@@ -37,10 +38,12 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    '''def create(self, request, **validated_data):
+    def create(self, request, **validated_data):
         serializer = PurchasesSerializer(GetAdesaPurchases.objects.create(**validated_data))
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, headers=headers)'''
+
+        print(headers)
+        return Response(serializer.validated_data, headers=headers)
 
 
 class GetCarFax(viewsets.ModelViewSet):
@@ -48,6 +51,9 @@ class GetCarFax(viewsets.ModelViewSet):
 
     queryset = CarFax.objects.all()
     serializer_class = CarFaxSerializer
+    # authentication_classes = []
+    permission_classes = []
+    #print('TEST')
 
     def list(self, request):
 
@@ -64,3 +70,14 @@ class GetCarFax(viewsets.ModelViewSet):
         serializer = CarFaxSerializer(record, many=True)
 
         return Response(serializer.data)
+
+    def create(self, request, **validated_data):
+        print('TEST')
+        print(request.data)
+        print(validated_data)
+        serializer = CarFaxSerializer(CarFax.objects.create(**validated_data))
+        headers = self.get_success_headers(serializer.data)
+        print(serializer.data)
+
+        print(headers)
+        return Response(serializer.data, headers=headers)
