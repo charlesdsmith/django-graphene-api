@@ -20,7 +20,7 @@ class GetAdesaPurchases(models.Model):
     unit_of_measurement = models.CharField(max_length=20, null=True)
     exterior_color = models.CharField(max_length=10, null=True)
     seller_name = models.CharField(max_length=20, null=True)
-    purchase_date = models.DateTimeField(null=False)
+    purchase_date = models.DateTimeField(null=True)
     title_status = models.CharField(max_length=20, null=True)
     pdi_status = models.CharField(max_length=20, null=True)
     transport_status = models.CharField(max_length=20, null=True)

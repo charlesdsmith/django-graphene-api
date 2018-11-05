@@ -7,6 +7,7 @@ from .models import GetAdesaPurchases, CarFax
 from .serializers import PurchasesSerializer
 from .serializers import CarFaxSerializer
 from rest_framework.response import Response
+from rest_framework.views import exception_handler
 
 # Create your views here.
 
@@ -43,17 +44,30 @@ class getAdesaPurchases(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         print(headers)
-        return Response(serializer.validated_data, headers=headers)
+        return Response(serializer.data, headers=headers)
 
 
 class GetCarFax(viewsets.ModelViewSet):
-    ''' This view will be used for POSTing new carfax reports to he database '''
+    ''' This view will be used for POSTing new carfax reports to the database '''
 
     queryset = CarFax.objects.all()
     serializer_class = CarFaxSerializer
     # authentication_classes = []
     permission_classes = []
     #print('TEST')
+    # lookup_field = "vin"
+
+
+    def custom_exception_handler(exc, context):
+        # Call REST framework's default exception handler first,
+        # to get the standard error response.
+        response = exception_handler(exc, context)
+
+        # Now add the HTTP status code to the response.
+        if response is not None:
+            response.data['status_code'] = response.status_code
+
+        return response
 
     def list(self, request):
 
@@ -71,13 +85,15 @@ class GetCarFax(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    def create(self, request, **validated_data):
+    '''def create(self, request, **validated_data):
         print('TEST')
-        print(request.data)
+        # print(request.data)
         print(validated_data)
         serializer = CarFaxSerializer(CarFax.objects.create(**validated_data))
         headers = self.get_success_headers(serializer.data)
         print(serializer.data)
 
         print(headers)
-        return Response(serializer.data, headers=headers)
+        return Response(serializer.data, headers=headers)'''
+
+    #print(custom_exception_handler())

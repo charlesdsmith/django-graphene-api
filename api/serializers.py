@@ -1,6 +1,7 @@
 # serialize the models here
 from rest_framework import serializers
 from .models import GetAdesaPurchases, CarFax
+from rest_framework.response import Response
 
 
 class PurchasesSerializer(serializers.ModelSerializer):
@@ -30,3 +31,7 @@ class CarFaxSerializer(serializers.ModelSerializer):
                   'accident', 'airbags', 'odometer', 'recalls',
                   'last_updated')
 
+    def create(self, validated_data):
+        print('TEST')
+        serializer = CarFax.objects.create(**validated_data)
+        return serializer
