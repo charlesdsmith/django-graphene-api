@@ -7,7 +7,7 @@ from .models import GetAdesaPurchases, CarFax
 from .serializers import PurchasesSerializer
 from .serializers import CarFaxSerializer
 from rest_framework.response import Response
-from rest_framework.views import exception_handler
+
 
 # Create your views here.
 
@@ -39,12 +39,12 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    def create(self, request, **validated_data):
+    '''def create(self, request, **validated_data):
         serializer = PurchasesSerializer(GetAdesaPurchases.objects.create(**validated_data))
         headers = self.get_success_headers(serializer.data)
 
         print(headers)
-        return Response(serializer.data, headers=headers)
+        return Response(serializer.data, headers=headers)'''
 
 
 class GetCarFax(viewsets.ModelViewSet):
@@ -57,17 +57,6 @@ class GetCarFax(viewsets.ModelViewSet):
     #print('TEST')
     # lookup_field = "vin"
 
-
-    def custom_exception_handler(exc, context):
-        # Call REST framework's default exception handler first,
-        # to get the standard error response.
-        response = exception_handler(exc, context)
-
-        # Now add the HTTP status code to the response.
-        if response is not None:
-            response.data['status_code'] = response.status_code
-
-        return response
 
     def list(self, request):
 

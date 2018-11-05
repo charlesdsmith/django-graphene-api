@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from .models import GetAdesaPurchases, CarFax
 from rest_framework.response import Response
+from rest_framework.views import exception_handler
 
 
 class PurchasesSerializer(serializers.ModelSerializer):
@@ -22,6 +23,9 @@ class PurchasesSerializer(serializers.ModelSerializer):
                   'gross_axle_weight_rear', 'tire_size','tire_pressure_front',
                   'tire_pressure_rear', 'rim_size')
 
+    def create(self, validated_data):
+        return GetAdesaPurchases.objects.create(**validated_data)
+
 
 class CarFaxSerializer(serializers.ModelSerializer):
 
@@ -33,5 +37,15 @@ class CarFaxSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print('TEST')
-        serializer = CarFax.objects.create(**validated_data)
-        return serializer
+        return CarFax.objects.create(**validated_data)
+
+    '''def custom_exception_handler(exc):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+        response = exception_handler(exc)
+
+        # Now add the HTTP status code to the response.
+        if response is not None:
+            response.data['status_code'] = response.status_code
+
+        return response'''
