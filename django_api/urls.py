@@ -23,7 +23,7 @@ router = routers.DefaultRouter()
 router.register(r'purchases', views.getAdesaPurchases)
 router.register(r'get_carfax', views.GetCarFax)
 router.register(r'post_carfax', views.PostCarFax)
-#router.register(r'recalls', views.GetRecalls)
+router.register(r'recalls', views.Recalls)
 admin.autodiscover()
 
 
@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     # path('api/v1/get_carfax/(?P<vin>[\w-]+)/$', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve'),
     path('api/v1/get_carfax/rundate/<rundate>/', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve_by_rundate'),
+    path('api/v1/recalls/rundate/<rundate>/', views.Recalls.as_view({'get': 'retrieve'}), name='retrieve_by_rundate'),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('graphql', GraphQLView.as_view(graphiql=True)),
 

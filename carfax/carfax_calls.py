@@ -8,20 +8,21 @@ test = ['VHSRLAFKStest', 'No Issues Reported', 'No Issues Reported', 'No Issues 
 
 def authorize():
 
-    client_id = '8TqPw5f2WgdNiY8qFZ97oh7wDQhVNnuuKyJ30dUd'
-    client_secret = 'F2MCmGC3EapJBWH7c446qpsQpj0fxYde9MKRXL8CsH514uN1CbMh654WrT8ZqqfrsZnsitsNnI4MeZEzmZu4t2at7ViEWDbELKzqUHeJWevyrpoeInSoJpEARxYvPs9R'
+    client_id = 'SF4ndlds1e6H5cAAi8vpxDzQB0zbkslfqiH1CgXb'
+    client_secret = 'vznY2auvuqGnTKdaYOA6tqlpASRXU6dEe6V3ZdZblX2RVvQGdh2c1IF6byVpxOafdfqbysthAxeXkTyMI7R5SExvK6MbDEhXaaF4YXg9Wz9GyCXIZ97eCf6VaH8MlTEO'
 
 
     data = {
         'grant_type': 'password',
-        'username': 'charlessmith',
-        'password': 'gsmcharles',
+        'username': 'charles',
+        'password': 'charles',
     }
 
 
     response = requests.post('http://localhost:8000/o/token/', data=data, auth=(client_id, client_secret))
+    heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
 
-    return response.text
+    return heroku_response.text
 
 def post_carfax(test):
 
@@ -29,21 +30,9 @@ def post_carfax(test):
     # ['No Issues Reported', 'No Issues Reported', 'No Issues Reported', 'No Issues Indicated', 'No Issues Reported', 'No Recalls Reported']
 
 
-    '''cookies = {
-        'PGADMIN_LANGUAGE': 'en',
-        'PGADMIN_KEY': '5edc9e0d-8f36-4e63-8e9e-694ae3d9f9a9',
-        'csrftoken': 'iHH5pujGsroVpiwBR4qpKuhVovCyWRauddwiCZaxnxxHzANt7rNTGhc4fKbjaqEV',
-        'pga4_session': 'b395d851-2905-4dd9-aa83-7d27af6f0557!3ovpR7+Zw4XwrrRD0A9Qg5NYExs=',
-        'tabstyle': 'raw-tab',
-    }'''
-
-    cookies = {
-        'csrftoken': 'LQFPzk47nbZB0IbZMSolMZf6zLzl9KWeUHMBidLLBZiPDhloukrBxCnMBqN7eyYe',
-    }
-
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer TmI5EngNb8eUkR4IrifzdmkRvjcrIf',
+        'Authorization': 'Bearer wfvkVUtFNDAGmSE5Kojb9pP6PhGMbx',
     }
 
 
@@ -60,9 +49,15 @@ def post_carfax(test):
 
     data = json.dumps(data)
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.post('http://127.0.0.1:8000/api/v1/post_carfax/', headers=headers, data=data)
-    # print(json.dumps(response.json))
-    return response.text
+    try:
+        # heroku_response = requests.post('http://localhost:8000/api/v1/post_carfax', data=data, headers=headers)
+        response = requests.post('https://gsm-django.herokuapp.com/api/v1/post_carfax/', data=data, headers=headers)
+        # print(json.dumps(response.json))
+        return response.text
+    except Exception as e:
+        print(e)
+
+
 
 
 def get_api_root():

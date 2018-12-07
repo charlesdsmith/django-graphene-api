@@ -5,8 +5,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import GetAdesaPurchases, CarFax
-from .serializers import PurchasesSerializer
-from .serializers import CarFaxSerializer
+from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer
 from rest_framework.response import Response
 from rest_framework import generics, permissions, serializers, authentication
 
@@ -82,7 +81,7 @@ class GetCarFax(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    def retrieve_by_rundate(self, request, rundate):
+    def retrieve_by_rundate(self, request, rundate=None):
         # accessed at url: ^api/v1/retrieve/{pk}/$
         queryset = CarFax.objects.all()
         #record = get_list_or_404(queryset, self.kwargs)
@@ -118,8 +117,38 @@ class PostCarFax(viewsets.ModelViewSet):
     serializer_class = CarFaxSerializer
 
 
-class GetRecalls(viewsets.ModelViewSet):
+class Recalls(viewsets.ModelViewSet):
     '''
     This view will be fore retrieving a recall for a car from the database
     '''
 
+
+    queryset = CarFax.objects.all()
+    serializer_class = RecallsSerializer
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+
+
+    def list(self, request, **kwargs):
+
+        queryset = CarFax.objects.all()
+        serializer = RecallsSerializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None, *args, **kwargs):
+
+        queryset = CarFax.objects.all()
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, vin__exact=pk)
+        serializer = RecallsSerializer(record, many=True)
+
+        return Response(serializer.data)
+
+    def retrieve_by_rundate(self, request, rundate=None):
+
+        queryset = CarFax.objects.all()
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, rundate__exact=rundate)
+        serializer = RecallsSerializer(record, many=True)
+
+        return Response(serializer.data)

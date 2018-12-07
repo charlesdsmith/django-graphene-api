@@ -1,6 +1,6 @@
 # serialize the models here
 from rest_framework import serializers
-from .models import GetAdesaPurchases, CarFax
+from .models import GetAdesaPurchases, CarFax, GetRecalls
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
@@ -49,3 +49,14 @@ class CarFaxSerializer(serializers.ModelSerializer):
             response.data['status_code'] = response.status_code
 
         return response'''
+
+class RecallsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = GetRecalls
+        # can also use "fields = '__all__'" but it will include the objects id too
+        fields = ("vin", "make", "recalls", "run_date")
+
+    def create(self, validated_data):
+        return GetRecalls.objects.create(**validated_data)
+
