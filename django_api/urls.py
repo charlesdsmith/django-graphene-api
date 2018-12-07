@@ -13,17 +13,45 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib import admin
 from rest_framework import routers
+from graphene_django.views import GraphQLView
 from api import views
 
 router = routers.DefaultRouter()
 router.register(r'purchases', views.getAdesaPurchases)
-router.register(r'carfax', views.GetCarFax)
+router.register(r'get_carfax', views.GetCarFax)
+router.register(r'post_carfax', views.PostCarFax)
+#router.register(r'recalls', views.GetRecalls)
+admin.autodiscover()
+
+
+from rest_framework import generics, permissions, serializers
+
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 urlpatterns = [
-    url(r'^api/v1/', include(router.urls)),
-    url(r'^admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('api/v1/', include(router.urls)),
+    # path('api/v1/get_carfax/(?P<vin>[\w-]+)/$', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve'),
+    path('api/v1/get_carfax/rundate/<rundate>/', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve_by_rundate'),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('graphql', GraphQLView.as_view(graphiql=True)),
+
 ]
+
+
+'''urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/purchases/$', views.getAdesaPurchases.as_view({'get': 'list'}), name='list'),
+    url(r'^api/v1/purchases/(?P<pk>[\w-]+)/$', views.getAdesaPurchases.as_view({'get': 'retrieve'}), name='retrieve'),
+    url(r'^api/v1/purchases/create/$', views.getAdesaPurchases.as_view({'post': 'create'}), name='create'),
+    url(r'^api/v1/carfax/$', views.GetCarFax.as_view({'get': 'list'}), name='list'),
+    url(r'^api/v1/get_carfax/(?P<pk>[\w-]+)/$', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve'),
+    url(r'^api/v1/carfax/create/$', views.PostCarFax.as_view({'post': 'create'}), name='create'),
+    url('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+]'''
+
 

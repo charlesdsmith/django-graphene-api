@@ -33,10 +33,10 @@ class CarFaxSerializer(serializers.ModelSerializer):
         model = CarFax
         fields = ('vin', 'structural_damage', 'total_loss',
                   'accident', 'airbags', 'odometer', 'recalls',
-                  'last_updated')
+                  'last_updated', 'origin_country')
 
     def create(self, validated_data):
-        print('TEST')
+        print(validated_data)
         return CarFax.objects.create(**validated_data)
 
     '''def custom_exception_handler(exc):

@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from rest_framework import status, viewsets
 from django.db import models
 from django.utils import timezone
+from graphene_django import DjangoObjectType
+import graphene
 
 import time
 
@@ -64,4 +66,74 @@ class CarFax(models.Model):
     last_updated = models.DateTimeField(auto_now=True)  # updated timestamp
     html = models.TextField(max_length=None, default="Check Online")
     origin_country = models.CharField(max_length=15, default="Check Online")
+    run_date = models.CharField(max_length=20, default="Check Online")
 
+class GetRecalls(models.Model):
+    make = models.CharField(max_length=20, default="Check Online")
+    vin = models.CharField(max_length=20)
+    recalls = models.TextField(max_length=None, default="Check online")
+    run_date = models.CharField(max_length=20, default="Check Online")
+
+
+class GetAdesaRunList(models.Model):
+    vin = models.CharField(max_length=20)
+    img_url = models.URLField()
+    year = models.IntegerField()
+    make = models.CharField(max_length=20, default="Check Online")
+    model = models.CharField(max_length=20, default="Check Online")
+    grade = models.IntegerField(default="Check Online")
+    colour = models.CharField(max_length=20, default="Check Online")
+    MMR = models.TextField(max_length=50, default="Check Online")
+    MID = models.CharField(max_length=20, default="Check Online")
+    GSMR = models.TextField(max_length=50, default="Check Online")
+    transactions = models.CharField(max_length=20, default="Check Online")
+    run_date = models.CharField(max_length=20, default="Check Online")
+    timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
+
+class ShoppingList(models.Model):
+    vin = models.CharField(max_length=20)
+    img_url = models.URLField()
+    year = models.IntegerField()
+    make = models.CharField(max_length=20, default="Check Online")
+    model = models.CharField(max_length=20, default="Check Online")
+    grade = models.IntegerField(default="Check Online")
+    colour = models.CharField(max_length=20, default="Check Online")
+    MMR = models.TextField(max_length=50, default="Check Online")
+    MID = models.CharField(max_length=20, default="Check Online")
+    GSMR = models.TextField(max_length=50, default="Check Online")
+    transactions = models.CharField(max_length=20, default="Check Online")
+    run_date = models.CharField(max_length=20, default="Check Online")
+    timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
+
+
+#### GraphQL ####
+class CarFaxType(DjangoObjectType):
+    class Meta:
+        model = CarFax
+
+class RecallsType(DjangoObjectType):
+    class Meta:
+        model = GetRecalls
+
+class Query(graphene.ObjectType):
+    all_carfax_objects = graphene.List(CarFaxType)
+    all_recalls_type = graphene.List(RecallsType)
+
+    def return_all_carfax(self, info, **kwargs):
+        return CarFax.objects.all()
+
+    def return_all_recalls(self, info, **kwargs):
+        return GetRecalls.objects.all()
+
+schema = graphene.Schema(query=Query)
+
+query = '''
+query {
+    return_all_carfax {
+        vin,
+        accident
+    }
+}
+'''
+
+result = schema.execute(query)
