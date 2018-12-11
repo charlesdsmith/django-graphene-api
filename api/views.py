@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .models import GetAdesaPurchases, CarFax, GetRecalls
-from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer
+from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
+from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer, AdesaRunlistSerializer, ShoppingListSerializer
 from rest_framework.response import Response
 from rest_framework import generics, permissions, serializers, authentication
 from rest_framework.decorators import action
@@ -66,6 +66,43 @@ class getAdesaPurchases(viewsets.ModelViewSet):
         print(headers)
         return Response(serializer.data, headers=headers)'''
 
+
+class AdesaRunList(viewsets.ModelViewSet):
+
+    queryset = GetAdesaRunList.objects.all()
+    serializer_class = PurchasesSerializer
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+
+    def list(self, request):
+        # accessed at url: ^api/v1/purchases/$
+        queryset = GetAdesaRunList.objects.all()
+        serializer = AdesaRunlistSerializer(queryset, many=True)
+        print('here')
+
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        # accessed at url: ^api/v1/purchases/{pk}/$
+
+        queryset = GetAdesaRunList.objects.all()
+        # https://docs.djangoproject.com/en/2.1/topics/http/shortcuts/#get-object-or-404
+        record = get_list_or_404(queryset, vin__exact=pk)
+        # To serialize a queryset or list of objects instead of a single object instance,
+        # you should pass the many=True flag when instantiating the serializer
+        # https://www.django-rest-framework.org/api-guide/serializers/#dealing-with-multiple-objects
+        serializer = AdesaRunlistSerializer(record, many=True)
+        print('here')
+
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
+    def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):
+
+        queryset = GetAdesaRunList.objects.all()
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, run_date__exact=pk)
+        serializer = AdesaRunlistSerializer(record, many=True)
+        print('RETRIEVE RUNDATE')
 
 class GetCarFax(viewsets.ModelViewSet):
     ''' This view will be used for GETing new carfax reports to the database '''
@@ -129,7 +166,6 @@ class Recalls(viewsets.ModelViewSet):
     #lookup_field = "vin"
 
 
-
     def list(self, request, **kwargs):
 
         queryset = GetRecalls.objects.all()
@@ -146,7 +182,7 @@ class Recalls(viewsets.ModelViewSet):
         serializer = RecallsSerializer(record, many=True)
 
 
-        print('RETRIEVE ONE')
+        print('RETRIEVE')
 
         return Response(serializer.data)
 
@@ -157,6 +193,47 @@ class Recalls(viewsets.ModelViewSet):
         #record = get_list_or_404(queryset, self.kwargs)
         record = get_list_or_404(queryset, run_date__exact=pk)
         serializer = RecallsSerializer(record, many=True)
+        print('RETRIEVE RUNDATE')
+
+        return Response(serializer.data)
+
+
+class ShoppingList(viewsets.ModelViewSet):
+    queryset = ShoppingList.objects.all()
+    serializer_class = ShoppingListSerializer
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    #lookup_field = "vin"
+
+
+
+    def list(self, request, **kwargs):
+
+        queryset = ShoppingList.objects.all()
+        serializer = ShoppingListSerializer(queryset, many=True)
+        print('LIST')
+
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None, *args, **kwargs):
+
+        queryset = ShoppingList.objects.all()
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, vin__exact=pk)
+        serializer = ShoppingListSerializer(record, many=True)
+
+        print('RETRIEVE ONE')
+
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
+    def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):
+
+        ''' Shopping List by "Run Date" '''
+
+        queryset = ShoppingList.objects.all()
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, run_date__exact=pk)
+        serializer = ShoppingListSerializer(record, many=True)
         print('RETRIEVE RUNDATE')
 
         return Response(serializer.data)

@@ -23,6 +23,8 @@ router = routers.DefaultRouter()
 router.register(r'purchases', views.getAdesaPurchases)
 router.register(r'carfax', views.GetCarFax)
 router.register(r'recalls', views.Recalls)
+router.register(r'adesa_run_list', views.AdesaRunList)
+router.register(r'shopping_list', views.ShoppingList)
 
 admin.autodiscover()
 

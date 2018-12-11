@@ -1,6 +1,6 @@
 # serialize the models here
 from rest_framework import serializers
-from .models import GetAdesaPurchases, CarFax, GetRecalls
+from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
@@ -63,3 +63,21 @@ class RecallsSerializer(serializers.ModelSerializer):
         return GetRecalls.objects.create(**validated_data)
 
 
+class AdesaRunlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GetAdesaRunList
+        fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
+                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp')
+
+
+    def create(self, validated_data):
+        return GetAdesaRunList.objects.create(**validated_data)
+
+class ShoppingListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShoppingList
+        fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
+                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp')
+
+    def create(self, validated_data):
+        return ShoppingList.objects.create(**validated_data)
