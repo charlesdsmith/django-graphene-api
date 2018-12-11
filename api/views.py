@@ -4,10 +4,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .models import GetAdesaPurchases, CarFax
+from .models import GetAdesaPurchases, CarFax, GetRecalls
 from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer
 from rest_framework.response import Response
 from rest_framework import generics, permissions, serializers, authentication
+from rest_framework.decorators import action
 
 # had to go online and download oauth2_provider manually, package installed oauth2_provider was missing files
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope, OAuth2Authentication
@@ -47,6 +48,17 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+    @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
+    def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):
+
+        queryset = GetRecalls.objects.all()
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, run_date__exact=pk)
+        serializer = RecallsSerializer(record, many=True)
+        print('RETRIEVE RUNDATE')
+
+        return Response(serializer.data)
+
     '''def create(self, request, **validated_data):
         serializer = PurchasesSerializer(GetAdesaPurchases.objects.create(**validated_data))
         headers = self.get_success_headers(serializer.data)
@@ -58,6 +70,7 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 class GetCarFax(viewsets.ModelViewSet):
     ''' This view will be used for GETing new carfax reports to the database '''
 
+    required_scopes = ['write']  # necessary to specify what type of permission the token should have to access this endpoint
     queryset = CarFax.objects.all()
     serializer_class = CarFaxSerializer
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
@@ -78,6 +91,7 @@ class GetCarFax(viewsets.ModelViewSet):
         #record = get_list_or_404(queryset, self.kwargs)
         record = get_list_or_404(queryset, vin__exact=pk)
         serializer = CarFaxSerializer(record, many=True)
+        print('CARFAX RETRIEVE')
 
         return Response(serializer.data)
 
@@ -90,31 +104,17 @@ class GetCarFax(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    def get_queryset(self):
-        """
-       Optionally restricts the returned carfax's to a given user,
-       by filtering against a `username` query parameter in the URL.
-       """
+    @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
+    def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):
 
         queryset = CarFax.objects.all()
-        carfax = self.request.query_params.get('vin', None)
+        #record = get_list_or_404(queryset, self.kwargs)
+        record = get_list_or_404(queryset, run_date__exact=pk)
+        serializer = CarFaxSerializer(record, many=True)
+        print('RETRIEVE RUNDATE')
 
-        if carfax is not None:
-            queryset = queryset.filter(carfax__vin=carfax)
+        return Response(serializer.data)
 
-        return queryset
-
-
-class PostCarFax(viewsets.ModelViewSet):
-
-    '''
-    This view will be used for POSTing new carfax reports to the database
-    '''
-
-    required_scopes = ['write']  # necessary to specify what type of permission the token should have to access this endpoint
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
-    queryset = CarFax.objects.all()
-    serializer_class = CarFaxSerializer
 
 
 class Recalls(viewsets.ModelViewSet):
@@ -123,32 +123,40 @@ class Recalls(viewsets.ModelViewSet):
     '''
 
 
-    queryset = CarFax.objects.all()
+    queryset = GetRecalls.objects.all()
     serializer_class = RecallsSerializer
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    #lookup_field = "vin"
+
 
 
     def list(self, request, **kwargs):
 
-        queryset = CarFax.objects.all()
+        queryset = GetRecalls.objects.all()
         serializer = RecallsSerializer(queryset, many=True)
+        print('LIST')
 
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
 
-        queryset = CarFax.objects.all()
+        queryset = GetRecalls.objects.all()
         #record = get_list_or_404(queryset, self.kwargs)
         record = get_list_or_404(queryset, vin__exact=pk)
         serializer = RecallsSerializer(record, many=True)
 
+
+        print('RETRIEVE ONE')
+
         return Response(serializer.data)
 
-    def retrieve_by_rundate(self, request, rundate=None):
+    @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
+    def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):
 
-        queryset = CarFax.objects.all()
+        queryset = GetRecalls.objects.all()
         #record = get_list_or_404(queryset, self.kwargs)
-        record = get_list_or_404(queryset, rundate__exact=rundate)
+        record = get_list_or_404(queryset, run_date__exact=pk)
         serializer = RecallsSerializer(record, many=True)
+        print('RETRIEVE RUNDATE')
 
         return Response(serializer.data)

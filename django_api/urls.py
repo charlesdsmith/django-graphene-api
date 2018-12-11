@@ -21,9 +21,9 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'purchases', views.getAdesaPurchases)
-router.register(r'get_carfax', views.GetCarFax)
-router.register(r'post_carfax', views.PostCarFax)
+router.register(r'carfax', views.GetCarFax)
 router.register(r'recalls', views.Recalls)
+
 admin.autodiscover()
 
 
@@ -34,9 +34,6 @@ from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, Token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    # path('api/v1/get_carfax/(?P<vin>[\w-]+)/$', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve'),
-    path('api/v1/get_carfax/rundate/<rundate>/', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve_by_rundate'),
-    path('api/v1/recalls/rundate/<rundate>/', views.Recalls.as_view({'get': 'retrieve'}), name='retrieve_by_rundate'),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('graphql', GraphQLView.as_view(graphiql=True)),
 
@@ -54,5 +51,4 @@ urlpatterns = [
     url(r'^api/v1/carfax/create/$', views.PostCarFax.as_view({'post': 'create'}), name='create'),
     url('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]'''
-
 

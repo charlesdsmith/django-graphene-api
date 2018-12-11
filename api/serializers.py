@@ -57,6 +57,9 @@ class RecallsSerializer(serializers.ModelSerializer):
         # can also use "fields = '__all__'" but it will include the objects id too
         fields = ("vin", "make", "recalls", "run_date")
 
+        print('RETRIEVE')
+
     def create(self, validated_data):
         return GetRecalls.objects.create(**validated_data)
+
 

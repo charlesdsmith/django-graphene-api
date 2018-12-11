@@ -6,6 +6,7 @@ import json
 test = ['VHSRLAFKStest', 'No Issues Reported', 'No Issues Reported', 'No Issues Reported', 'No Issues Indicated', 'No Issues Reported', 'some Recalls Reported', '12-01-2018']
 # MAKE SURE TO USE "application/json" IN "Content-Type"
 
+# TODO: Figure out why carfax isn't returning 'html' field in GET request
 def authorize():
 
     client_id = 'SF4ndlds1e6H5cAAi8vpxDzQB0zbkslfqiH1CgXb'
@@ -51,7 +52,7 @@ def post_carfax(test):
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
         # heroku_response = requests.post('http://localhost:8000/api/v1/post_carfax', data=data, headers=headers)
-        response = requests.post('https://gsm-django.herokuapp.com/api/v1/post_carfax/', data=data, headers=headers)
+        response = requests.post('https://gsm-django.herokuapp.com/api/v1/carfax/', data=data, headers=headers)
         # print(json.dumps(response.json))
         return response.text
     except Exception as e:
@@ -82,7 +83,7 @@ def get_api_root():
 def get_one_carfax(vin=None):
 
     headers = {
-        'Authorization': 'Bearer TmI5EngNb8eUkR4IrifzdmkRvjcrIf',
+        'Authorization': 'Bearer pfu0yVtMZJfA9xuMMHhbksdp6X6Kqa',
     }
 
     params = {
@@ -90,24 +91,42 @@ def get_one_carfax(vin=None):
     }
 
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.get('http://127.0.0.1:8000/api/v1/get_carfax/VHSRLAFKSF', headers=headers)
+    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/VHSRLAFKSghty', headers=headers)
     # print(json.dumps(response.json))
     return response.text
 
 def get_all_carfax():
 
     headers = {
-        'Authorization': 'Bearer TmI5EngNb8eUkR4IrifzdmkRvjcrIf',
+        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
     }
 
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.get('http://127.0.0.1:8000/api/v1/get_carfax/', headers=headers)
+    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/', headers=headers)
     # print(json.dumps(response.json))
     return response.text
 
+def get_by_rundate():
+
+    headers = {
+        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+    }
+
+    # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
+    try:
+        # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
+        response = requests.get('http://127.0.0.1:8000/api/v1/carfax/retrieve_by_rundate/11-28-2018/', headers=headers)
+        # print(json.dumps(response.json))
+
+    except Exception as e:
+        print(e)
+
+    return response.text
+
 if __name__ == '__main__':
-    print(post_carfax(test))
+    #print(post_carfax(test))
     #print(authorize())
     #print(get_api_root())
-    #print(get_all_carfax())
+    print(get_all_carfax())
     #print(get_one_carfax())
+    #print(get_by_rundate())
