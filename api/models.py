@@ -64,7 +64,7 @@ class CarFax(models.Model):
     odometer = models.CharField(max_length=100, default="Check Online")
     recalls = models.CharField(max_length=100, default="Check Online")
     last_updated = models.DateTimeField(auto_now=True)  # updated timestamp
-    html = models.TextField(max_length=None, default="Check Online")
+    html = models.TextField(default="Check Online")
     origin_country = models.CharField(max_length=15, default="Check Online")
     run_date = models.CharField(max_length=20, default="Check Online")
 

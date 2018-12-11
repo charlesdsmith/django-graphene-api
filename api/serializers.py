@@ -33,7 +33,7 @@ class CarFaxSerializer(serializers.ModelSerializer):
         model = CarFax
         fields = ('vin', 'structural_damage', 'total_loss',
                   'accident', 'airbags', 'odometer', 'recalls',
-                  'last_updated', 'origin_country')
+                  'last_updated', 'origin_country', 'html', 'run_date')
 
     def create(self, validated_data):
         print(validated_data)

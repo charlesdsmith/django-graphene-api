@@ -83,7 +83,7 @@ def get_api_root():
 def get_one_carfax(vin=None):
 
     headers = {
-        'Authorization': 'Bearer pfu0yVtMZJfA9xuMMHhbksdp6X6Kqa',
+        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
     }
 
     params = {
@@ -91,7 +91,7 @@ def get_one_carfax(vin=None):
     }
 
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/VHSRLAFKSghty', headers=headers)
+    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/5UXFG43549L225116', headers=headers)
     # print(json.dumps(response.json))
     return response.text
 
@@ -115,7 +115,7 @@ def get_by_rundate():
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
         # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-        response = requests.get('http://127.0.0.1:8000/api/v1/carfax/retrieve_by_rundate/11-28-2018/', headers=headers)
+        response = requests.get('http://127.0.0.1:8000/api/v1/carfax/retrieve_by_rundate/11-18-2018/', headers=headers)
         # print(json.dumps(response.json))
 
     except Exception as e:
@@ -127,6 +127,6 @@ if __name__ == '__main__':
     #print(post_carfax(test))
     #print(authorize())
     #print(get_api_root())
-    print(get_all_carfax())
-    #print(get_one_carfax())
+    #print(get_all_carfax())
+    print(get_one_carfax())
     #print(get_by_rundate())
