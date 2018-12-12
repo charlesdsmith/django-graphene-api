@@ -104,6 +104,7 @@ class AdesaRunList(viewsets.ModelViewSet):
         serializer = AdesaRunlistSerializer(record, many=True)
         print('RETRIEVE RUNDATE')
 
+
 class GetCarFax(viewsets.ModelViewSet):
     ''' This view will be used for GETing new carfax reports to the database '''
 
@@ -198,7 +199,7 @@ class Recalls(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class ShoppingList(viewsets.ModelViewSet):
+class ShoppingListView(viewsets.ModelViewSet):
     queryset = ShoppingList.objects.all()
     serializer_class = ShoppingListSerializer
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]

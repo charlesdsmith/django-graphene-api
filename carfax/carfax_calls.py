@@ -102,7 +102,7 @@ def get_all_carfax():
     }
 
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/', headers=headers)
+    response = requests.get('http://127.0.0.1:8000/api/v1/adesa_run_list/', headers=headers)
     # print(json.dumps(response.json))
     return response.text
 
@@ -124,9 +124,9 @@ def get_by_rundate():
     return response.text
 
 if __name__ == '__main__':
-    #print(post_carfax(test))
+    print(post_carfax(test))
     #print(authorize())
     #print(get_api_root())
     #print(get_all_carfax())
-    print(get_one_carfax())
+    #print(get_one_carfax())
     #print(get_by_rundate())
