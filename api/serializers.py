@@ -72,7 +72,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
-                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp')
+                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane')
 
     def create(self, validated_data):
         return ShoppingList.objects.create(**validated_data)
