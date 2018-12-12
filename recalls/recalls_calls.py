@@ -31,7 +31,7 @@ def post_recall():
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
     }
 
     data = {
@@ -55,14 +55,14 @@ def post_recall():
 def get_one_recall():
 
     headers = {
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
     }
 
     params = {
         'vin': "VHSRLAFKSF"
     }
 
-    # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
+    # response = requests.post('http://gsm-django.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
         response = requests.get('http://localhost:8000/api/v1/recalls/GSMTEAM/', headers=headers)
         # print(json.dumps(response.json))
@@ -75,10 +75,10 @@ def get_one_recall():
 def get_all_recalls():
 
     headers = {
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
     }
 
-    # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
+    # response = requests.post('http://gsm-django.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
         # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
         response = requests.get('http://127.0.0.1:8000/api/v1/recalls/', headers=headers)
@@ -92,12 +92,12 @@ def get_all_recalls():
 def get_by_rundate():
 
     headers = {
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
     }
 
-    # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
+    # response = requests.post('http://gsm-django.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
-        # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
+        # response = requests.post('http://gsm-django.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
         response = requests.get('http://127.0.0.1:8000/api/v1/recalls/retrieve_by_rundate/11-28-2018/', headers=headers)
         # print(json.dumps(response.json))
 
@@ -108,8 +108,8 @@ def get_by_rundate():
 
 
 if __name__ == "__main__":
-    #print(post_recall())
+    print(post_recall())
     #print(authorize())
     #print(get_one_recall())
     #print(get_all_recalls())
-    print(get_by_rundate())
+    #print(get_by_rundate())

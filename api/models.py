@@ -104,6 +104,7 @@ class ShoppingList(models.Model):
     transactions = models.CharField(max_length=20, default="Check Online")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
+    lane = models.CharField(max_length=5, default="Check Online")
 
 
 #### GraphQL ####

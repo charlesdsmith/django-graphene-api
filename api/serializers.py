@@ -1,6 +1,7 @@
 # serialize the models here
 from rest_framework import serializers
 from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
+import json
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
@@ -39,16 +40,6 @@ class CarFaxSerializer(serializers.ModelSerializer):
         print(validated_data)
         return CarFax.objects.create(**validated_data)
 
-    '''def custom_exception_handler(exc):
-    # Call REST framework's default exception handler first,
-    # to get the standard error response.
-        response = exception_handler(exc)
-
-        # Now add the HTTP status code to the response.
-        if response is not None:
-            response.data['status_code'] = response.status_code
-
-        return response'''
 
 class RecallsSerializer(serializers.ModelSerializer):
 
@@ -57,9 +48,11 @@ class RecallsSerializer(serializers.ModelSerializer):
         # can also use "fields = '__all__'" but it will include the objects id too
         fields = ("vin", "make", "recalls", "run_date")
 
-        print('RETRIEVE')
-
     def create(self, validated_data):
+        print(validated_data)
+        test = GetRecalls.objects.filter(vin='GSMTEAM')
+        print(json.dumps(test))
+
         return GetRecalls.objects.create(**validated_data)
 
 
@@ -69,8 +62,10 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp')
 
-
     def create(self, validated_data):
+        # check to see if object with 'vin' value exists, if it does and
+        # has a  different run_date, overwrite
+        print(GetAdesaRunList.objects.all())
         return GetAdesaRunList.objects.create(**validated_data)
 
 class ShoppingListSerializer(serializers.ModelSerializer):
