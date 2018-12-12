@@ -107,7 +107,6 @@ class ShoppingList(models.Model):
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=5, default="Check Online")
 
-
 #### GraphQL ####
 class CarFaxType(DjangoObjectType):
     class Meta:
