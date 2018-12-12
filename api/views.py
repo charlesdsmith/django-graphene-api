@@ -70,7 +70,7 @@ class getAdesaPurchases(viewsets.ModelViewSet):
 class AdesaRunList(viewsets.ModelViewSet):
 
     queryset = GetAdesaRunList.objects.all()
-    serializer_class = PurchasesSerializer
+    serializer_class = AdesaRunlistSerializer
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
 
     def list(self, request):
