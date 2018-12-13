@@ -70,7 +70,7 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
                 if obj["fields"]["run_date"] == validated_data["run_date"]:
                     print('found one')
                     print(type(obj))
-                    return GetAdesaRunList.objects.create(**validated_data)
+                    return HttpResponse(validated_data)
                 else:
                     print('else create')
                     print(obj["fields"]["run_date"])
@@ -95,7 +95,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
             test = django_serializer.serialize("json", GetRecalls.objects.filter(vin=validated_data["vin"]))
             for obj in test:
                 if obj["fields"]["run_date"] == validated_data["run_date"]:
-                    return GetAdesaRunList.objects.create(**validated_data)
+                    return "That record already exists with that run_date, not uploading to database"
                 else:
                     return GetRecalls.objects.create(**validated_data)
 
