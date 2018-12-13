@@ -64,7 +64,7 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # check to see if object with 'vin' value exists, if it does and
         # has a  different run_date, overwrite
-        try:
+        '''try:
             test = django_serializer.serialize("json", GetAdesaRunList.objects.filter(vin=validated_data["vin"]))
             for obj in json.loads(test):
                 if obj["fields"]["run_date"] == validated_data["run_date"]:
@@ -81,7 +81,8 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
             #test = django_serializer.serialize("json", GetAdesaRunList.objects.filter(vin='123456'))
             print(e)
             print('except create')
-            return GetAdesaRunList.objects.create(**validated_data)
+            return GetAdesaRunList.objects.create(**validated_data)'''
+        return GetAdesaRunList.objects.create(**validated_data)
 
 
 class ShoppingListSerializer(serializers.ModelSerializer):
