@@ -2,7 +2,7 @@
 
 import requests
 import json
-
+import datetime
 test = ['VHSRLAFKStest', 'No Issues Reported', 'No Issues Reported', 'No Issues Reported', 'No Issues Indicated', 'No Issues Reported', 'some Recalls Reported', '12-01-2018']
 # MAKE SURE TO USE "application/json" IN "Content-Type"
 
@@ -20,7 +20,7 @@ def authorize():
     }
 
 
-    response = requests.post('http://localhost:8000/o/token/', data=data, auth=(client_id, client_secret))
+    #response = requests.post('http://localhost:8000/o/token/', data=data, auth=(client_id, client_secret))
     heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
 
     return heroku_response.text
@@ -33,7 +33,7 @@ def post_carfax(test):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ojGvqiqrwoTn22y4oD8DjpnX2SUxgl',
+        'Authorization': 'Bearer I5RmXX9VBaLvAozrv7EkIQVL9GaEGY',
     }
 
 
@@ -52,10 +52,10 @@ def post_carfax(test):
     data = json.dumps(data)
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
-        # heroku_response = requests.post('http://localhost:8000/api/v1/post_carfax', data=data, headers=headers)
-        response = requests.post('http://127.0.0.1:8000/api/v1/carfax/', data=data, headers=headers)
+        heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/carfax/', data=data, headers=headers)
+        #response = requests.post('http://127.0.0.1:8000/api/v1/carfax/', data=data, headers=headers)
         # print(json.dumps(response.json))
-        return response.text
+        return heroku_response.status_code
     except Exception as e:
         print(e)
 
@@ -84,15 +84,16 @@ def get_api_root():
 def get_one_carfax(vin=None):
 
     headers = {
-        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
+
+        'Authorization': 'Bearer I5RmXX9VBaLvAozrv7EkIQVL9GaEGY',
     }
 
     params = {
         'vin': "VHSRLAFKSF"
     }
 
-    # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/5UXFG43549L225116', headers=headers)
+    response = requests.get('https://gsm-django.herokuapp.com/api/v1/carfax/VHSRLAFKStest/', headers=headers)
+    #response = requests.get('http://127.0.0.1:8000/api/v1/carfax/5UXFG43549L225116', headers=headers)
     # print(json.dumps(response.json))
     return response.text
 
@@ -125,9 +126,10 @@ def get_by_rundate():
     return response.text
 
 if __name__ == '__main__':
-    #print(post_carfax(test))
+    print(post_carfax(test))
     #print(authorize())
     #print(get_api_root())
-    print(get_all_carfax())
+    #print(get_all_carfax())
     #print(get_one_carfax())
     #print(get_by_rundate())
+
