@@ -56,7 +56,23 @@ def post_run_list():
 
         print(e)
 
+def get_by_rundate():
+
+    headers = {
+        'Content-Type': "application/json",
+        'Authorization': 'Bearer I5RmXX9VBaLvAozrv7EkIQVL9GaEGY',
+    }
+
+    try:
+        heroku_response = requests.get('https://gsm-django.herokuapp.com/api/v1/adesa_run_list/retrieve_by_rundate/11-28-2018/', headers=headers)
+        #response = requests.post('http://127.0.0.1:8000/api/v1/adesa_run_list/', data=data, headers=headers)
+        # print(json.dumps(response.json))
+        print(heroku_response.status_code)
+        return heroku_response.text
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     #print(authorize())
-    print(post_run_list())
+    #print(post_run_list())
+    print(get_by_rundate())
