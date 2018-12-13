@@ -70,7 +70,7 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
                 if obj["fields"]["run_date"] == validated_data["run_date"]:
                     print('found one')
                     print(type(obj))
-                    return HttpResponse(validated_data)
+                    return GetAdesaRunList.objects.create(**validated_data)
                 else:
                     print('else create')
                     print(obj["fields"]["run_date"])
