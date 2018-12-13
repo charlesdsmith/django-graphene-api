@@ -92,7 +92,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane')
 
     def create(self, validated_data):
-        try:
+        '''try:
             test = django_serializer.serialize("json", GetRecalls.objects.filter(vin=validated_data["vin"]))
             for obj in test:
                 if obj["fields"]["run_date"] == validated_data["run_date"]:
@@ -102,4 +102,5 @@ class ShoppingListSerializer(serializers.ModelSerializer):
 
         except:
             # if a record with that vin isn't already in the database, just create it
-            return GetRecalls.objects.create(**validated_data)
+            return GetRecalls.objects.create(**validated_data)'''
+        return GetRecalls.objects.create(**validated_data)
