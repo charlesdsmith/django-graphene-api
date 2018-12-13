@@ -16,7 +16,7 @@ from selenium.webdriver.support.ui import Select
 import time
 import pandas as pd
 from gspread_dataframe import get_as_dataframe, set_with_dataframe
-from carfax.carfax_calls import api_call
+#from carfax.carfax_calls import
 import requests
 from inputToSheets import startRegistrationsFriday, startAuthorization,startCarfaxSheet
 import numpy as np

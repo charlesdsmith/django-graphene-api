@@ -33,7 +33,7 @@ def post_carfax(test):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer wfvkVUtFNDAGmSE5Kojb9pP6PhGMbx',
+        'Authorization': 'Bearer ojGvqiqrwoTn22y4oD8DjpnX2SUxgl',
     }
 
 
@@ -48,11 +48,12 @@ def post_carfax(test):
         'run_date': test[7]
     }
 
+
     data = json.dumps(data)
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
     try:
         # heroku_response = requests.post('http://localhost:8000/api/v1/post_carfax', data=data, headers=headers)
-        response = requests.post('https://gsm-django.herokuapp.com/api/v1/carfax/', data=data, headers=headers)
+        response = requests.post('http://127.0.0.1:8000/api/v1/carfax/', data=data, headers=headers)
         # print(json.dumps(response.json))
         return response.text
     except Exception as e:
@@ -83,7 +84,7 @@ def get_api_root():
 def get_one_carfax(vin=None):
 
     headers = {
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     params = {
@@ -98,18 +99,18 @@ def get_one_carfax(vin=None):
 def get_all_carfax():
 
     headers = {
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
-    response = requests.get('http://127.0.0.1:8000/api/v1/adesa_run_list/', headers=headers)
+    response = requests.get('http://127.0.0.1:8000/api/v1/carfax/', headers=headers)
     # print(json.dumps(response.json))
     return response.text
 
 def get_by_rundate():
 
     headers = {
-        'Authorization': 'Bearer qdKC0g6vn26GRXr2pmGVVeBXbWu8re',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
@@ -124,9 +125,9 @@ def get_by_rundate():
     return response.text
 
 if __name__ == '__main__':
-    print(post_carfax(test))
+    #print(post_carfax(test))
     #print(authorize())
     #print(get_api_root())
-    #print(get_all_carfax())
+    print(get_all_carfax())
     #print(get_one_carfax())
     #print(get_by_rundate())

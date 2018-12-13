@@ -1,5 +1,7 @@
 # serialize the models here
 from rest_framework import serializers
+from django.core import serializers as django_serializer
+from django.http import HttpResponse
 from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
 import json
 from rest_framework.response import Response
@@ -49,10 +51,6 @@ class RecallsSerializer(serializers.ModelSerializer):
         fields = ("vin", "make", "recalls", "run_date")
 
     def create(self, validated_data):
-        print(validated_data)
-        test = GetRecalls.objects.filter(vin='GSMTEAM')
-        print(json.dumps(test))
-
         return GetRecalls.objects.create(**validated_data)
 
 
@@ -62,11 +60,29 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane')
 
+
     def create(self, validated_data):
         # check to see if object with 'vin' value exists, if it does and
         # has a  different run_date, overwrite
-        print(GetAdesaRunList.objects.all())
-        return GetAdesaRunList.objects.create(**validated_data)
+        try:
+            test = django_serializer.serialize("json", GetAdesaRunList.objects.filter(vin=validated_data["vin"]))
+            for obj in json.loads(test):
+                if obj["fields"]["run_date"] == validated_data["run_date"]:
+                    print('found one')
+                    print(type(obj))
+                    return HttpResponse(validated_data)
+                else:
+                    print('else create')
+                    print(obj["fields"]["run_date"])
+                    return GetAdesaRunList.objects.create(**validated_data)
+
+        except Exception as e:
+            # if a record with that vin isn't already in the database, just create it
+            #test = django_serializer.serialize("json", GetAdesaRunList.objects.filter(vin='123456'))
+            print(e)
+            print('except create')
+            return GetAdesaRunList.objects.create(**validated_data)
+
 
 class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -75,4 +91,14 @@ class ShoppingListSerializer(serializers.ModelSerializer):
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane')
 
     def create(self, validated_data):
-        return ShoppingList.objects.create(**validated_data)
+        try:
+            test = django_serializer.serialize("json", GetRecalls.objects.filter(vin=validated_data["vin"]))
+            for obj in test:
+                if obj["fields"]["run_date"] == validated_data["run_date"]:
+                    return "That record already exists with that run_date, not uploading to database"
+                else:
+                    return GetRecalls.objects.create(**validated_data)
+
+        except:
+            # if a record with that vin isn't already in the database, just create it
+            return GetRecalls.objects.create(**validated_data)

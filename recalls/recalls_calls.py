@@ -31,7 +31,7 @@ def post_recall():
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     data = {
@@ -44,10 +44,10 @@ def post_recall():
     data = json.dumps(data)
 
     try:
-        response = requests.post('http://localhost:8000/api/v1/recalls/', data=data, headers=headers)
-        #heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/recalls/', data=data, headers=headers)
+        # response = requests.post('http://localhost:8000/api/v1/recalls/', data=data, headers=headers)
+        heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/recalls/', data=data, headers=headers)
         # print(json.dumps(response.json))
-        return response.text
+        return heroku_response.text
 
     except Exception as e:
         print(e)
@@ -55,7 +55,7 @@ def post_recall():
 def get_one_recall():
 
     headers = {
-        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     params = {
@@ -75,7 +75,7 @@ def get_one_recall():
 def get_all_recalls():
 
     headers = {
-        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     # response = requests.post('http://gsm-django.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
@@ -92,7 +92,7 @@ def get_all_recalls():
 def get_by_rundate():
 
     headers = {
-        'Authorization': 'Bearer RdY8OGbhXXi9Kua5NRfOZffpNIj0tA',
+        'Authorization': 'Bearer hVe2xZpR0PxBoqS12k6RiNX9Dw661Q',
     }
 
     # response = requests.post('http://gsm-django.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
