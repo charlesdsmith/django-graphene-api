@@ -90,6 +90,8 @@ class GetAdesaRunList(models.Model):
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
+    trim = models.CharField(max_length=60, default="Check Online")
+    mileage = models.CharField(max_length=20, default="Check Online")
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
