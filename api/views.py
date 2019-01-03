@@ -5,17 +5,19 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
-from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer, AdesaRunlistSerializer, ShoppingListSerializer
+from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer, AdesaRunlistSerializer, ShoppingListSerializer, AdesaRunListBulkUploadSerializer, PurchasesBulkUploadSerializer, CarFaxBulkUploadSerializer, RecallsBulkUploadSerializer
 from rest_framework.response import Response
 from rest_framework import generics, permissions, serializers, authentication
 from rest_framework.decorators import action
+from rest_framework_bulk import ListBulkCreateAPIView
 
 # had to go online and download oauth2_provider manually, package installed oauth2_provider was missing files
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope, OAuth2Authentication
 from oauth2_provider.views.generic import ProtectedResourceView
 
 
-
+# How django knows which method to use for requests:
+# https://docs.djangoproject.com/en/2.1/ref/class-based-views/base/#django.views.generic.base.View.dispatch
 # Create your views here.
 
 class getAdesaPurchases(viewsets.ModelViewSet):
@@ -66,6 +68,9 @@ class getAdesaPurchases(viewsets.ModelViewSet):
         print(headers)
         return Response(serializer.data, headers=headers)'''
 
+class AdesaPurchasesBulkUpload(ListBulkCreateAPIView):
+    queryset = GetAdesaRunList.objects.all()
+    serializer_class = PurchasesBulkUploadSerializer
 
 class AdesaRunList(viewsets.ModelViewSet):
 
@@ -105,6 +110,11 @@ class AdesaRunList(viewsets.ModelViewSet):
         print('RETRIEVE RUNDATE')
 
         return Response(serializer.data)
+
+
+class BulkAdesaRunListUpload(ListBulkCreateAPIView):
+    queryset = GetAdesaRunList.objects.all()
+    serializer_class = AdesaRunListBulkUploadSerializer
 
 
 class GetCarFax(viewsets.ModelViewSet):
@@ -155,6 +165,9 @@ class GetCarFax(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+class CarFaxBulkUpload(ListBulkCreateAPIView):
+    queryset = CarFax.objects.all()
+    serializer_class = CarFaxBulkUploadSerializer
 
 
 class Recalls(viewsets.ModelViewSet):
@@ -200,6 +213,9 @@ class Recalls(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+class RecallsBulkUpload(ListBulkCreateAPIView):
+    queryset = GetRecalls.objects.all()
+    serializer_class = RecallsBulkUploadSerializer
 
 class ShoppingListView(viewsets.ModelViewSet):
     queryset = ShoppingList.objects.all()

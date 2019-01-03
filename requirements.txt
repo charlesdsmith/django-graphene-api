@@ -8,3 +8,4 @@ django-heroku
 django-oauth-toolkit
 graphene_django
 graphene
+djangorestframework-bulk

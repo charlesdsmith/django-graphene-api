@@ -77,8 +77,8 @@ class GetRecalls(models.Model):
 
 class GetAdesaRunList(models.Model):
     vin = models.CharField(max_length=20)
-    img_url = models.URLField()
-    year = models.IntegerField()
+    img_url = models.URLField(blank=True)
+    year = models.IntegerField(blank=True)
     make = models.CharField(max_length=20, default="Check Online")
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.IntegerField(default="Check Online")

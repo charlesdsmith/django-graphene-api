@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework_bulk.routes import BulkRouter
 from graphene_django.views import GraphQLView
 from api import views
 
@@ -25,6 +26,9 @@ router.register(r'carfax', views.GetCarFax)
 router.register(r'recalls', views.Recalls)
 router.register(r'adesa_run_list', views.AdesaRunList)
 router.register(r'shopping_list', views.ShoppingListView)
+
+bulk_router = BulkRouter()
+bulk_router.register(r'adesa_run_list_bulk_upload', views.BulkAdesaRunListUpload)
 
 admin.autodiscover()
 
@@ -36,6 +40,10 @@ from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, Token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
+    path('api/v1/adesa_run_list_bulk_upload/', views.BulkAdesaRunListUpload.as_view()),
+    path('api/v1/adesa_purchases_bulk_upload/', views.AdesaPurchasesBulkUpload.as_view()),
+    path('api/v1/carfax_bulk_upload/', views.CarFaxBulkUpload.as_view()),
+    path('api/v1/recalls_bulk_upload/', views.RecallsBulkUpload.as_view()),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('graphql', GraphQLView.as_view(graphiql=True)),
 
