@@ -122,7 +122,7 @@ class AdesaRunListBulkUploadSerializer(BulkSerializerMixin, serializers.ModelSer
     class Meta:
         model = GetAdesaRunList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
-                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane')
+                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', 'trim', 'mileage')
         list_serializer_class = BulkListSerializer
 
 

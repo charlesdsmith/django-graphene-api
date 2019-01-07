@@ -141,3 +141,5 @@ query {
 '''
 
 result = schema.execute(query)
+
+print(result)
