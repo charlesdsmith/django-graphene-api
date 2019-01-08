@@ -144,4 +144,4 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         except:
             # if a record with that vin isn't already in the database, just create it
             return GetRecalls.objects.create(**validated_data)'''
-        return GetRecalls.objects.create(**validated_data)
+        return ShoppingList.objects.create(**validated_data)

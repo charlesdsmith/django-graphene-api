@@ -31,7 +31,7 @@ def post_run_list():
 
     headers = {
         'Content-Type': "application/json",
-        'Authorization': 'Bearer I5RmXX9VBaLvAozrv7EkIQVL9GaEGY',
+        'Authorization': 'Bearer Vl1tcchRnhJcNeIz7ztJdQTrjGp0Qv',
     }
 
     data = {
@@ -47,7 +47,7 @@ def post_run_list():
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
 
     try:
-        heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/adesa_run_list/', data=data, headers=headers)
+        heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/shopping_list/', data=data, headers=headers)
         #response = requests.post('http://127.0.0.1:8000/api/v1/adesa_run_list/', data=data, headers=headers)
         # print(json.dumps(response.json))
         print(heroku_response.status_code)
@@ -74,5 +74,5 @@ def get_by_rundate():
 
 if __name__ == "__main__":
     #print(authorize())
-    #print(post_run_list())
-    print(get_by_rundate())
+    print(post_run_list())
+    #print(get_by_rundate())
