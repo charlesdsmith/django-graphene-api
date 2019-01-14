@@ -83,15 +83,16 @@ class GetAdesaRunList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.IntegerField(default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = models.TextField(max_length=50, default="Check Online")
-    MID = models.CharField(max_length=20, default="Check Online")
-    GSMR = models.TextField(max_length=50, default="Check Online")
-    transactions = models.CharField(max_length=20, default="Check Online")
+    MMR = models.TextField(max_length=250, default="Check Online")
+    MID = models.CharField(max_length=250, default="Check Online")
+    GSMR = models.TextField(max_length=250, default="Check Online")
+    transactions = models.CharField(max_length=250, default="Check Online")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
     trim = models.CharField(max_length=60, default="Check Online")
     mileage = models.CharField(max_length=20, default="Check Online")
+    suggested_retail = models.CharField(max_length=250, default="Check Online")
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
@@ -101,45 +102,15 @@ class ShoppingList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.IntegerField(default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = models.TextField(max_length=50, default="Check Online")
-    MID = models.CharField(max_length=20, default="Check Online")
-    GSMR = models.TextField(max_length=50, default="Check Online")
+    MMR = models.TextField(max_length=250, default="Check Online")
+    MID = models.CharField(max_length=250, default="Check Online")
+    GSMR = models.TextField(max_length=250, default="Check Online")
     transactions = models.CharField(max_length=20, default="Check Online")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
+    trim = models.CharField(max_length=60, default="Check Online")
+    mileage = models.CharField(max_length=20, default="Check Online")
+    suggested_retail = models.CharField(max_length=250, default="Check Online")
 
 
-#### GraphQL ####
-class CarFaxType(DjangoObjectType):
-    class Meta:
-        model = CarFax
-
-class RecallsType(DjangoObjectType):
-    class Meta:
-        model = GetRecalls
-
-class Query(graphene.ObjectType):
-    all_carfax_objects = graphene.List(CarFaxType)
-    all_recalls_type = graphene.List(RecallsType)
-
-    def return_all_carfax(self, info, **kwargs):
-        return CarFax.objects.all()
-
-    def return_all_recalls(self, info, **kwargs):
-        return GetRecalls.objects.all()
-
-schema = graphene.Schema(query=Query)
-
-query = '''
-query {
-    return_all_carfax {
-        vin,
-        accident
-    }
-}
-'''
-
-result = schema.execute(query)
-
-print(result)
