@@ -1,9 +1,11 @@
 from graphene_django import DjangoObjectType
 import graphene
-from api.models import CarFax, GetRecalls
+from api.models import CarFax, GetRecalls, GetAdesaRunList, GetAdesaPurchases
+from api.serializers import *
 from graphene import ObjectType, Node, Schema
 from graphene_django.fields import DjangoConnectionField
 from django.shortcuts import get_object_or_404, get_list_or_404
+from graphene_django.rest_framework.mutation import SerializerMutation
 
 
 #### GraphQL ####
@@ -60,7 +62,11 @@ class Query(graphene.ObjectType):
 
         return None
 
-schema = graphene.Schema(query=Query)
+class CarFaxMutation(SerializerMutation):
+    class Meta:
+        serializer_class = CarFaxSerializer
+
+schema = graphene.Schema(query=Query, mutation=CarFaxMutation)
 
 query = '''
 query {

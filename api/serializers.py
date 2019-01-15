@@ -9,6 +9,7 @@ from rest_framework.views import exception_handler
 from rest_framework_bulk import BulkListSerializer, BulkSerializerMixin
 
 
+
 class PurchasesSerializer(serializers.ModelSerializer):
     class Meta:
         model = GetAdesaPurchases
@@ -147,3 +148,5 @@ class ShoppingListSerializer(serializers.ModelSerializer):
             # if a record with that vin isn't already in the database, just create it
             return GetRecalls.objects.create(**validated_data)'''
         return ShoppingList.objects.create(**validated_data)
+
+
