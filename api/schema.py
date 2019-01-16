@@ -62,7 +62,11 @@ class Query(graphene.ObjectType):
 
         return None
 
-class CreateCarFax(graphene.Mutation):
+class SearchResult(graphene.Union):
+    class Meta:
+        types = (CarFaxType, RecallsType)
+
+'''class CreateCarFax(graphene.Mutation):
     class Arguments:
         # Arguments attributes are the arguments that the mutation needs for resolving
         vin = graphene.String()
@@ -71,16 +75,16 @@ class CreateCarFax(graphene.Mutation):
     carfax = graphene.Field(lambda: CarFax)
 
     # mutate is the function that will be applied once the mutation is called
-    def mutate(self, info, vin):
-        carfax = CarFaxType(vin=vin)
+    def mutate(self, info, name):
+        carfax = CarFaxType(vin=name)
         ok = True
         return CreateCarFax(carfax=carfax, ok=ok)
 
 class Mutations(graphene.ObjectType):
-    create_carfax = CreateCarFax.Field()
+    create_carfax = CreateCarFax.Field()'''
 
 
-schema = graphene.Schema(query=Query, mutation=Mutations)
+schema = graphene.Schema(query=Query)
 
 query = '''
 query {
