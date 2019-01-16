@@ -62,11 +62,25 @@ class Query(graphene.ObjectType):
 
         return None
 
-class CarFaxMutation(SerializerMutation):
-    class Meta:
-        serializer_class = CarFaxSerializer
+class CreateCarFax(graphene.Mutation):
+    class Arguments:
+        # Arguments attributes are the arguments that the mutation needs for resolving
+        vin = graphene.String()
 
-schema = graphene.Schema(query=Query, mutation=CarFaxMutation)
+    ok = graphene.Boolean()  # person and ok are output fields when the mutation is resolved
+    carfax = graphene.Field(lambda: CarFax)
+
+    # mutate is the function that will be applied once the mutation is called
+    def mutate(self, info, vin):
+        carfax = CarFaxType(vin=vin)
+        ok = True
+        return CreateCarFax(carfax=carfax, ok=ok)
+
+class Mutations(graphene.ObjectType):
+    create_carfax = CreateCarFax.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutations)
 
 query = '''
 query {

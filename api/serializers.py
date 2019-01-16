@@ -93,7 +93,8 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = GetAdesaRunList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
-                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', 'trim', 'mileage')
+                  'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', 'trim', 'mileage',
+                  'suggested_retail')
 
 
     def create(self, validated_data):
