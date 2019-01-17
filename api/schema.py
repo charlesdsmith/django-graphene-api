@@ -62,9 +62,19 @@ class Query(graphene.ObjectType):
 
         return None
 
-class SearchResult(graphene.Union):
+class CarFaxUnion(DjangoObjectType):
     class Meta:
-        types = (CarFaxType, RecallsType)
+        model = CarFax
+
+class RecallsUnion(DjangoObjectType):
+    class Meta:
+        model = GetRecalls
+
+'''class SearchResult(graphene.Union):
+
+    def resolve_(cls, instance, info):
+        class Meta:
+            types = (CarFaxUnion, RecallsUnion)'''
 
 '''class CreateCarFax(graphene.Mutation):
     class Arguments:

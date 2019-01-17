@@ -9,16 +9,32 @@ def get_graphql(query):
     return response.text
 
 
+def post_graphql(query=None):
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "query": """getCarFaxByRundate {
+        carfax(runDate:"11-18-2018"){
+        vin
+    }}"""}
+
+    data = json.dumps(data)
+
+    response = requests.post("http://localhost:8000/graphql", headers=headers, data=data)
+    print(response.text)
+
+    return response.text
+
 if __name__ == "__main__":
-    print(get_graphql("""query getOneCarFax {
-  allCarfaxObjects{
+    post_graphql()
+
+    '''print(get_graphql("""query getCarFaxByRundate {
+  carfax(runDate:"11-18-2018"){
     vin
-    structuralDamage
-    
   }
-  findRecall: recalls(runDate:"11-28-2018"){
-    vin
-    make
-  }
-}"""))
+}"""))'''
+
 
