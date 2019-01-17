@@ -34,6 +34,7 @@ class AdesaRunListType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
+    ### List ALL objects ###
     all_carfax_objects = graphene.List(CarFaxType)
     all_recalls_objects = graphene.List(RecallsType)
     all_adesa_purchases_objects = graphene.List(AdesaPurchasesType)
@@ -42,8 +43,9 @@ class Query(graphene.ObjectType):
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
+    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
 
-    def resolve_all_carfax_objects(self, info, **kwargs):
+def resolve_all_carfax_objects(self, info, **kwargs):
         return CarFax.objects.all()
 
     def resolve_all_recalls_objects(self, info, **kwargs):
