@@ -16,10 +16,19 @@ def post_graphql(query=None):
     }
 
     data = {
-        "query": """getCarFaxByRundate {
-        carfax(runDate:"11-18-2018"){
+        "query": """{
+      allCarfaxObjects{
         vin
-    }}"""}
+        structuralDamage
+        
+      }
+  
+      findRecall: recalls(runDate:"11-28-2018"){
+        vin
+        make
+      }
+    }""",
+        }
 
     data = json.dumps(data)
 

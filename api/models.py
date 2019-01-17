@@ -83,16 +83,16 @@ class GetAdesaRunList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.IntegerField(default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = models.TextField(default="Check Online")
-    MID = models.TextField(default="Check Online")
-    GSMR = models.TextField(default="Check Online")
-    transactions = models.CharField(max_length=250, default="Check Online")
+    MMR = models.TextField(default="{error: error}")
+    MID = models.TextField(default="{error: error}")
+    GSMR = models.TextField(default="{error: error}")
+    transactions = models.CharField(max_length=250, default="{error: error}")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
     trim = models.CharField(max_length=60, default="Check Online")
     mileage = models.CharField(max_length=20, default="Check Online")
-    suggested_retail = models.TextField(default="Check Online")
+    suggested_retail = models.TextField(default="{error: error}")
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
@@ -102,15 +102,15 @@ class ShoppingList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.IntegerField(default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = models.TextField(default="Check Online")
-    MID = models.TextField(default="Check Online")
-    GSMR = models.TextField(default="Check Online")
-    transactions = models.TextField(default="Check Online")
+    MMR = models.TextField(default="{error: error}")
+    MID = models.TextField(default="{error: error}")
+    GSMR = models.TextField(default="{error: error}")
+    transactions = models.TextField(default="{error: error}")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
     trim = models.CharField(max_length=60, default="Check Online")
     mileage = models.CharField(max_length=20, default="Check Online")
-    suggested_retail = models.CharField(max_length=250, default="Check Online")
+    suggested_retail = models.CharField(max_length=250, default="{error: error}")
 
 

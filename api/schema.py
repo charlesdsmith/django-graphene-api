@@ -21,13 +21,27 @@ class RecallsType(DjangoObjectType):
         model = GetRecalls
         interfaces = (Node, )
 
+class AdesaPurchasesType(DjangoObjectType):
+    class Meta:
+        model = GetAdesaPurchases
+        interfaces = (Node, )
+
+class AdesaRunListType(DjangoObjectType):
+    class Meta:
+        model = GetAdesaRunList
+        interfaces = (Node, )
+
+
+
 class Query(graphene.ObjectType):
     all_carfax_objects = graphene.List(CarFaxType)
     all_recalls_objects = graphene.List(RecallsType)
+    all_adesa_purchases_objects = graphene.List(AdesaPurchasesType)
+    all_adesa_runlist_objects = graphene.List(AdesaRunListType)
 
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
-
+    adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
 
     def resolve_all_carfax_objects(self, info, **kwargs):
         return CarFax.objects.all()
