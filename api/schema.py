@@ -34,23 +34,34 @@ class AdesaRunListType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    ### List ALL objects ###
+
+    ### List ALL objects fields ###
     all_carfax_objects = graphene.List(CarFaxType)
     all_recalls_objects = graphene.List(RecallsType)
     all_adesa_purchases_objects = graphene.List(AdesaPurchasesType)
     all_adesa_runlist_objects = graphene.List(AdesaRunListType)
 
+    ### Retrieve ONE object fields ###
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
     adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
 
-def resolve_all_carfax_objects(self, info, **kwargs):
+    ### Retrieve ALL objects resolvers (endpoints) ###
+    def resolve_all_carfax_objects(self, info, **kwargs):
         return CarFax.objects.all()
 
     def resolve_all_recalls_objects(self, info, **kwargs):
         return GetRecalls.objects.all()
 
+    def resolve_all_adesa_purchases_objects(self, info, **kwargs):
+        return GetAdesaPurchases.objects.all()
+
+    def resolve_all_adesa_runlist_objects(self, info, **kwargs):
+        return GetAdesaRunList.objects.all()
+    ###
+
+    ### Retrieve ONE objects resolvers (endpoints) ###
     def resolve_carfax(self, info, **kwargs):
         vin = kwargs.get('vin')
         run_date = kwargs.get('run_date')
@@ -64,7 +75,6 @@ def resolve_all_carfax_objects(self, info, **kwargs):
 
         return None
 
-
     def resolve_recalls(self, info, **kwargs):
         vin = kwargs.get('vin')
         run_date = kwargs.get('run_date')
@@ -77,6 +87,33 @@ def resolve_all_carfax_objects(self, info, **kwargs):
             return all_recalls_objects
 
         return None
+
+    def resolve_adesa_purchases(self, info, **kwargs):
+        vin = kwargs.get('vin')
+        run_date = kwargs.get('run_date')
+
+        if vin is not None:
+            return GetAdesaPurchases.objects.get(vin=vin)
+
+        if run_date is not None:
+            all_adesa_purchases_objects = GetAdesaPurchases.objects.filter(run_date__exact=run_date)
+            return all_adesa_purchases_objects
+
+        return None
+
+    def resolve_adesa_runlist(self, info, **kwargs):
+        vin = kwargs.get('vin')
+        run_date = kwargs.get('run_date')
+
+        if vin is not None:
+            return GetAdesaRunList.objects.get(vin=vin)
+
+        if run_date is not None:
+            all_recalls_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
+            return all_recalls_objects
+
+        return None
+
 
 class CarFaxUnion(DjangoObjectType):
     class Meta:
