@@ -98,7 +98,7 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
 
         if vin is not None:
-            all_carfax_objects = CarFax.objects.filter(vin__exact=vin)
+            all_carfax_objects = GetRecalls.objects.filter(vin__exact=vin)
             return all_carfax_objects
 
         if run_date is not None:
@@ -112,7 +112,7 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
 
         if vin is not None:
-            all_carfax_objects = CarFax.objects.filter(vin__exact=vin)
+            all_carfax_objects = GetAdesaPurchases.objects.filter(vin__exact=vin)
             return all_carfax_objects
 
         if run_date is not None:
@@ -126,7 +126,7 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
 
         if vin is not None:
-            all_carfax_objects = CarFax.objects.filter(vin__exact=vin)
+            all_carfax_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
             return all_carfax_objects
 
         if run_date is not None:
