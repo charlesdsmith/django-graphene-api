@@ -16,12 +16,9 @@ def post_graphql(query=None):
     }
 
     data = {
-        "query": """{
-  carfax(runDate:"11-18-2018"){
+        "query": """{adesaRunlist(vin:"1GBE5C1295F519873") {
     vin
-    recalls
-    runDate
-    airbags
+    MID
   }
 }""",
         }
