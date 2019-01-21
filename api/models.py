@@ -52,6 +52,7 @@ class GetAdesaPurchases(models.Model):
     tire_pressure_front = models.CharField(max_length=20, default="n/a")
     tire_pressure_rear = models.CharField(max_length=20, default="n/a")
     rim_size = models.CharField(max_length=20, default="n/a")
+    adesa_id = models.CharField(max_length=20, default="n/a")
 
 
 # totalLossCells, frameDamageCells, airbagCells, odometerCells, accidentCheckCells, recallCells
@@ -95,6 +96,7 @@ class GetAdesaRunList(models.Model):
     suggested_retail = models.TextField(default="{error: error}")
     human_valuation = models.TextField(default="{error: error}")
     run_no = models.CharField(max_length=20, default="Check Online")
+    adesa_id = models.CharField(max_length=20, default="n/a")
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
@@ -116,6 +118,7 @@ class ShoppingList(models.Model):
     suggested_retail = models.CharField(max_length=250, default="{error: error}")
     human_valuation = models.TextField(default="{error: error}")
     run_no = models.CharField(max_length=20, default="Check Online")
+    adesa_id = models.CharField(max_length=20, default="n/a")
 
 
 

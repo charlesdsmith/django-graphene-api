@@ -25,7 +25,7 @@ class PurchasesSerializer(serializers.ModelSerializer):
                   'amount', 'purchase_price', 'purchase_hst', 'bill_of_sale',
                   'checked', 'recalls', 'manufacturer_date', 'gvwr', 'gross_axle_weight_front',
                   'gross_axle_weight_rear', 'tire_size','tire_pressure_front',
-                  'tire_pressure_rear', 'rim_size')
+                  'tire_pressure_rear', 'rim_size', 'adesa_id')
 
     def create(self, validated_data):
         return GetAdesaPurchases.objects.create(**validated_data)
@@ -45,7 +45,7 @@ class PurchasesBulkUploadSerializer(BulkSerializerMixin, serializers.ModelSerial
                   'amount', 'purchase_price', 'purchase_hst', 'bill_of_sale',
                   'checked', 'recalls', 'manufacturer_date', 'gvwr', 'gross_axle_weight_front',
                   'gross_axle_weight_rear', 'tire_size','tire_pressure_front',
-                  'tire_pressure_rear', 'rim_size')
+                  'tire_pressure_rear', 'rim_size', 'adesa_id')
         list_serializer_class = BulkListSerializer
 
 
@@ -94,7 +94,7 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
         model = GetAdesaRunList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', 'trim', 'mileage',
-                  'suggested_retail', 'human_valuation', 'run_no')
+                  'suggested_retail', 'human_valuation', 'run_no', 'adesa_id')
 
 
     def create(self, validated_data):
@@ -125,7 +125,7 @@ class AdesaRunListBulkUploadSerializer(BulkSerializerMixin, serializers.ModelSer
         model = GetAdesaRunList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', 'trim',
-                  'mileage', 'suggested_retail', 'human_valuation', 'run_no')
+                  'mileage', 'suggested_retail', 'human_valuation', 'run_no', 'adesa_id')
         list_serializer_class = BulkListSerializer
 
 
@@ -134,7 +134,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         model = ShoppingList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', "mileage",
-                  "suggested_retail", 'human_valuation', 'run_no')
+                  "suggested_retail", 'human_valuation', 'run_no', 'adesa_id')
 
     def create(self, validated_data):
         '''try:
