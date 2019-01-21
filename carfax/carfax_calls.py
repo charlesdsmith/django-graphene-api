@@ -178,5 +178,22 @@ if __name__ == '__main__':
     #print(get_all_carfax())
     #print(get_one_carfax())
     #print(get_by_rundate())
-    print(bulk_post())
+    #print(bulk_post())
+
+    def constant(f):
+        def fset(self, value):
+            raise TypeError
+        def fget(self):
+            return f()
+        return property(fget, fset)
+
+    class _Const(object):
+        @constant
+        def FOO():
+            return 0xBAADFACE
+        @constant
+        def BAR():
+            return 0xDEADBEEF
+
+CONST = _Const()
 

@@ -31,6 +31,23 @@ class AdesaRunListType(DjangoObjectType):
         model = GetAdesaRunList
         interfaces = (Node, )
 
+class CarFaxInput(graphene.InputObjectType):
+    vin = graphene.String(required=True)
+
+'''class CreateCarFax(graphene.Mutation):
+    class Arguments:
+        # Arguments attributes are the arguments that the mutation needs for resolving
+        vin = CarFaxInput(required=True)
+
+    carfax = graphene.Field(CarFax)
+
+    # mutate is the function that will be applied once the mutation is called
+    @staticmethod
+    def mutate(self, info, vin):
+        carfax = CarFax(
+            vin=vin.vin,
+        )
+        return CreateCarFax(vin=vin)'''
 
 
 class Query(graphene.ObjectType):
@@ -141,9 +158,9 @@ class RecallsUnion(DjangoObjectType):
     def mutate(self, info, name):
         carfax = CarFaxType(vin=name)
         ok = True
-        return CreateCarFax(carfax=carfax, ok=ok)
+        return CreateCarFax(carfax=carfax, ok=ok)'''
 
-class Mutations(graphene.ObjectType):
+'''class Mutations(graphene.ObjectType):
     create_carfax = CreateCarFax.Field()'''
 
 
