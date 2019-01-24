@@ -94,7 +94,7 @@ class GetAdesaRunList(models.Model):
     trim = models.CharField(max_length=60, default="Check Online")
     mileage = models.CharField(max_length=20, default="Check Online")
     suggested_retail = models.TextField(default="{error: error}")
-    human_valuation = models.TextField(default="{error: error}")
+    human_valuation = models.TextField(default="{'error': 'error}'")
     run_no = models.CharField(max_length=20, default="Check Online")
     adesa_id = models.CharField(max_length=20, default="n/a")
 
@@ -116,7 +116,7 @@ class ShoppingList(models.Model):
     trim = models.CharField(max_length=60, default="Check Online")
     mileage = models.CharField(max_length=20, default="Check Online")
     suggested_retail = models.CharField(max_length=250, default="{error: error}")
-    human_valuation = models.TextField(default="{error: error}")
+    human_valuation = models.TextField(default="{'error': 'error}'")
     run_no = models.CharField(max_length=20, default="Check Online")
     adesa_id = models.CharField(max_length=20, default="n/a")
 

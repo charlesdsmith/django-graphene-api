@@ -136,6 +136,26 @@ class Query(graphene.ObjectType):
         return None
 
 
+class Mutation(SerializerMutation):
+    class Meta:
+        serializer_class = AdesaRunlistSerializer
+
+        @classmethod
+        def get_serializer_kwargs(cls, root, info, **input):
+            if 'vin' and 'run_date' in input:
+                instance = GetAdesaRunList.objects.filter(vin=input['vin'], run_date=input['run_date'])
+                if instance:
+                    return {'instance': instance, 'data': input, 'partial': True}
+
+                else:
+                    return {"error": "an error was encountered"}
+
+            return {'data': input, 'partial': True}
+
+    def resolve_edit_human_valuation(self, info, **kwargs):
+
+
+
 class CarFaxUnion(DjangoObjectType):
     class Meta:
         model = CarFax
