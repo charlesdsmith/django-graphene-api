@@ -88,12 +88,12 @@ def get_carfax_infoMMC():
                 continue
 
             wait = WebDriverWait(browser, 1.5)
-            wait.until(EC.presence_of_element_located((By.ID, "vin")))
+            wait.until(EC.presence_of_element_located((By.ID, "vin-input")))
 
-            vin_field = browser.find_element_by_id('vin')
+            vin_field = browser.find_element_by_id('vin-input')
             vin_field.send_keys(vin)  # make the url for that vin available
 
-            get_report_button = browser.find_element_by_id('run_vhr_button')  # get report
+            get_report_button = browser.find_element_by_id('header_run_vhr_button')  # get report
 
             get_report_button.click()
             time.sleep(2)

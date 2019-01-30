@@ -2,11 +2,11 @@ from graphene_django import DjangoObjectType
 import graphene
 from api.models import CarFax, GetRecalls, GetAdesaRunList, GetAdesaPurchases
 from api.serializers import *
-from graphene import ObjectType, Node, Schema
+from graphene import ObjectType, Node, Schema, relay
 from graphene_django.fields import DjangoConnectionField
 from django.shortcuts import get_object_or_404, get_list_or_404
 from graphene_django.rest_framework.mutation import SerializerMutation
-
+# from types import ErrorType
 
 #### GraphQL ####
 #  https://docs.graphene-python.org/projects/django/en/latest/tutorial-plain/#introduction-tutorial-graphene-and-django
@@ -32,6 +32,9 @@ class AdesaRunListType(DjangoObjectType):
         interfaces = (Node, )
 
 class CarFaxInput(graphene.InputObjectType):
+    vin = graphene.String(required=True)
+
+class AdesaRunlistInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
 
 '''class CreateCarFax(graphene.Mutation):
@@ -136,25 +139,69 @@ class Query(graphene.ObjectType):
         return None
 
 
-class Mutation(SerializerMutation):
+class CreateCarFax(graphene.Mutation):
+    ## https://github.com/graphql-python/graphene/blob/master/UPGRADE-v2.0.md#clientidmutationmutate_and_get_payload
+    class Arguments:
+        # Arguments attributes are the arguments that the mutation needs for resolving
+        #vin = CarFaxInput(required=True)
+        carfax_info = CarFaxInput(required=True)
+
+    ok = graphene.Boolean()  # person and ok are output fields when the mutation is resolved
+    carfax = graphene.Field(lambda: CarFaxType)
+
+
+    def mutate(root, info, **input):
+        carfax = CarFax(
+            vin=input['carfax_info']['vin'],)
+        carfax.save()  # this step is necessary
+
+        return CreateCarFax(carfax=carfax)
+
+'''class Mutation(graphene.ObjectType):
+    create_carfax = CreateCarFax.Field()'''
+
+
+'''class CreateCarFax(SerializerMutation):
     class Meta:
         serializer_class = AdesaRunlistSerializer
 
-        @classmethod
-        def get_serializer_kwargs(cls, root, info, **input):
-            if 'vin' and 'run_date' in input:
-                instance = GetAdesaRunList.objects.filter(vin=input['vin'], run_date=input['run_date'])
-                if instance:
-                    return {'instance': instance, 'data': input, 'partial': True}
+    @classmethod
+    def get_serializer_kwargs(cls, root, info, **input):
+        print('here1')
+        if 'vin' and 'run_date' in input:
+            instance = GetAdesaRunList.objects.filter(vin=input['vin'], run_date=input['run_date']).first()
+            if instance:
+                # if the instance exists, update it with the sent "humanValuation" value
+                return {'instance': instance, 'data': input, 'partial': True}
+            else:
+                print(input)
+                raise ValueError
 
-                else:
-                    return {"error": "an error was encountered"}
-
-            return {'data': input, 'partial': True}
-
-    def resolve_edit_human_valuation(self, info, **kwargs):
+        return {'data': input, 'partial': True}
 
 
+
+    @classmethod
+    def mutate_and_get_payload(cls, root, info, **input):
+        print(input)
+
+        kwargs = cls.get_serializer_kwargs(root, info, **input)
+        serializer = cls._meta.serializer_class(**kwargs)
+
+        if serializer.is_valid():
+            return cls.perform_mutate(serializer, info)
+        else:
+            'errors = [
+                ErrorType(field=key, messages=value)
+                for key, value in serializer.errors.items()
+            ]
+
+            return cls(errors=errors)
+            return 'no'''
+
+
+class Mutation(graphene.ObjectType):
+    create_carfax = CreateCarFax.Field()
 
 class CarFaxUnion(DjangoObjectType):
     class Meta:
@@ -170,25 +217,12 @@ class RecallsUnion(DjangoObjectType):
         class Meta:
             types = (CarFaxUnion, RecallsUnion)'''
 
-'''class CreateCarFax(graphene.Mutation):
-    class Arguments:
-        # Arguments attributes are the arguments that the mutation needs for resolving
-        vin = graphene.String()
-
-    ok = graphene.Boolean()  # person and ok are output fields when the mutation is resolved
-    carfax = graphene.Field(lambda: CarFax)
-
-    # mutate is the function that will be applied once the mutation is called
-    def mutate(self, info, name):
-        carfax = CarFaxType(vin=name)
-        ok = True
-        return CreateCarFax(carfax=carfax, ok=ok)'''
-
-'''class Mutations(graphene.ObjectType):
-    create_carfax = CreateCarFax.Field()'''
 
 
-schema = graphene.Schema(query=Query)
+
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
 
 query = '''
 query {
