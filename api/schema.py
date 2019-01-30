@@ -33,6 +33,11 @@ class AdesaRunListType(DjangoObjectType):
         model = GetAdesaRunList
         interfaces = (Node, )
 
+class ShoppingListType(DjangoObjectType):
+    class Meta:
+        model = ShoppingList
+        interfaces = (Node, )
+
 class CarFaxInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
 
@@ -40,6 +45,12 @@ class AdesaRunlistInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
     run_date = graphene.String(required=True)
     human_valuation = graphene.String(required=True)
+
+class ShoppingListInput(graphene.InputObjectType):
+    vin = graphene.String(required=True)
+    run_date = graphene.String(required=True)
+    human_valuation = graphene.String(required=True)
+
 
 '''class CreateCarFax(graphene.Mutation):
     class Arguments:
@@ -167,7 +178,29 @@ class UpdateAdesaRunlist(graphene.Mutation):
             except ObjectDoesNotExist as error:
                 return error
 
+class UpdateShoppingList(graphene.Mutation):
+    class Arguments:
+        lookup_fields = ShoppingListInput(required=True)
+        lookup_rundate = graphene.Argument(ShoppingListInput)
 
+    ok = graphene.Boolean
+    runlist = graphene.Field(lambda: ShoppingListType)
+
+
+    def mutate(root, info, **input):
+        vin = input['lookup_fields']['vin']
+        run_date = input['lookup_fields']['run_date']
+
+        if vin and run_date:
+            instance = ShoppingList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
+            try:
+                if instance:
+                    instance.human_valuation = input["lookup_fields"]["human_valuation"]
+                    instance.save()
+                    return UpdateShoppingList(runlist=instance)
+
+            except ObjectDoesNotExist as error:
+                return error
 
 
 
@@ -240,6 +273,7 @@ class CreateCarFax(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     create_carfax = CreateCarFax.Field()
     update_runlist = UpdateAdesaRunlist.Field()
+    update_shoppinglist = UpdateShoppingList.Field()
 
 class CarFaxUnion(DjangoObjectType):
     class Meta:

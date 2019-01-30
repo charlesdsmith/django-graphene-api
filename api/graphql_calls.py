@@ -25,13 +25,14 @@ def post_graphql(query=None):
 
     data1 = {
         "query": """mutation{
-            createCarfax(carfaxInfo:{vin:"graphqltest1"}){
-                carfax{
-                vin
-                accident
-                    }
-                    }
-                    }""",
+  updateShoppinglist(lookupFields: {vin:"123456", runDate:"11-28-2018", humanValuation: "graphqltest3"}){
+    runlist{
+      vin
+      runDate
+      humanValuation
+    }
+  }
+}""",
     }
 
     data1 = json.dumps(data1)
