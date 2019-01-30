@@ -23,9 +23,20 @@ def post_graphql(query=None):
 }""",
         }
 
-    data = json.dumps(data)
+    data1 = {
+        "query": """mutation{
+            createCarfax(carfaxInfo:{vin:"graphqltest1"}){
+                carfax{
+                vin
+                accident
+                    }
+                    }
+                    }""",
+    }
 
-    response = requests.post("http://localhost:8000/graphql", headers=headers, data=data)
+    data1 = json.dumps(data1)
+
+    response = requests.post("http://localhost:8000/graphql", headers=headers, data=data1)
     print(response.text)
 
     return response.text

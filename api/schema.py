@@ -3,10 +3,12 @@ import graphene
 from api.models import CarFax, GetRecalls, GetAdesaRunList, GetAdesaPurchases
 from api.serializers import *
 from graphene import ObjectType, Node, Schema, relay
+from django.core.exceptions import ObjectDoesNotExist
 from graphene_django.fields import DjangoConnectionField
 from django.shortcuts import get_object_or_404, get_list_or_404
 from graphene_django.rest_framework.mutation import SerializerMutation
 # from types import ErrorType
+import http
 
 #### GraphQL ####
 #  https://docs.graphene-python.org/projects/django/en/latest/tutorial-plain/#introduction-tutorial-graphene-and-django
@@ -36,6 +38,8 @@ class CarFaxInput(graphene.InputObjectType):
 
 class AdesaRunlistInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
+    run_date = graphene.String(required=True)
+    human_valuation = graphene.String(required=True)
 
 '''class CreateCarFax(graphene.Mutation):
     class Arguments:
@@ -139,6 +143,34 @@ class Query(graphene.ObjectType):
         return None
 
 
+class UpdateAdesaRunlist(graphene.Mutation):
+    class Arguments:
+        lookup_fields = AdesaRunlistInput(required=True)
+        lookup_rundate = graphene.Argument(AdesaRunlistInput)
+
+    ok = graphene.Boolean
+    runlist = graphene.Field(lambda: AdesaRunListType)
+
+
+    def mutate(root, info, **input):
+        vin = input['lookup_fields']['vin']
+        run_date = input['lookup_fields']['run_date']
+
+        if vin and run_date:
+            instance = GetAdesaRunList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
+            try:
+                if instance:
+                    instance.human_valuation = input["lookup_fields"]["human_valuation"]
+                    instance.save()
+                    return UpdateAdesaRunlist(runlist=instance)
+
+            except ObjectDoesNotExist as error:
+                return error
+
+
+
+
+
 class CreateCarFax(graphene.Mutation):
     ## https://github.com/graphql-python/graphene/blob/master/UPGRADE-v2.0.md#clientidmutationmutate_and_get_payload
     class Arguments:
@@ -156,6 +188,11 @@ class CreateCarFax(graphene.Mutation):
         carfax.save()  # this step is necessary
 
         return CreateCarFax(carfax=carfax)
+
+
+
+
+
 
 '''class Mutation(graphene.ObjectType):
     create_carfax = CreateCarFax.Field()'''
@@ -202,6 +239,7 @@ class CreateCarFax(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     create_carfax = CreateCarFax.Field()
+    update_runlist = UpdateAdesaRunlist.Field()
 
 class CarFaxUnion(DjangoObjectType):
     class Meta:
