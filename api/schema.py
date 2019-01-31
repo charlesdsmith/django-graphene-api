@@ -103,6 +103,7 @@ class Query(graphene.ObjectType):
     ### Retrieve ONE objects resolvers (endpoints) ###
     def resolve_carfax(self, info, **kwargs):
         print(kwargs)
+        print(info)
         vin = kwargs.get('vin')
         run_date = kwargs.get('run_date')
 
