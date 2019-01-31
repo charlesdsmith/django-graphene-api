@@ -52,9 +52,10 @@ class AdesaRunlistUpdateInput(graphene.InputObjectType):
 class ShoppingListInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
     run_date = graphene.String(required=True)
-    human_valuation = graphene.String(required=False)
-    trim = graphene.String(required=False)
 
+class ShoppingListUpdateInput(graphene.InputObjectType):
+    human_valuation = graphene.String()
+    trim = graphene.String()
 
 '''class CreateCarFax(graphene.Mutation):
     class Arguments:
@@ -170,7 +171,6 @@ class UpdateAdesaRunlist(graphene.Mutation):
     runlist = graphene.Field(lambda: AdesaRunListType)
 
     def mutate(root, info, **input):
-        lookup_keys = list(input["lookup_fields"].keys())
         update_keys = list(input["fields_to_update"].keys())
         vin = input['lookup_fields']['vin']
         run_date = input['lookup_fields']['run_date']
@@ -201,23 +201,35 @@ class UpdateAdesaRunlist(graphene.Mutation):
 class UpdateShoppingList(graphene.Mutation):
     class Arguments:
         lookup_fields = ShoppingListInput()
+        fields_to_update = AdesaRunlistUpdateInput()  # only need trim and human_valuation
 
     ok = graphene.Boolean
     runlist = graphene.Field(lambda: ShoppingListType)
 
-
     def mutate(root, info, **input):
+        update_keys = list(input["fields_to_update"].keys())
         vin = input['lookup_fields']['vin']
         run_date = input['lookup_fields']['run_date']
+
+        human_valuation = None
+        trim = None
+
+        if "human_valuation" in update_keys:
+            human_valuation = input["fields_to_update"]["human_valuation"]
+
+        if 'trim' in update_keys:
+            trim = input["fields_to_update"]["trim"]
 
         if vin and run_date:
             instance = ShoppingList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
             try:
                 if instance:
-                    instance.human_valuation = input["lookup_fields"]["human_valuation"]
-                    instance.trim = input["lookup_fields"]["trim"]
+                    if human_valuation:
+                        instance.human_valuation = human_valuation
+                    if trim:
+                        instance.trim = trim
                     instance.save()
-                    return UpdateShoppingList(runlist=instance)
+                    return UpdateAdesaRunlist(runlist=instance)
 
             except ObjectDoesNotExist as error:
                 return error
@@ -241,10 +253,6 @@ class CreateCarFax(graphene.Mutation):
         carfax.save()  # this step is necessary
 
         return CreateCarFax(carfax=carfax)
-
-
-
-
 
 
 '''class Mutation(graphene.ObjectType):
