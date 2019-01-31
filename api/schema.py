@@ -41,15 +41,19 @@ class ShoppingListType(DjangoObjectType):
 class CarFaxInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
 
-class AdesaRunlistInput(graphene.InputObjectType):
+class AdesaRunlistLookUpInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
     run_date = graphene.String(required=True)
-    human_valuation = graphene.String(required=True)
+
+class AdesaRunlistUpdateInput(graphene.InputObjectType):
+    human_valuation = graphene.String()
+    trim = graphene.String()
 
 class ShoppingListInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
     run_date = graphene.String(required=True)
-    human_valuation = graphene.String(required=True)
+    human_valuation = graphene.String(required=False)
+    trim = graphene.String(required=False)
 
 
 '''class CreateCarFax(graphene.Mutation):
@@ -155,23 +159,37 @@ class Query(graphene.ObjectType):
 
 
 class UpdateAdesaRunlist(graphene.Mutation):
+
     class Arguments:
-        lookup_fields = AdesaRunlistInput(required=True)
-        lookup_rundate = graphene.Argument(AdesaRunlistInput)
+        lookup_fields = AdesaRunlistLookUpInput()
+        fields_to_update = AdesaRunlistUpdateInput()  # only need trim and human_valuation
 
     ok = graphene.Boolean
     runlist = graphene.Field(lambda: AdesaRunListType)
 
-
     def mutate(root, info, **input):
+        lookup_keys = list(input["lookup_fields"].keys())
+        update_keys = list(input["fields_to_update"].keys())
         vin = input['lookup_fields']['vin']
         run_date = input['lookup_fields']['run_date']
+
+        human_valuation = None
+        trim = None
+
+        if "human_valuation" in update_keys:
+            human_valuation = input["fields_to_update"]["human_valuation"]
+
+        if 'trim' in update_keys:
+            trim = input["fields_to_update"]["trim"]
 
         if vin and run_date:
             instance = GetAdesaRunList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
             try:
                 if instance:
-                    instance.human_valuation = input["lookup_fields"]["human_valuation"]
+                    if human_valuation:
+                        instance.human_valuation = human_valuation
+                    if trim:
+                        instance.trim = trim
                     instance.save()
                     return UpdateAdesaRunlist(runlist=instance)
 
@@ -180,8 +198,7 @@ class UpdateAdesaRunlist(graphene.Mutation):
 
 class UpdateShoppingList(graphene.Mutation):
     class Arguments:
-        lookup_fields = ShoppingListInput(required=True)
-        lookup_rundate = graphene.Argument(ShoppingListInput)
+        lookup_fields = ShoppingListInput()
 
     ok = graphene.Boolean
     runlist = graphene.Field(lambda: ShoppingListType)
@@ -196,6 +213,7 @@ class UpdateShoppingList(graphene.Mutation):
             try:
                 if instance:
                     instance.human_valuation = input["lookup_fields"]["human_valuation"]
+                    instance.trim = input["lookup_fields"]["trim"]
                     instance.save()
                     return UpdateShoppingList(runlist=instance)
 
