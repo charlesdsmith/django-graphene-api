@@ -302,7 +302,7 @@ class UpdateShoppingList(graphene.Mutation):
                     if trim:
                         instance.trim = trim
                     instance.save()
-                    return UpdateAdesaRunlist(runlist=instance)
+                    return UpdateShoppingList(runlist=instance)
 
             except ObjectDoesNotExist as error:
                 return error
