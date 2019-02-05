@@ -71,12 +71,14 @@ class Query(graphene.ObjectType):
     all_recalls_objects = graphene.List(RecallsType)
     all_adesa_purchases_objects = graphene.List(AdesaPurchasesType)
     all_adesa_runlist_objects = graphene.List(AdesaRunListType)
+    all_shopping_list_objects = graphene.List(ShoppingListType)
 
     ### Retrieve ONE object fields ###
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
     adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
+    shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
 
     search = graphene.List(SearchResult, q=graphene.String())
 
@@ -99,7 +101,10 @@ class Query(graphene.ObjectType):
     def resolve_all_adesa_runlist_objects(self, info, **kwargs):
         return GetAdesaRunList.objects.all()
 
-    ### Retrieve ONE objects resolvers (endpoints) ###
+    def resolve_all_shopping_list_objects(self, info, **kwargs):
+        return ShoppingList.objects.all()
+
+    ### Retrieve ONE object resolvers (endpoints) ###
     def resolve_carfax(self, info, **kwargs):
         vin = kwargs.get('vin')
         run_date = kwargs.get('run_date')
@@ -119,8 +124,8 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
 
         if vin is not None:
-            all_carfax_objects = GetRecalls.objects.filter(vin__exact=vin)
-            return all_carfax_objects
+            all_recalls_objects = GetRecalls.objects.filter(vin__exact=vin)
+            return all_recalls_objects
 
         if run_date is not None:
             all_recalls_objects = GetRecalls.objects.filter(run_date__exact=run_date)
@@ -133,8 +138,8 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
 
         if vin is not None:
-            all_carfax_objects = GetAdesaPurchases.objects.filter(vin__exact=vin)
-            return all_carfax_objects
+            all_adesa_purchases_objects = GetAdesaPurchases.objects.filter(vin__exact=vin)
+            return all_adesa_purchases_objects
 
         if run_date is not None:
             all_adesa_purchases_objects = GetAdesaPurchases.objects.filter(run_date__exact=run_date)
@@ -147,12 +152,26 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
 
         if vin is not None:
-            all_carfax_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
-            return all_carfax_objects
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
+            return all_adesa_runlist_objects
 
         if run_date is not None:
-            all_recalls_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
-            return all_recalls_objects
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
+            return all_adesa_runlist_objects
+
+        return None
+
+    def resolve_shopping_list(self, info, **kwargs):
+        vin = kwargs.get('vin')
+        run_date = kwargs.get('run_date')
+
+        if vin is not None:
+            all_shopping_list_objects = ShoppingList.objects.filter(vin__exact=vin)
+            return all_shopping_list_objects
+
+        if run_date is not None:
+            all_shopping_list_objects = ShoppingList.objects.filter(run_date__exact=run_date)
+            return all_shopping_list_objects
 
         return None
 
@@ -255,7 +274,7 @@ class UpdateAdesaRunlist(graphene.Mutation):
 class UpdateShoppingList(graphene.Mutation):
     class Arguments:
         lookup_fields = ShoppingListInput()
-        fields_to_update = AdesaRunlistUpdateInput()  # only need trim and human_valuation
+        fields_to_update = ShoppingListUpdateInput()  # only need trim and human_valuation
 
     ok = graphene.Boolean
     runlist = graphene.Field(lambda: ShoppingListType)
