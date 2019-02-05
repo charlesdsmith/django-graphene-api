@@ -21,9 +21,9 @@ def authorize():
 
 
     heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
-    response = requests.post('http://127.0.0.1:8000/o/token/', data=data, auth=(local_client_id, local_client_secret))
+    response = requests.post('http://127.0.0.1:8000/o/token/', data=data, auth=(client_id, client_secret))
 
-    return response.text
+    return heroku_response.text
 
 def bulk_post():
     # create multiple resources
@@ -65,6 +65,6 @@ def bulk_post():
         print(e)
 
 if __name__ == "__main__":
-    #print(authorize())
+    print(authorize())
     #print(post_run_list())
-    print(bulk_post())
+    #print(bulk_post())
