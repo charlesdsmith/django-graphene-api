@@ -41,6 +41,9 @@ class ShoppingListType(DjangoObjectType):
 class CarFaxInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
 
+class AdesaPurchasesInput(graphene.InputObjectType):
+    vin = graphene.String(required=True)
+
 class AdesaRunlistLookUpInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
     run_date = graphene.String(required=True)
@@ -57,21 +60,9 @@ class ShoppingListUpdateInput(graphene.InputObjectType):
     human_valuation = graphene.String()
     trim = graphene.String()
 
-'''class CreateCarFax(graphene.Mutation):
-    class Arguments:
-        # Arguments attributes are the arguments that the mutation needs for resolving
-        vin = CarFaxInput(required=True)
-
-    carfax = graphene.Field(CarFax)
-
-    # mutate is the function that will be applied once the mutation is called
-    @staticmethod
-    def mutate(self, info, vin):
-        carfax = CarFax(
-            vin=vin.vin,
-        )
-        return CreateCarFax(vin=vin)'''
-
+class SearchResult(graphene.Union):
+    class Meta:
+        types = (CarFaxType, RecallsType)
 
 class Query(graphene.ObjectType):
 
@@ -87,6 +78,14 @@ class Query(graphene.ObjectType):
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
     adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
 
+    search = graphene.List(SearchResult, q=graphene.String())
+
+    ### Search fields ###
+    def resolve_search(self, info, **args):
+        q = args.get("q")
+        print(q)
+        return CarFax.objects.all()
+
     ### Retrieve ALL objects resolvers (endpoints) ###
     def resolve_all_carfax_objects(self, info, **kwargs):
         return CarFax.objects.all()
@@ -99,12 +98,9 @@ class Query(graphene.ObjectType):
 
     def resolve_all_adesa_runlist_objects(self, info, **kwargs):
         return GetAdesaRunList.objects.all()
-    ###
 
     ### Retrieve ONE objects resolvers (endpoints) ###
     def resolve_carfax(self, info, **kwargs):
-        print(kwargs)
-        print(info)
         vin = kwargs.get('vin')
         run_date = kwargs.get('run_date')
 
@@ -160,6 +156,64 @@ class Query(graphene.ObjectType):
 
         return None
 
+
+class CreateCarFax(graphene.Mutation):
+    ## https://github.com/graphql-python/graphene/blob/master/UPGRADE-v2.0.md#clientidmutationmutate_and_get_payload
+    class Arguments:
+        # Arguments attributes are the arguments that the mutation needs for resolving
+        #vin = CarFaxInput(required=True)
+        carfax_info = CarFaxInput(required=True)
+
+    ok = graphene.Boolean()  # carfax and ok are output fields when the mutation is resolved
+    carfax = graphene.Field(lambda: CarFaxType)
+
+
+    def mutate(root, info, **input):
+        carfax = CarFax(
+            vin=input['carfax_info']['vin'],)
+        carfax.save()  # this step is necessary
+
+        return CreateCarFax(carfax=carfax)
+
+class CreateAdesaRunlist(graphene.Mutation):
+    class Arguments:
+        runlist_info = AdesaRunlistLookUpInput(required=True)
+
+    ok = graphene.Boolean()
+    runlist = graphene.Field(lambda: AdesaRunListType)
+
+    def mutate(root, info, **input):
+        runlist = GetAdesaRunList(
+            vin=input['runlist_info']['vin'],)
+        runlist.save()  # this step is necessary
+
+        return CreateAdesaRunlist(runlist=runlist)
+
+class CreateShoppinglist(graphene.Mutation):
+    class Arguments:
+        list_info = ShoppingListInput(required=True)
+
+    ok = graphene.Boolean()
+    list = graphene.Field(lambda: ShoppingListType)
+
+    def mutate(root, info, **input):
+        list = GetAdesaRunList(vin=input['list_info']['vin'],)
+        list.save()
+
+        return CreateShoppinglist(list=list)
+
+class CreateAdesaPurchase(graphene.Mutation):
+    class Arguments:
+        purchase_info = AdesaPurchasesInput(required=True)
+
+    ok = graphene.Boolean()
+    purchase = graphene.Field(lambda: AdesaRunListType)
+
+    def mutate(root, info, **input):
+        purchase = GetAdesaPurchases(vin=input['purchase_info']['vin'],)
+        purchase.save()
+
+        return CreateAdesaPurchase(purchase=purchase)
 
 class UpdateAdesaRunlist(graphene.Mutation):
 
@@ -236,103 +290,24 @@ class UpdateShoppingList(graphene.Mutation):
 
 
 
-class CreateCarFax(graphene.Mutation):
-    ## https://github.com/graphql-python/graphene/blob/master/UPGRADE-v2.0.md#clientidmutationmutate_and_get_payload
-    class Arguments:
-        # Arguments attributes are the arguments that the mutation needs for resolving
-        #vin = CarFaxInput(required=True)
-        carfax_info = CarFaxInput(required=True)
-
-    ok = graphene.Boolean()  # person and ok are output fields when the mutation is resolved
-    carfax = graphene.Field(lambda: CarFaxType)
-
-
-    def mutate(root, info, **input):
-        carfax = CarFax(
-            vin=input['carfax_info']['vin'],)
-        carfax.save()  # this step is necessary
-
-        return CreateCarFax(carfax=carfax)
-
-
-'''class Mutation(graphene.ObjectType):
-    create_carfax = CreateCarFax.Field()'''
-
-
-'''class CreateCarFax(SerializerMutation):
-    class Meta:
-        serializer_class = AdesaRunlistSerializer
-
-    @classmethod
-    def get_serializer_kwargs(cls, root, info, **input):
-        print('here1')
-        if 'vin' and 'run_date' in input:
-            instance = GetAdesaRunList.objects.filter(vin=input['vin'], run_date=input['run_date']).first()
-            if instance:
-                # if the instance exists, update it with the sent "humanValuation" value
-                return {'instance': instance, 'data': input, 'partial': True}
-            else:
-                print(input)
-                raise ValueError
-
-        return {'data': input, 'partial': True}
-
-
-
-    @classmethod
-    def mutate_and_get_payload(cls, root, info, **input):
-        print(input)
-
-        kwargs = cls.get_serializer_kwargs(root, info, **input)
-        serializer = cls._meta.serializer_class(**kwargs)
-
-        if serializer.is_valid():
-            return cls.perform_mutate(serializer, info)
-        else:
-            'errors = [
-                ErrorType(field=key, messages=value)
-                for key, value in serializer.errors.items()
-            ]
-
-            return cls(errors=errors)
-            return 'no'''
-
-
 class Mutation(graphene.ObjectType):
     create_carfax = CreateCarFax.Field()
+    create_runlist = CreateAdesaRunlist.Field()
+    create_shopping_list = CreateShoppinglist.Field()
+    create_adesa_purchase = CreateAdesaPurchase.Field()
     update_runlist = UpdateAdesaRunlist.Field()
     update_shoppinglist = UpdateShoppingList.Field()
 
-class CarFaxUnion(DjangoObjectType):
+
+
+
+'''class CarFaxUnion(DjangoObjectType):
     class Meta:
         model = CarFax
 
 class RecallsUnion(DjangoObjectType):
     class Meta:
-        model = GetRecalls
-
-'''class SearchResult(graphene.Union):
-
-    def resolve_(cls, instance, info):
-        class Meta:
-            types = (CarFaxUnion, RecallsUnion)'''
+        model = GetRecalls'''
 
 
-
-
-
-
-schema = graphene.Schema(query=Query, mutation=Mutation)
-
-query = '''
-query {
-    allCarfaxObjects {
-        vin,
-        accident
-    }
-}
-'''
-
-result = schema.execute(query)
-
-print(result)
+schema = graphene.Schema(query=Query, mutation=Mutation, types=[CarFaxType, RecallsType, SearchResult])
