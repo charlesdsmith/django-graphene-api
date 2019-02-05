@@ -23,7 +23,7 @@ def authorize():
     heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
     response = requests.post('http://127.0.0.1:8000/o/token/', data=data, auth=(client_id, client_secret))
 
-    return heroku_response.text
+    return heroku_response.status_code
 
 def bulk_post():
     # create multiple resources
