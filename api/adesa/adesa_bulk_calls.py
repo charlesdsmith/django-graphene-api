@@ -20,10 +20,10 @@ def authorize():
     }
 
 
-    heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
-    #response = requests.post('http://127.0.0.1:8000/o/token/', data=data, auth=(client_id, client_secret))
+    #heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
+    response = requests.post('http://127.0.0.1:3000/o/token/', data=data, auth=(local_client_id, local_client_secret))
 
-    return heroku_response
+    return response.text
 
 def bulk_post():
     # create multiple resources
@@ -31,7 +31,7 @@ def bulk_post():
 
     headers = {
         'Content-Type': "application/json",
-        'Authorization': 'Bearer 33YRUEFSr2x7IvgdtNm06uNHfzj2wh',
+        'Authorization': 'Bearer Lvh03et4eQuVE3QjxLrcXvjxjQDORZ',
     }
 
     data = [{
@@ -56,7 +56,7 @@ def bulk_post():
 
     try:
         #heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/adesa_run_list_bulk_upload/', data=data, headers=headers)
-        response = requests.post('http://127.0.0.1:8000/api/v1/adesa_run_list_bulk_upload/', data=data, headers=headers)
+        response = requests.post('http://127.0.0.1:3000/api/v1/adesa_run_list_bulk_upload/', data=data, headers=headers)
         # print(json.dumps(response.json))
         #print(heroku_response.status_code)
         return response.text

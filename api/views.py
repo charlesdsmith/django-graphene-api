@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+import rest_framework
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
@@ -10,6 +11,9 @@ from rest_framework.response import Response
 from rest_framework import generics, permissions, serializers, authentication
 from rest_framework.decorators import action
 from rest_framework_bulk import ListBulkCreateAPIView
+from rest_framework.decorators import authentication_classes, permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated
+from graphene_django.views import GraphQLView
 
 # had to go online and download oauth2_provider manually, package installed oauth2_provider was missing files
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope, OAuth2Authentication
@@ -19,6 +23,20 @@ from oauth2_provider.views.generic import ProtectedResourceView
 # How django knows which method to use for requests:
 # https://docs.djangoproject.com/en/2.1/ref/class-based-views/base/#django.views.generic.base.View.dispatch
 # Create your views here.
+
+class DOTAuthenticatedGraphQLView(GraphQLView):
+    def parse_body(self, request):
+        if isinstance(request, rest_framework.request.Request):
+            return request.data
+        return super(DOTAuthenticatedGraphQLView, self).parse_body(request)
+
+    @classmethod
+    def as_view(cls, *args, **kwargs):
+        view = super(DOTAuthenticatedGraphQLView, cls).as_view(*args, **kwargs)
+        view = permission_classes((IsAuthenticated, TokenHasReadWriteScope, ))(view)  # add permissions to the view
+        view = authentication_classes((OAuth2Authentication,))(view)
+        view = api_view(['POST'])(view)
+        return view
 
 class getAdesaPurchases(viewsets.ModelViewSet):
     ''' The actions provided by the ModelViewSet class are .list(), .retrieve(),

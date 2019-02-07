@@ -45,20 +45,6 @@ urlpatterns = [
     path('api/v1/carfax_bulk_upload/', views.CarFaxBulkUpload.as_view()),
     path('api/v1/recalls_bulk_upload/', views.RecallsBulkUpload.as_view()),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path('graphql', GraphQLView.as_view(graphiql=True)),
+    path('graphql', views.DOTAuthenticatedGraphQLView.as_view(graphiql=True)),
 
 ]
-
-
-'''urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/v1/', include(router.urls)),
-    url(r'^api/v1/purchases/$', views.getAdesaPurchases.as_view({'get': 'list'}), name='list'),
-    url(r'^api/v1/purchases/(?P<pk>[\w-]+)/$', views.getAdesaPurchases.as_view({'get': 'retrieve'}), name='retrieve'),
-    url(r'^api/v1/purchases/create/$', views.getAdesaPurchases.as_view({'post': 'create'}), name='create'),
-    url(r'^api/v1/carfax/$', views.GetCarFax.as_view({'get': 'list'}), name='list'),
-    url(r'^api/v1/get_carfax/(?P<pk>[\w-]+)/$', views.GetCarFax.as_view({'get': 'retrieve'}), name='retrieve'),
-    url(r'^api/v1/carfax/create/$', views.PostCarFax.as_view({'post': 'create'}), name='create'),
-    url('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-]'''
-

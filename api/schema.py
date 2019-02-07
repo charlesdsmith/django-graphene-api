@@ -90,6 +90,7 @@ class Query(graphene.ObjectType):
 
     ### Retrieve ALL objects resolvers (endpoints) ###
     def resolve_all_carfax_objects(self, info, **kwargs):
+        print(info)
         return CarFax.objects.all()
 
     def resolve_all_recalls_objects(self, info, **kwargs):
