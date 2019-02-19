@@ -216,6 +216,7 @@ class CreateShoppinglist(graphene.Mutation):
         list_info = graphene.Argument(ShoppingListInput)
 
     ok = graphene.Boolean()
+    response = graphene.String()
     list = graphene.Field(lambda: ShoppingListType)
 
     def mutate(root, info, **input):
@@ -223,7 +224,7 @@ class CreateShoppinglist(graphene.Mutation):
         instance = ShoppingList.objects.filter(vin=input['list_info']['vin'], run_date=input['list_info']['run_date']).first()
 
         if instance:
-            return "That car is already on the Shopping List"
+            return CreateAdesaRunlist(response="That car is already on the Shopping List")
 
         else:
             list = ShoppingList(vin=input['list_info']['vin'], run_date=input['list_info']['run_date'])
@@ -322,6 +323,7 @@ class DeleteShoppingList(graphene.Mutation):
         lookup_fields = ShoppingListInput()
 
     ok = graphene.Boolean()
+    response = graphene.String()
     deleted_field = graphene.Field(lambda: ShoppingListType)
 
     def mutate(root, info, **input):
@@ -329,16 +331,14 @@ class DeleteShoppingList(graphene.Mutation):
         run_date = input['lookup_fields']['run_date']
         if vin and run_date:
             instance = ShoppingList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
-
             try:
                 if instance:
                     instance.delete()
-                    return DeleteShoppingList(ok=True)
+                    return DeleteShoppingList(response="Record with VIN: %s has been deleted" % vin)
                 else:
-                    return DeleteShoppingList(ok=False)
+                    return DeleteShoppingList(response="That record does not exist")
             except ObjectDoesNotExist:
                 return DeleteShoppingList(ok=False)
-
 
 
 
