@@ -44,6 +44,10 @@ class CarFaxInput(graphene.InputObjectType):
 class AdesaPurchasesInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
 
+class AdesaRunlistInput(graphene.InputObjectType):
+    vin = graphene.String(required=True)
+    run_date = graphene.String(required=True)
+
 class AdesaRunlistLookUpInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
     run_date = graphene.String(required=True)
@@ -85,17 +89,14 @@ class Query(graphene.ObjectType):
     ### Search fields ###
     def resolve_search(self, info, **args):
         q = args.get("q")
-        print(q)
         return CarFax.objects.all()
 
     ### Retrieve ALL objects resolvers (endpoints) ###
     def resolve_all_carfax_objects(self, info, **kwargs):
-        print(info)
         return CarFax.objects.all()
 
     def resolve_all_recalls_objects(self, info, **kwargs):
         return GetRecalls.objects.all()
-
     def resolve_all_adesa_purchases_objects(self, info, **kwargs):
         return GetAdesaPurchases.objects.all()
 
@@ -182,7 +183,7 @@ class CreateCarFax(graphene.Mutation):
     class Arguments:
         # Arguments attributes are the arguments that the mutation needs for resolving
         #vin = CarFaxInput(required=True)
-        carfax_info = CarFaxInput(required=True)
+        carfax_info = graphene.Argument(CarFaxInput)
 
     ok = graphene.Boolean()  # carfax and ok are output fields when the mutation is resolved
     carfax = graphene.Field(lambda: CarFaxType)
@@ -195,9 +196,10 @@ class CreateCarFax(graphene.Mutation):
 
         return CreateCarFax(carfax=carfax)
 
+
 class CreateAdesaRunlist(graphene.Mutation):
     class Arguments:
-        runlist_info = AdesaRunlistLookUpInput(required=True)
+        runlist_info = graphene.Argument(AdesaRunlistInput)
 
     ok = graphene.Boolean()
     runlist = graphene.Field(lambda: AdesaRunListType)
@@ -211,16 +213,22 @@ class CreateAdesaRunlist(graphene.Mutation):
 
 class CreateShoppinglist(graphene.Mutation):
     class Arguments:
-        list_info = ShoppingListInput(required=True)
+        list_info = graphene.Argument(ShoppingListInput)
 
     ok = graphene.Boolean()
     list = graphene.Field(lambda: ShoppingListType)
 
     def mutate(root, info, **input):
-        list = GetAdesaRunList(vin=input['list_info']['vin'],)
-        list.save()
+        # attempt to retrieve the record first
+        instance = ShoppingList.objects.filter(vin=input['list_info']['vin'], run_date=input['list_info']['run_date']).first()
 
-        return CreateShoppinglist(list=list)
+        if instance:
+            return "That car is already on the Shopping List"
+
+        else:
+            list = ShoppingList(vin=input['list_info']['vin'], run_date=input['list_info']['run_date'])
+            list.save()
+            return CreateShoppinglist(list=list)
 
 class CreateAdesaPurchase(graphene.Mutation):
     class Arguments:
@@ -241,7 +249,7 @@ class UpdateAdesaRunlist(graphene.Mutation):
         lookup_fields = AdesaRunlistLookUpInput()
         fields_to_update = AdesaRunlistUpdateInput()  # only need trim and human_valuation
 
-    ok = graphene.Boolean
+    ok = graphene.Boolean()
     runlist = graphene.Field(lambda: AdesaRunListType)
 
     def mutate(root, info, **input):
@@ -277,7 +285,7 @@ class UpdateShoppingList(graphene.Mutation):
         lookup_fields = ShoppingListInput()
         fields_to_update = ShoppingListUpdateInput()  # only need trim and human_valuation
 
-    ok = graphene.Boolean
+    ok = graphene.Boolean()
     runlist = graphene.Field(lambda: ShoppingListType)
 
     def mutate(root, info, **input):
@@ -308,6 +316,29 @@ class UpdateShoppingList(graphene.Mutation):
             except ObjectDoesNotExist as error:
                 return error
 
+class DeleteShoppingList(graphene.Mutation):
+
+    class Arguments:
+        lookup_fields = ShoppingListInput()
+
+    ok = graphene.Boolean()
+    deleted_field = graphene.Field(lambda: ShoppingListType)
+
+    def mutate(root, info, **input):
+        vin = input['lookup_fields']['vin']
+        run_date = input['lookup_fields']['run_date']
+
+        if vin and run_date:
+            instance = ShoppingList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
+
+            try:
+                if instance:
+                    instance.delete()
+                return DeleteShoppingList(ok=True)
+            except ObjectDoesNotExist as error:
+                return error
+
+
 
 
 class Mutation(graphene.ObjectType):
@@ -317,6 +348,7 @@ class Mutation(graphene.ObjectType):
     create_adesa_purchase = CreateAdesaPurchase.Field()
     update_runlist = UpdateAdesaRunlist.Field()
     update_shoppinglist = UpdateShoppingList.Field()
+    delete_shoppinglist = DeleteShoppingList.Field()
 
 
 

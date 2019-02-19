@@ -12,40 +12,47 @@ def get_graphql(query):
 def post_graphql(query=None):
 
     headers = {
-        'Authorization': 'Bearer 360a2JVZcgeYe0QGiUpp2kVQXyv8lp',
+        'Authorization': 'Bearer jAL8mDIwpm7Pqk7BUtelsgW3jIFUkO',
         "Content-Type": "application/json",
 
     }
 
     data = {
-        "query": """{adesaRunlist(vin:"1GBE5C1295F519873") {
-    vin
-    MID
+        "query": """{
+  allBids{
+    bid_id
+    amount
   }
+  
 }""",
         }
 
     data1 = {
-        "query": """mutation{
-  updateShoppinglist(lookupFields: {vin:"123456", runDate:"11-28-2018"}, fieldsToUpdate:{ humanValuation: "graphqltest44"}){
+        "query": """mutation update($vin:String!, $runDate:String!, $humanValuation:String!){
+  updateShoppinglist(lookupFields: {vin:$vin, runDate:$runDate}, fieldsToUpdate:{ humanValuation: $humanValuation}){
     runlist{
       vin
       runDate
       humanValuation
-    }
-  }
-}""",
+         }
+         }
+        }""",
+        "variables": {"vin": "123456", "runDate": "11-28-2018", "humanValuation": "234"},
     }
 
     data1 = json.dumps(data1)
     data = json.dumps(data)
 
     response = requests.post("http://localhost:3000/graphql", headers=headers, data=data1)
-    print(response.text)
+    #response2 = requests.post("https://gsmauctionapp.herokuapp.com/graphql/", headers=headers, data=data)
+    #print(response.text)
 
-    return response.text
+    #print(response.status_code)
+    print(response.content)
+    return response
 
 if __name__ == "__main__":
+
     post_graphql()
 
     '''print(get_graphql("""query getCarFaxByRundate {
