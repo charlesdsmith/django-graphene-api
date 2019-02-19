@@ -327,16 +327,17 @@ class DeleteShoppingList(graphene.Mutation):
     def mutate(root, info, **input):
         vin = input['lookup_fields']['vin']
         run_date = input['lookup_fields']['run_date']
-
         if vin and run_date:
             instance = ShoppingList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
 
             try:
                 if instance:
                     instance.delete()
-                return DeleteShoppingList(ok=True)
-            except ObjectDoesNotExist as error:
-                return error
+                    return DeleteShoppingList(ok=True)
+                else:
+                    return DeleteShoppingList(ok=False)
+            except ObjectDoesNotExist:
+                return DeleteShoppingList(ok=False)
 
 
 
