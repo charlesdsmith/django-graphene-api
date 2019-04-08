@@ -89,12 +89,15 @@ class RecallsBulkUploadSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return GetRecalls.objects.create(**validated_data)
 
+
 class AdesaRunlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = GetAdesaRunList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', 'trim', 'mileage',
-                  'suggested_retail', 'human_valuation', 'run_no', 'adesa_id')
+                  'suggested_retail', 'human_valuation', 'run_no', 'adesa_id',
+                  'engine', 'transmission', 'wheel_drive', 'interior_color', 'total_damages',
+                  'auction_location', 'extra')
 
 
     def create(self, validated_data):
@@ -134,7 +137,8 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         model = ShoppingList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'MID', 'GSMR', 'transactions', 'run_date', 'timestamp', 'lane', "mileage",
-                  "suggested_retail", 'human_valuation', 'run_no', 'adesa_id')
+                  "suggested_retail", 'human_valuation', 'run_no', 'adesa_id', 'engine', 'transmission', 'wheel_drive', 'interior_color', 'total_damages',
+                  'auction_location', 'extra')
 
     def create(self, validated_data):
         '''try:

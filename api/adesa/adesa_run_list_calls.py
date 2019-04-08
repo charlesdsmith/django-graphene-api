@@ -74,5 +74,19 @@ def get_by_rundate():
 
 if __name__ == "__main__":
     #print(authorize())
-    print(post_run_list())
+    #print(post_run_list())
     #print(get_by_rundate())
+
+
+    def decorator(func):
+        def wrapper(name):
+            return "hello {0}".format(func(name))
+        return wrapper
+
+    @decorator
+    def get_text(name):
+        return "this is {0}".format(name)
+
+    my_get_text = decorator(get_text)
+    print(my_get_text)
+    print(get_text('charles'))

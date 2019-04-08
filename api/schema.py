@@ -341,7 +341,6 @@ class DeleteShoppingList(graphene.Mutation):
                 return DeleteShoppingList(ok=False)
 
 
-
 class Mutation(graphene.ObjectType):
     create_carfax = CreateCarFax.Field()
     create_runlist = CreateAdesaRunlist.Field()
