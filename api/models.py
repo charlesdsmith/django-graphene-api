@@ -79,7 +79,7 @@ class GetRecalls(models.Model):
 class GetAdesaRunList(models.Model):
     vin = models.CharField(max_length=20)
     img_url = models.URLField(blank=True)
-    year = models.IntegerField(null=True)
+    year = models.CharField(max_length=20, default="Check Online")
     make = models.CharField(max_length=20, default="Check Online")
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.CharField(max_length=20, default="Check Online")
@@ -111,7 +111,7 @@ class GetAdesaRunList(models.Model):
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
     img_url = models.URLField()
-    year = models.IntegerField(null=True)
+    year = models.CharField(max_length=20, default="Check Online")
     make = models.CharField(max_length=20, default="Check Online")
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.CharField(max_length=20, default="Check Online")
