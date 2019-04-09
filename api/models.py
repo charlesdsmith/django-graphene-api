@@ -133,6 +133,7 @@ class ShoppingList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
+    check = models.TextField(default="n/a")
     extra = models.TextField(max_length=50, default="n/a")
 
     class Meta:
