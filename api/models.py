@@ -86,9 +86,6 @@ class GetAdesaRunList(models.Model):
     grade = models.CharField(max_length=20, default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
     MMR = models.TextField(default="{error: error}")
-    MID = models.TextField(default="{error: error}")
-    GSMR = models.TextField(default="{error: error}")
-    transactions = models.CharField(max_length=250, default="{error: error}")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
@@ -104,10 +101,12 @@ class GetAdesaRunList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
+    check = models.TextField(default="n/a")
     extra = models.TextField(max_length=50, default="n/a")
 
     class Meta:
         ordering = ['id']
+
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
@@ -118,9 +117,7 @@ class ShoppingList(models.Model):
     grade = models.CharField(max_length=20, default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
     MMR = models.TextField(default="{error: error}")
-    MID = models.TextField(default="{error: error}")
-    GSMR = models.TextField(default="{error: error}")
-    transactions = models.TextField(default="{error: error}")
+    check = models.TextField(default="n/a")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
