@@ -76,6 +76,7 @@ class GetRecalls(models.Model):
     run_date = models.CharField(max_length=20, default="Check Online")
 
 
+
 class GetAdesaRunList(models.Model):
     vin = models.CharField(max_length=20)
     img_url = models.URLField(blank=True)
