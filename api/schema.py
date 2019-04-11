@@ -270,7 +270,7 @@ class UpdateAdesaRunlist(graphene.Mutation):
             trim = input["fields_to_update"]["trim"]
 
         if 'check' in update_keys:
-            trim = input["fields_to_update"]["check"]
+            check = input["fields_to_update"]["check"]
 
         if vin and run_date:
             instance = GetAdesaRunList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
