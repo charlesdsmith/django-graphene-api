@@ -55,6 +55,7 @@ class AdesaRunlistLookUpInput(graphene.InputObjectType):
 class AdesaRunlistUpdateInput(graphene.InputObjectType):
     human_valuation = graphene.String()
     trim = graphene.String()
+    check = graphene.String()
 
 class ShoppingListInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
@@ -260,12 +261,16 @@ class UpdateAdesaRunlist(graphene.Mutation):
 
         human_valuation = None
         trim = None
+        check = None
 
         if "human_valuation" in update_keys:
             human_valuation = input["fields_to_update"]["human_valuation"]
 
         if 'trim' in update_keys:
             trim = input["fields_to_update"]["trim"]
+
+        if 'check' in update_keys:
+            trim = input["fields_to_update"]["check"]
 
         if vin and run_date:
             instance = GetAdesaRunList.objects.filter(vin=input['lookup_fields']['vin'], run_date=input['lookup_fields']['run_date']).first()
@@ -275,8 +280,10 @@ class UpdateAdesaRunlist(graphene.Mutation):
                         instance.human_valuation = human_valuation
                     if trim:
                         instance.trim = trim
+                    if check:
+                        instance.check = check
                     instance.save()
-                    return UpdateAdesaRunlist(runlist=instance)
+                    return UpdateAdesaRunlist(ok=True, runlist=instance)
 
             except ObjectDoesNotExist as error:
                 return error
