@@ -18,7 +18,7 @@ def post_graphql(query=None):
     }
 
     data = {
-        "query": """{
+        "query": """ {
   allBids{
     bid_id
     amount

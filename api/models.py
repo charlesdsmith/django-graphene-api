@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from rest_framework import status, viewsets
 from django.db import models
+from django.contrib.postgres.fields import JSONField, ArrayField
 from django.utils import timezone
 from graphene_django import DjangoObjectType
 import graphene
@@ -85,7 +86,7 @@ class GetAdesaRunList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.CharField(max_length=20, default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = models.TextField(default="{error: error}")
+    MMR = JSONField()
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
@@ -100,8 +101,8 @@ class GetAdesaRunList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
-    check = models.TextField(default="n/a")
-    extra = models.TextField(max_length=50, default="n/a")
+    check = JSONField()
+    extra = JSONField()
 
     class Meta:
         ordering = ['id']
@@ -115,7 +116,7 @@ class ShoppingList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.CharField(max_length=20, default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = models.TextField(default="{error: error}")
+    MMR = JSONField()
     check = models.TextField(default="n/a")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
@@ -131,8 +132,8 @@ class ShoppingList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
-    check = models.TextField(default="n/a")
-    extra = models.TextField(max_length=50, default="n/a")
+    check = JSONField()
+    extra = JSONField()
 
     class Meta:
         ordering = ['id']
