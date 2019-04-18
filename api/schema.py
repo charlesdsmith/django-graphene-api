@@ -55,7 +55,7 @@ class AdesaRunlistLookUpInput(graphene.InputObjectType):
 class AdesaRunlistUpdateInput(graphene.InputObjectType):
     human_valuation = graphene.String()
     trim = graphene.String()
-    check = graphene.String()
+    check = graphene.JSONString()
 
 class ShoppingListInput(graphene.InputObjectType):
     vin = graphene.String(required=True)

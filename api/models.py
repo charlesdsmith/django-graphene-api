@@ -86,7 +86,7 @@ class GetAdesaRunList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.CharField(max_length=20, default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = JSONField()
+    MMR = models.TextField(default="n/a")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
     lane = models.CharField(max_length=10, default="Check Online")
@@ -101,8 +101,8 @@ class GetAdesaRunList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
-    check = JSONField()
-    extra = JSONField()
+    check = models.TextField(default="n/a")
+    extra = models.TextField(default="n/a")
 
     class Meta:
         ordering = ['id']
@@ -116,7 +116,7 @@ class ShoppingList(models.Model):
     model = models.CharField(max_length=20, default="Check Online")
     grade = models.CharField(max_length=20, default="Check Online")
     colour = models.CharField(max_length=20, default="Check Online")
-    MMR = JSONField()
+    MMR = models.TextField(default="n/a")
     check = models.TextField(default="n/a")
     run_date = models.CharField(max_length=20, default="Check Online")
     timestamp = models.DateTimeField(auto_now=True)  # updated timestamp
@@ -132,8 +132,8 @@ class ShoppingList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
-    check = JSONField()
-    extra = JSONField()
+    check = models.TextField(default="n/a")
+    extra = models.TextField(default="n/a")
 
     class Meta:
         ordering = ['id']
