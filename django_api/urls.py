@@ -40,6 +40,7 @@ from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, Token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
+    #path('api/v1/adesa_run_list/update-partial/(?P<pk>\d+)/$', views.AdesaRunList.as_view(), name='runlist_partial_update'),
     path('api/v1/adesa_run_list_bulk_upload/', views.BulkAdesaRunListUpload.as_view()),
     path('api/v1/adesa_purchases_bulk_upload/', views.AdesaPurchasesBulkUpload.as_view()),
     path('api/v1/carfax_bulk_upload/', views.CarFaxBulkUpload.as_view()),

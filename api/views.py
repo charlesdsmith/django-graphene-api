@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
 from .serializers import PurchasesSerializer, RecallsSerializer, CarFaxSerializer, AdesaRunlistSerializer, ShoppingListSerializer, AdesaRunListBulkUploadSerializer, PurchasesBulkUploadSerializer, CarFaxBulkUploadSerializer, RecallsBulkUploadSerializer
 from rest_framework.response import Response
-from rest_framework import generics, permissions, serializers, authentication
+from rest_framework import generics, permissions, serializers, authentication, status
 from rest_framework.decorators import action
 from rest_framework_bulk import ListBulkCreateAPIView
 from rest_framework.decorators import authentication_classes, permission_classes, api_view
@@ -106,7 +106,7 @@ class AdesaRunList(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         # accessed at url: ^api/v1/purchases/{pk}/$
-
+        print('here')
         queryset = GetAdesaRunList.objects.all()
         # https://docs.djangoproject.com/en/2.1/topics/http/shortcuts/#get-object-or-404
         record = get_list_or_404(queryset, vin__exact=pk)
@@ -118,6 +118,17 @@ class AdesaRunList(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+    def update(self, request, pk=None, *args, **kwargs):
+        queryset = GetAdesaRunList.objects.all()
+        record = get_object_or_404(queryset, vin__exact=pk)
+        serializer = AdesaRunlistSerializer(record, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
     def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):
 
@@ -128,6 +139,7 @@ class AdesaRunList(viewsets.ModelViewSet):
         print('RETRIEVE RUNDATE')
 
         return Response(serializer.data)
+
 
 
 class BulkAdesaRunListUpload(ListBulkCreateAPIView):

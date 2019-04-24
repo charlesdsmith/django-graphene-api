@@ -7,8 +7,8 @@ test = ['VHSRLAFKStest', 'No Issues Reported', 'No Issues Reported', 'No Issues 
 
 def authorize():
 
-    client_id = 'SF4ndlds1e6H5cAAi8vpxDzQB0zbkslfqiH1CgXb'
-    client_secret = 'vznY2auvuqGnTKdaYOA6tqlpASRXU6dEe6V3ZdZblX2RVvQGdh2c1IF6byVpxOafdfqbysthAxeXkTyMI7R5SExvK6MbDEhXaaF4YXg9Wz9GyCXIZ97eCf6VaH8MlTEO'
+    client_id = '4cTTNannIFUGWcFbrl0GyWhlSK4pVoBBDwbGiEmT'
+    client_secret = 'ECkqotBupUmcrK3JgrOnw8f8bPFhbWd37Cpi4JWXs3vcJRpgwADaJmqFnk8jKkWggrTKIDY6DIYq9sWDgbKCX0i4BclwEH4cPvJpqdk85mK6Ld9EbVzjtyhBVt8hfSRY'
 
 
     data = {
@@ -18,7 +18,7 @@ def authorize():
     }
 
 
-    response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
+    response = requests.post('http://localhost:8080/o/token/', data=data, auth=(client_id, client_secret))
     #heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
 
     return response.text
@@ -72,13 +72,35 @@ def get_by_rundate():
     except Exception as e:
         print(e)
 
+def update_runlist():
+
+    headers = {
+        'Content-Type': "application/json",
+        'Authorization': 'Bearer nOyAc2RdHnVGp8dPgf0UBL0fK7dWpL',
+    }
+
+    data = {
+        "check": """{"user": "remone"}"""
+    }
+
+    data = json.dumps(data)
+    try:
+        print("here")
+        response = requests.patch('http://127.0.0.1:8080/api/v1/adesa_run_list/5UXFG43549L225116/', data=data, headers=headers)
+        print(response.text)
+        return response.text
+
+    except Exception as e:
+        print(e)
+
 if __name__ == "__main__":
     #print(authorize())
     #print(post_run_list())
     #print(get_by_rundate())
+    print(update_runlist())
 
 
-    def decorator(func):
+    '''def decorator(func):
         def wrapper(name):
             return "hello {0}".format(func(name))
         return wrapper
@@ -89,4 +111,4 @@ if __name__ == "__main__":
 
     my_get_text = decorator(get_text)
     print(my_get_text)
-    print(get_text('charles'))
+    print(get_text('charles'))'''
