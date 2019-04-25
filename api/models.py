@@ -110,7 +110,7 @@ class GetAdesaRunList(models.Model):
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)
-    img_url = models.URLField()
+    img_url = models.URLField(blank=True)
     year = models.CharField(max_length=20, default="Check Online")
     make = models.CharField(max_length=20, default="Check Online")
     model = models.CharField(max_length=20, default="Check Online")
