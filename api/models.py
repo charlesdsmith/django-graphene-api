@@ -101,7 +101,7 @@ class GetAdesaRunList(models.Model):
     interior_color = models.CharField(max_length=50, default="n/a")
     total_damages = models.CharField(max_length=50, default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
-    check = models.TextField(default="n/a")
+    check = models.TextField(default="not available")
     extra = models.TextField(default="n/a")
 
     class Meta:

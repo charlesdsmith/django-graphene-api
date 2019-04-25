@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cd5ae7e-4dfa-4ed3-a6a2-612c838ab5a7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/migrations/00014_auto_20190418_1306.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py" afterPath="$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models.py" afterPath="$PROJECT_DIR$/api/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,18 +29,6 @@
                 <state relative-caret-position="1885">
                   <caret line="133" column="23" lean-forward="false" selection-start-line="133" selection-start-column="18" selection-end-line="133" selection-end-column="23" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/api/views.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="364">
-                  <caret line="125" column="33" lean-forward="true" selection-start-line="125" selection-start-column="33" selection-end-line="125" selection-end-column="33" />
-                  <folding>
-                    <element signature="e#24#63#0" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -106,11 +95,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="00014_auto_20190418_1306.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="00014_auto_20190418_1306.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/migrations/00014_auto_20190418_1306.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="255">
                   <caret line="15" column="49" lean-forward="false" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="00015_auto_20190418_1306.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="340">
+                  <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -133,8 +132,8 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="131">
-                  <caret line="86" column="29" lean-forward="false" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="43" />
+                <state relative-caret-position="420">
+                  <caret line="103" column="38" lean-forward="true" selection-start-line="103" selection-start-column="38" selection-end-line="103" selection-end-column="51" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
                   </folding>
@@ -289,12 +288,13 @@
         <option value="$PROJECT_DIR$/api/views.py" />
         <option value="$PROJECT_DIR$/api/adesa/adesa_run_list_calls.py" />
         <option value="$PROJECT_DIR$/api/serializers.py" />
-        <option value="$PROJECT_DIR$/api/models.py" />
         <option value="$PROJECT_DIR$/api/migrations/00010_auto_20190418_1306.py" />
         <option value="$PROJECT_DIR$/api/migrations/00011_auto_20190418_1306.py" />
         <option value="$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py" />
         <option value="$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py" />
+        <option value="$PROJECT_DIR$/api/models.py" />
         <option value="$PROJECT_DIR$/api/migrations/00014_auto_20190418_1306.py" />
+        <option value="$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py" />
       </list>
     </option>
   </component>
@@ -670,7 +670,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/api/schema/schema.py" />
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -980,16 +979,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="86" column="29" lean-forward="false" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="43" />
-          <folding>
-            <element signature="e#24#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/migrations/00010_auto_20190418_1306.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1022,10 +1011,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="103" column="38" lean-forward="true" selection-start-line="103" selection-start-column="38" selection-end-line="103" selection-end-column="51" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/migrations/00014_auto_20190418_1306.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="49" lean-forward="false" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
