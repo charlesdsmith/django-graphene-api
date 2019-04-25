@@ -104,6 +104,7 @@ class GetAdesaRunList(models.Model):
     check = models.TextField(default="not available")
     extra = models.TextField(default="n/a")
 
+
     class Meta:
         ordering = ['id']
 

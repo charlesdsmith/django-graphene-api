@@ -65,6 +65,9 @@ class ShoppingListUpdateInput(graphene.InputObjectType):
     human_valuation = graphene.String()
     trim = graphene.String()
 
+class ShoppingListDeleteInput(graphene.InputObjectType):
+    id = graphene.String(required=True)
+
 class SearchResult(graphene.Union):
     class Meta:
         types = (CarFaxType, RecallsType)
@@ -212,6 +215,22 @@ class CreateAdesaRunlist(graphene.Mutation):
 
         return CreateAdesaRunlist(runlist=runlist)
 
+class DeleteShoppingListById(graphene.Mutation):
+    class Arguments:
+        record = graphene.Argument(ShoppingListDeleteInput)
+
+    ok = graphene.Boolean()
+    # shoppingList = graphene.Field(lambda: ShoppingListType)
+
+    def mutate(self, info, **input):
+        instance = ShoppingList.objects.get(id=input['record']['id'])
+
+        if instance:
+            instance.delete()
+
+        return DeleteShoppingListById(ok=True)
+
+
 class CreateShoppinglist(graphene.Mutation):
     class Arguments:
         list_info = graphene.Argument(ShoppingListInput)
@@ -356,6 +375,7 @@ class Mutation(graphene.ObjectType):
     update_runlist = UpdateAdesaRunlist.Field()
     update_shoppinglist = UpdateShoppingList.Field()
     delete_shoppinglist = DeleteShoppingList.Field()
+    delete_shoppinglist_by_id = DeleteShoppingListById.Field()
 
 
 
