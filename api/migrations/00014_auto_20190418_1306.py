@@ -6,19 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '00012_auto_20190418_1306'),
+        ('api', '00013_auto_20190418_1306'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='getadesarunlist',
-            name='grade',
-            field=models.CharField(max_length=20, default='Check Online'),
-        ),
-        migrations.AlterField(
             model_name='shoppinglist',
             name='grade',
-            field=models.CharField(max_length=20, default='Check Online'),
+            field=models.TextField(default='n/a'),
         ),
         migrations.AlterField(
             model_name='shoppinglist',
