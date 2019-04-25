@@ -4,11 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/api/views.py" line="27" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9cd5ae7e-4dfa-4ed3-a6a2-612c838ab5a7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models.py" afterPath="$PROJECT_DIR$/api/models.py" />
-    </list>
+    <list default="true" id="9cd5ae7e-4dfa-4ed3-a6a2-612c838ab5a7" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,18 +25,6 @@
                 <state relative-caret-position="1885">
                   <caret line="133" column="23" lean-forward="false" selection-start-line="133" selection-start-column="18" selection-end-line="133" selection-end-column="23" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/django_api/urls.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-153">
-                  <caret line="0" column="31" lean-forward="true" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
-                  <folding>
-                    <element signature="e#644#681#0" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -105,11 +89,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="00015_auto_20190418_1306.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="00015_auto_20190418_1306.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="340">
                   <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="0016_auto_20190425_1441.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/api/migrations/0016_auto_20190425_1441.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="357">
+                  <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
                   <folding />
                 </state>
               </provider>
@@ -132,7 +126,7 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="420">
+                <state relative-caret-position="216">
                   <caret line="103" column="38" lean-forward="true" selection-start-line="103" selection-start-column="38" selection-end-line="103" selection-end-column="51" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
@@ -295,6 +289,7 @@
         <option value="$PROJECT_DIR$/api/models.py" />
         <option value="$PROJECT_DIR$/api/migrations/00014_auto_20190418_1306.py" />
         <option value="$PROJECT_DIR$/api/migrations/00015_auto_20190418_1306.py" />
+        <option value="$PROJECT_DIR$/api/migrations/0016_auto_20190425_1441.py" />
       </list>
     </option>
   </component>
@@ -670,13 +665,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="19" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/carfax/sheets_credentials.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1013,7 +1001,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
+        <state relative-caret-position="216">
           <caret line="103" column="38" lean-forward="true" selection-start-line="103" selection-start-column="38" selection-end-line="103" selection-end-column="51" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
@@ -1033,6 +1021,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/0016_auto_20190425_1441.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
           <folding />
         </state>
       </provider>
