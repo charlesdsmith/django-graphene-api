@@ -136,7 +136,9 @@ class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingList
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
-                  'colour', 'MMR', 'GSMR', 'run_date', 'timestamp', 'lane', "mileage", 'human_valuation', 'run_no', 'adesa_id', 'engine', 'transmission', 'wheel_drive', 'interior_color', 'total_damages',
+                  'colour', 'MMR', 'run_date', 'timestamp', 'lane', "trim",
+                  "mileage", 'human_valuation', 'run_no', 'adesa_id', 'engine',
+                  'transmission', 'wheel_drive', 'interior_color', 'total_damages',
                   'auction_location', 'extra', 'check')
 
     def create(self, validated_data):

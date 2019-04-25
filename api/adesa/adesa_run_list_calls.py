@@ -80,7 +80,7 @@ def update_runlist():
     }
 
     data = {
-        "check": """{"user": "remone"}"""
+        "colour": """{"user": "remone"}"""
     }
 
     data = json.dumps(data)
