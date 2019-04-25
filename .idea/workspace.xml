@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cd5ae7e-4dfa-4ed3-a6a2-612c838ab5a7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/migrations/00011_auto_20190418_1306.py" afterPath="$PROJECT_DIR$/api/migrations/00011_auto_20190418_1306.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py" afterPath="$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -68,18 +68,6 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="graphql_calls.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/api/graphql_calls.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-                  <folding>
-                    <element signature="e#31#42#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="0004_auto_20190409_1802.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/migrations/0004_auto_20190409_1802.py">
               <provider selected="true" editor-type-id="text-editor">
@@ -110,11 +98,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="00012_auto_20190418_1306.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="00012_auto_20190418_1306.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+                <state relative-caret-position="425">
+                  <caret line="25" column="47" lean-forward="false" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="00013_auto_20190418_1306.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="136">
+                  <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
                   <folding />
                 </state>
               </provider>
@@ -297,6 +295,7 @@
         <option value="$PROJECT_DIR$/api/migrations/00010_auto_20190418_1306.py" />
         <option value="$PROJECT_DIR$/api/migrations/00011_auto_20190418_1306.py" />
         <option value="$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py" />
+        <option value="$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py" />
       </list>
     </option>
   </component>
@@ -672,13 +671,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/oauth2_provider/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -1024,8 +1016,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/migrations/00012_auto_20190418_1306.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+        <state relative-caret-position="425">
+          <caret line="25" column="47" lean-forward="false" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/00013_auto_20190418_1306.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
           <folding />
         </state>
       </provider>
