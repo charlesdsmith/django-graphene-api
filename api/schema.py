@@ -87,6 +87,8 @@ class Query(graphene.ObjectType):
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
     adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
+    shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), check=graphene.String())
+
 
     search = graphene.List(SearchResult, q=graphene.String())
 
@@ -178,6 +180,17 @@ class Query(graphene.ObjectType):
         if run_date is not None:
             all_shopping_list_objects = ShoppingList.objects.filter(run_date__exact=run_date)
             return all_shopping_list_objects
+
+        return None
+
+    def resolve_shopping_list_by_check(self, info, **kwargs):
+        vin = kwargs.get('vin')
+        check = kwargs.get('check')
+
+        if vin and check:
+            instance = ShoppingList.objects.filter(vin__exact=vin, check__exact=check)
+            if instance:
+                return instance
 
         return None
 
