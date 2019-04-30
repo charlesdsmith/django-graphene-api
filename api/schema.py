@@ -4,6 +4,7 @@ from api.models import CarFax, GetRecalls, GetAdesaRunList, GetAdesaPurchases
 from api.serializers import *
 from graphene import ObjectType, Node, Schema, relay
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from graphene_django.fields import DjangoConnectionField
 from django.shortcuts import get_object_or_404, get_list_or_404
 from graphene_django.rest_framework.mutation import SerializerMutation
@@ -79,16 +80,18 @@ class Query(graphene.ObjectType):
     all_recalls_objects = graphene.List(RecallsType)
     all_adesa_purchases_objects = graphene.List(AdesaPurchasesType)
     all_adesa_runlist_objects = graphene.List(AdesaRunListType)
+    runlist_paginated = graphene.List(AdesaRunListType, page_no=graphene.Int())
     all_shopping_list_objects = graphene.List(ShoppingListType)
 
-    ### Retrieve ONE object fields ###
+
+
+### Retrieve ONE object fields ###
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
     adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), run_date=graphene.String(), check=graphene.String())
-
 
     search = graphene.List(SearchResult, q=graphene.String())
 
@@ -106,8 +109,18 @@ class Query(graphene.ObjectType):
     def resolve_all_adesa_purchases_objects(self, info, **kwargs):
         return GetAdesaPurchases.objects.all()
 
+    def resolve_runlist_paginated(self, info, **kwargs):
+        objects = GetAdesaRunList.objects.all()
+
+        page_no = kwargs.get('page_no')
+        p = Paginator(objects, 2)
+        current_page = p.page(page_no)
+
+        return current_page
+
     def resolve_all_adesa_runlist_objects(self, info, **kwargs):
         return GetAdesaRunList.objects.all()
+
 
     def resolve_all_shopping_list_objects(self, info, **kwargs):
         return ShoppingList.objects.all()
