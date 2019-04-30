@@ -105,8 +105,8 @@ class GetAdesaRunList(models.Model):
     extra = models.TextField(default="n/a")
 
 
-    class Meta:
-        ordering = ['id']
+    '''class Meta:
+        ordering = ['id']'''
 
 
 class ShoppingList(models.Model):
