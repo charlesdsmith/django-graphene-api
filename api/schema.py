@@ -172,6 +172,7 @@ class Query(graphene.ObjectType):
         auction_location = kwargs.get('auction_location')
         run_date = kwargs.get('run_date')
         lane = kwargs.get('lane')
+        page_no = kwargs.get('page_no')
 
         print(lane)
         if vin is not None:
@@ -179,33 +180,47 @@ class Query(graphene.ObjectType):
             return all_adesa_runlist_objects
 
         if run_date is not None and auction_location is None and lane is None:  # if auction_location is only supplied
+
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         if auction_location is not None and run_date is None and lane is None:  # if auction_location is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).order_by('run_date').distinct('run_date')
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
-            print("hereee")
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('lane').distinct('lane')
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         if auction_location is not None and run_date is not None and lane is not None:  # if all three are supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date, auction_location__exact=auction_location, lane__exact=lane)
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         if lane is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
-            return all_adesa_runlist_objects
+            p = Paginator(all_adesa_runlist_objects, 20)
+            current_page = p.page(page_no)
+            return current_page
 
         return None
 
