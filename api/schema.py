@@ -89,7 +89,7 @@ class Query(graphene.ObjectType):
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
-    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String())
+    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String())
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), run_date=graphene.String(), check=graphene.String())
 
@@ -169,25 +169,39 @@ class Query(graphene.ObjectType):
 
     def resolve_adesa_runlist(self, info, **kwargs):
         vin = kwargs.get('vin')
-        location = kwargs.get('location')
+        auction_location = kwargs.get('auction_location')
         run_date = kwargs.get('run_date')
         lane = kwargs.get('lane')
 
-
+        print(lane)
         if vin is not None:
+            print(1)
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
             return all_adesa_runlist_objects
 
-        if location is not None:
-            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(location__exact=run_date)
+        if auction_location is not None and run_date is None and lane is None:  # if auction_location is only supplied
+            print(2)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location)
             return all_adesa_runlist_objects
 
-        if run_date is not None:
-            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
+        if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
+            print(3)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date)
+            return all_adesa_runlist_objects
+
+        if auction_location is not None and run_date is not None and lane is not None:  # if all three are supplied
+            print(4)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date, auction_location__exact=auction_location, lane__exact=lane)
+            return all_adesa_runlist_objects
+
+        if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
+            print(5)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
             return all_adesa_runlist_objects
 
         if lane is not None:
-            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=run_date)
+            print(6)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
             return all_adesa_runlist_objects
 
         return None
