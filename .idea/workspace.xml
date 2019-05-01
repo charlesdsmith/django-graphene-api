@@ -18,7 +18,7 @@
     <favorites_list name="gsm-django" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.48395061">
+    <splitter split-orientation="horizontal" split-proportion="0.69753087">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="0001_initial.py" pinned="false" current-in-tab="false">
@@ -44,8 +44,8 @@
           <file leaf-file-name="schema.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/schema.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="212">
-                  <caret line="194" column="178" lean-forward="false" selection-start-line="194" selection-start-column="178" selection-end-line="194" selection-end-column="178" />
+                <state relative-caret-position="314">
+                  <caret line="185" column="154" lean-forward="false" selection-start-line="185" selection-start-column="154" selection-end-line="185" selection-end-column="154" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
                   </folding>
@@ -984,8 +984,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/schema.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="194" column="178" lean-forward="false" selection-start-line="194" selection-start-column="178" selection-end-line="194" selection-end-column="178" />
+        <state relative-caret-position="314">
+          <caret line="185" column="154" lean-forward="false" selection-start-line="185" selection-start-column="154" selection-end-line="185" selection-end-column="154" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
