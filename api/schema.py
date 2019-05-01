@@ -179,9 +179,19 @@ class Query(graphene.ObjectType):
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
             return all_adesa_runlist_objects
 
+        if run_date is not None and auction_location is None and lane is None:  # if auction_location is only supplied
+            print(1.5)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
+            return all_adesa_runlist_objects
+
         if auction_location is not None and run_date is None and lane is None:  # if auction_location is only supplied
             print(2)
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location)
+            return all_adesa_runlist_objects
+
+        if lane is not None and auction_location is None and run_date is None:  # if auction_location is only supplied
+            print(1.5)
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
             return all_adesa_runlist_objects
 
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
