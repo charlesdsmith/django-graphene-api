@@ -99,7 +99,7 @@ class GetAdesaRunList(models.Model):
     transmission = models.TextField(default="n/a")
     wheel_drive = models.CharField(max_length=50, default="n/a")
     interior_color = models.CharField(max_length=50, default="n/a")
-    total_damages = models.CharField(max_length=50, default="n/a")
+    seller_announcements = models.TextField(default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
     check = models.TextField(default="not available")
     extra = models.TextField(default="n/a")
@@ -131,12 +131,12 @@ class ShoppingList(models.Model):
     transmission = models.TextField(default="n/a")
     wheel_drive = models.CharField(max_length=50, default="n/a")
     interior_color = models.CharField(max_length=50, default="n/a")
-    total_damages = models.CharField(max_length=50, default="n/a")
+    seller_announcements = models.TextField(default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
     check = models.TextField(default="n/a")
     extra = models.TextField(default="n/a")
 
-    class Meta:
-        ordering = ['id']
+    '''class Meta:
+        ordering = ['id']'''
 
 

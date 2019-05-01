@@ -96,7 +96,7 @@ class AdesaRunlistSerializer(serializers.ModelSerializer):
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'run_date', 'timestamp', 'lane', 'trim', 'mileage',
                   'human_valuation', 'run_no', 'adesa_id',
-                  'engine', 'transmission', 'wheel_drive', 'interior_color', 'total_damages',
+                  'engine', 'transmission', 'wheel_drive', 'interior_color', 'seller_announcements',
                   'auction_location', 'extra', 'check')
 
 
@@ -138,7 +138,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         fields = ('vin', 'img_url', 'year', 'make', 'model', 'grade',
                   'colour', 'MMR', 'run_date', 'timestamp', 'lane', "trim",
                   "mileage", 'human_valuation', 'run_no', 'adesa_id', 'engine',
-                  'transmission', 'wheel_drive', 'interior_color', 'total_damages',
+                  'transmission', 'wheel_drive', 'interior_color', 'seller_announcements',
                   'auction_location', 'extra', 'check')
 
     def create(self, validated_data):

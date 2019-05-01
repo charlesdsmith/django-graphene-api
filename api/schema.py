@@ -121,7 +121,6 @@ class Query(graphene.ObjectType):
     def resolve_all_adesa_runlist_objects(self, info, **kwargs):
         return GetAdesaRunList.objects.all()
 
-
     def resolve_all_shopping_list_objects(self, info, **kwargs):
         return ShoppingList.objects.all()
 
@@ -170,14 +169,25 @@ class Query(graphene.ObjectType):
 
     def resolve_adesa_runlist(self, info, **kwargs):
         vin = kwargs.get('vin')
+        location = kwargs.get('location')
         run_date = kwargs.get('run_date')
+        lane = kwargs.get('lane')
+
 
         if vin is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
             return all_adesa_runlist_objects
 
+        if location is not None:
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(location__exact=run_date)
+            return all_adesa_runlist_objects
+
         if run_date is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
+            return all_adesa_runlist_objects
+
+        if lane is not None:
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=run_date)
             return all_adesa_runlist_objects
 
         return None
