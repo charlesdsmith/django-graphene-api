@@ -89,7 +89,7 @@ class Query(graphene.ObjectType):
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
-    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String())
+    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String(), page_no=graphene.Int())
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), run_date=graphene.String(), check=graphene.String())
 
