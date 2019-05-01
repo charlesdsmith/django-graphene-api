@@ -192,7 +192,7 @@ class Query(graphene.ObjectType):
 
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
             print("hereee")
-            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('auction_location').distinct('auction_location')
+            all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('run_date').distinct('run_date')
             return all_adesa_runlist_objects
 
         if auction_location is not None and run_date is not None and lane is not None:  # if all three are supplied
