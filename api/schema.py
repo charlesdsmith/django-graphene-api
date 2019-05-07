@@ -175,8 +175,13 @@ class Query(graphene.ObjectType):
         page_no = kwargs.get('page_no')
 
         print(lane)
+
         if vin is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
+            return all_adesa_runlist_objects
+
+        if auction_location == "all":
+            all_adesa_runlist_objects = GetAdesaRunList.objects.all().distinct('auction_location')
             return all_adesa_runlist_objects
 
         if run_date is not None and auction_location is None and lane is None:  # if run_date is only supplied
