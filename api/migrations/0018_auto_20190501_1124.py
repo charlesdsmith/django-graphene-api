@@ -14,14 +14,6 @@ class Migration(migrations.Migration):
             name='getadesarunlist',
             options={},
         ),
-        migrations.RemoveField(
-            model_name='getadesarunlist',
-            name='total_damages',
-        ),
-        migrations.RemoveField(
-            model_name='shoppinglist',
-            name='total_damages',
-        ),
         migrations.AddField(
             model_name='getadesarunlist',
             name='seller_announcements',
