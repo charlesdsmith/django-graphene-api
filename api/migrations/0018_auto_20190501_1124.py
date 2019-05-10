@@ -19,9 +19,4 @@ class Migration(migrations.Migration):
             name='seller_announcements',
             field=models.TextField(default='n/a'),
         ),
-        migrations.AlterField(
-            model_name='shoppinglist',
-            name='grade',
-            field=models.CharField(default='Check Online', max_length=20),
-        ),
     ]
