@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cd5ae7e-4dfa-4ed3-a6a2-612c838ab5a7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/schema.py" afterPath="$PROJECT_DIR$/api/schema.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models.py" afterPath="$PROJECT_DIR$/api/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/carfax/carfax_scraper.py" afterPath="$PROJECT_DIR$/carfax/carfax_scraper.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,7 +20,7 @@
     <favorites_list name="gsm-django" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.69753087">
+    <splitter split-orientation="horizontal" split-proportion="0.35185185">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="0001_initial.py" pinned="false" current-in-tab="false">
@@ -41,10 +43,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="schema.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="schema.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/schema.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="351">
+                <state relative-caret-position="453">
                   <caret line="184" column="44" lean-forward="false" selection-start-line="184" selection-start-column="44" selection-end-line="184" selection-end-column="44" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
@@ -53,7 +55,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="0018_auto_20190501_1124.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="0018_auto_20190501_1124.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/migrations/0018_auto_20190501_1124.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="561">
@@ -63,11 +65,21 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="0019_auto_20190501_1125.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/api/migrations/0019_auto_20190501_1125.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="carfax_scraper.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/carfax/carfax_scraper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1224">
-                  <caret line="27" column="31" lean-forward="true" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+                <state relative-caret-position="272">
+                  <caret line="43" column="48" lean-forward="true" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
                   <folding />
                 </state>
               </provider>
@@ -77,11 +89,11 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="677">
-                  <caret line="139" column="28" lean-forward="false" selection-start-line="139" selection-start-column="28" selection-end-line="139" selection-end-column="28" />
+                <state relative-caret-position="653">
+                  <caret line="133" column="17" lean-forward="false" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
                   </folding>
@@ -123,11 +135,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="vin_location.txt" pinned="false" current-in-tab="true">
+          <file leaf-file-name="vin_location.txt" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/carfax/vin_location.txt">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
-                  <caret line="0" column="1" lean-forward="true" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+                  <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
                   <folding />
                 </state>
               </provider>
@@ -148,7 +160,7 @@
           <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/serializers.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="335">
+                <state relative-caret-position="-300">
                   <caret line="98" column="98" lean-forward="false" selection-start-line="98" selection-start-column="98" selection-end-line="98" selection-end-column="98" />
                   <folding>
                     <element signature="e#28#66#0" expanded="true" />
@@ -163,9 +175,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>textfi</find>
-      <find>detail</find>
-      <find>resp</find>
       <find>credentia</find>
       <find>respon</find>
       <find>session</find>
@@ -193,10 +202,14 @@
       <find>off</find>
       <find>pagin</find>
       <find>requi</find>
+      <find>loc</find>
+      <find>1FTFX1EF2DFC74215</find>
+      <find>vin_list</find>
     </findStrings>
     <replaceStrings>
       <replace>getadesarunlist</replace>
       <replace>shoppinglist</replace>
+      <replace>curated_vin_list</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -219,7 +232,6 @@
         <option value="$PROJECT_DIR$/recalls/recalls_calls.py" />
         <option value="$PROJECT_DIR$/api/schema/schema.py" />
         <option value="$PROJECT_DIR$/carfax/carfax_calls.py" />
-        <option value="$PROJECT_DIR$/carfax/carfax_scraper.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/api/adesa/adesa_bulk_calls.py" />
         <option value="$PROJECT_DIR$/DB_maintenance.py" />
@@ -242,15 +254,16 @@
         <option value="$PROJECT_DIR$/api/migrations/0016_auto_20190425_1441.py" />
         <option value="$PROJECT_DIR$/api/migrations/0017_auto_20190425_1550.py" />
         <option value="$PROJECT_DIR$/api/serializers.py" />
-        <option value="$PROJECT_DIR$/api/models.py" />
-        <option value="$PROJECT_DIR$/carfax/vin_location.txt" />
         <option value="$PROJECT_DIR$/api/schema.py" />
+        <option value="$PROJECT_DIR$/carfax/carfax_scraper.py" />
+        <option value="$PROJECT_DIR$/carfax/vin_location.txt" />
+        <option value="$PROJECT_DIR$/api/models.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="138" />
-    <option name="y" value="-24" />
+    <option name="x" value="2166" />
+    <option name="y" value="-14" />
     <option name="width" value="1780" />
     <option name="height" value="977" />
   </component>
@@ -589,7 +602,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1216" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -599,7 +612,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22291666" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19444445" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929292" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -625,16 +638,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/carfax/inputToSheets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="26" column="42" lean-forward="false" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#11#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/recalls/recalls_calls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -657,7 +660,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -938,13 +941,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/schema.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="184" column="44" lean-forward="false" selection-start-line="184" selection-start-column="44" selection-end-line="184" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/carfax/vin_location.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
+        <state relative-caret-position="-300">
           <caret line="98" column="98" lean-forward="false" selection-start-line="98" selection-start-column="98" selection-end-line="98" selection-end-column="98" />
           <folding>
             <element signature="e#28#66#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/carfax/carfax_scraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="43" column="48" lean-forward="true" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/0019_auto_20190501_1125.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -958,36 +995,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="139" column="28" lean-forward="false" selection-start-line="139" selection-start-column="28" selection-end-line="139" selection-end-column="28" />
+        <state relative-caret-position="653">
+          <caret line="133" column="17" lean-forward="false" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/carfax/carfax_scraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1224">
-          <caret line="27" column="31" lean-forward="true" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/carfax/vin_location.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="1" lean-forward="true" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/schema.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="184" column="44" lean-forward="false" selection-start-line="184" selection-start-column="44" selection-end-line="184" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>

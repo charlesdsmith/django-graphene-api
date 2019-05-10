@@ -47,19 +47,26 @@ def get_carfax_infoMMC():
     username = browser.find_element_by_css_selector("input[type='text']")
     password = browser.find_element_by_css_selector("input[type='password']")
 
-    username.send_keys("info@germanstarsmotorllc.com")
-    password.send_keys("Aastra57")
+    username.send_keys("sencoreent@gmail.com")
+    password.send_keys("7102677Se")
 
     browser.find_element_by_id("login_button").click()
     wait = WebDriverWait(browser, 3)
     wait_for_dashboard = wait.until(EC.url_to_be("https://www.carfaxonline.com/"))
 
     # get registrations as a dataframe
-    registrations_friday_df = get_as_dataframe(registrations_friday)
+    registrations_friday_df = get_as_dataframe(registrations_friday, evaluate_formulas=True)
+    registrations_friday_df.dropna(subset=['VIN(17)'], inplace=True)
 
     # get list of vins from dataframe
     vin_list = registrations_friday_df["VIN(17)"].values
 
+    # curated vin list that excludes vin that have been run already
+    curated_vin_list = [row["VIN(17)"] for index, row in registrations_friday_df.iterrows() if pd.isna(row["Run"])]
+
+    print(curated_vin_list)
+    print("VIN LIST LENGTH:", len(vin_list))
+    print("CURATED VIN LIST LENGTH:", len(curated_vin_list))
     # get carfax2 as dataframe
     carfax_2_dataframe = get_as_dataframe(carfax_2_sheet)
     # carfax_2_dataframe = pd.DataFrame(carfax_2_dataframe)
@@ -76,11 +83,11 @@ def get_carfax_infoMMC():
     print(current_vin_location)
     vin_counter = 0
     carfax_data = []  # this will store the 6 values and be returned by the function to use in api calls
-    print(len(list(vin_list)))
+    print(len(list(curated_vin_list)))
 
     try:
         print("INDEX OF VIN BEING PROCESSED: %s " % current_vin_location)
-        for vin in vin_list[int(current_vin_location):]:  # range(vin_list[current_vin_location], len(vin_list) - 1):
+        for vin in curated_vin_list[int(current_vin_location):]:  # range(curated_vin_list[current_vin_location], len(curated_vin_list) - 1):
             print(vin)
 
             if type(vin) is not str or len(vin) < 17:
@@ -170,8 +177,8 @@ def get_carfax_infoMMC():
             browser.get('https://www.carfaxonline.com/')
 
 
-            # current_vin_location = list(vin_list).index(vin) # convert the vin ndarray to a list then retrieve index of current vin
-            current_vin_location = list(vin_list).index(vin)
+            # current_vin_location = list(curated_vin_list).index(vin) # convert the vin ndarray to a list then retrieve index of current vin
+            current_vin_location = list(curated_vin_list).index(vin)
             vin_counter = current_vin_location
 
             # just update the dataframe
@@ -179,7 +186,7 @@ def get_carfax_infoMMC():
 
             '''with open(vin_location_txt, 'w') as file:
 
-                if vin_counter == len(list(vin_list)) - 1:  # if we reach the end of the list set the vin counter back to 0
+                if vin_counter == len(list(curated_vin_list)) - 1:  # if we reach the end of the list set the vin counter back to 0
                     vin_counter = 0
                     file.write(str(vin_counter))
                     file.close()
@@ -200,7 +207,7 @@ def get_carfax_infoMMC():
 
         with open(vin_location_txt, 'w') as file:
 
-            if vin_counter == len(list(vin_list)) - 1:  # if we reach the end of the list set the vin counter back to 0
+            if vin_counter == len(list(curated_vin_list)) - 1:  # if we reach the end of the list set the vin counter back to 0
                 vin_counter = 0
                 file.write(str(vin_counter))
                 file.close()
@@ -232,7 +239,7 @@ def modifyCarfaxDataframe(dataframe, info_array):
     recall = info_array[6]
     origin = info_array[8]
 
-    if np.sum(pandas_df["UNIV KEY"] == vin) >= 1:
+    if np.sum(pandas_df["UNIV KEY"] == vin) >= 1:  # if the VIN is found
         print('found')
         print(vin)
 
