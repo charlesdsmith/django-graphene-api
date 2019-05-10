@@ -15,11 +15,6 @@ class Migration(migrations.Migration):
             options={},
         ),
         migrations.AddField(
-            model_name='getadesarunlist',
-            name='seller_announcements',
-            field=models.TextField(default='n/a'),
-        ),
-        migrations.AddField(
             model_name='shoppinglist',
             name='seller_announcements',
             field=models.TextField(default='n/a'),
