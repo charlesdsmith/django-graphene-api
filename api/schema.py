@@ -176,13 +176,17 @@ class Query(graphene.ObjectType):
         items = kwargs.get('items')
 
 
-
         if vin is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
             return all_adesa_runlist_objects
 
         if auction_location == "all":
             all_adesa_runlist_objects = GetAdesaRunList.objects.all().distinct('auction_location')
+
+            if items:
+                all_adesa_runlist_objects = GetAdesaRunList.objects.all()
+                return all_adesa_runlist_objects
+
             return all_adesa_runlist_objects
 
         if run_date is not None and auction_location is None and lane is None:  # if run_date is only supplied
@@ -205,10 +209,9 @@ class Query(graphene.ObjectType):
 
             if items:
                 print("items")
-                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).count()
+                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).objects.all()
                 return all_adesa_runlist_objects
 
-            print('nothing')
             return all_adesa_runlist_objects
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
