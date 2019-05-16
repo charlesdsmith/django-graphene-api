@@ -18,5 +18,4 @@ class Migration(migrations.Migration):
             model_name='shoppinglist',
             name='total_damages'
         )
-
     ]

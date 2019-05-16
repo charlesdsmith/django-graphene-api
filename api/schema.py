@@ -89,7 +89,7 @@ class Query(graphene.ObjectType):
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
-    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String(), page_no=graphene.Int(required=False))
+    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String(), page_no=graphene.Int(required=False), items=graphene.Boolean(required=False))
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), run_date=graphene.String(), check=graphene.String())
 
@@ -173,8 +173,9 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
         lane = kwargs.get('lane')
         page_no = kwargs.get('page_no')
+        items = kwargs.get('items')
 
-        print(lane)
+
 
         if vin is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(vin__exact=vin)
@@ -202,6 +203,12 @@ class Query(graphene.ObjectType):
                 current_page = p.page(page_no)
                 return current_page
 
+            if items:
+                print("items")
+                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).count()
+                return all_adesa_runlist_objects
+
+            print('nothing')
             return all_adesa_runlist_objects
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
