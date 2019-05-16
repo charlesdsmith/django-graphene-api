@@ -209,7 +209,7 @@ class Query(graphene.ObjectType):
 
             if items:
                 print("items")
-                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).objects.all()
+                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).all()
                 return all_adesa_runlist_objects
 
             return all_adesa_runlist_objects
@@ -231,6 +231,12 @@ class Query(graphene.ObjectType):
                 p = Paginator(all_adesa_runlist_objects, 20)
                 current_page = p.page(page_no)
                 return current_page
+
+            if items:
+                print("items2")
+                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
+
+                return all_adesa_runlist_objects
 
             return all_adesa_runlist_objects
 
