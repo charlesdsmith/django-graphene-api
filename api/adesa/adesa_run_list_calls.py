@@ -36,10 +36,10 @@ def post_run_list():
     }
 
     data = {
-        "vin": "123456",
+        "vin": "123456789",
         "img_url": "https://germanstarmotors.slack.com/messages/DE33RNUSHTEST2/",
         "year": "1995",
-        "grade": "6",
+        "grade": " ",
         "run_date": "11-28-2018",
         "lane": "9",
         "check":"charles"

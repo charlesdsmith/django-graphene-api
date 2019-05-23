@@ -155,7 +155,6 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         if lookup:
             print("Updating old record")
             lookup.update(**validated_data)
-            lookup[0].save()
             return lookup[0]  # need to return an instance not a whole queryset
 
         return ShoppingList.objects.create(**validated_data)
