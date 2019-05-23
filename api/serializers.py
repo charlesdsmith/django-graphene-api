@@ -142,17 +142,22 @@ class ShoppingListSerializer(serializers.ModelSerializer):
                   'auction_location', 'extra', 'check')
 
     def create(self, validated_data):
-        '''try:
-            test = django_serializer.serialize("json", GetRecalls.objects.filter(vin=validated_data["vin"]))
-            for obj in test:
-                if obj["fields"]["run_date"] == validated_data["run_date"]:
-                    return "That record already exists with that run_date, not uploading to database"
-                else:
-                    return GetRecalls.objects.create(**validated_data)
+        # look up the supplied vin, rundate and check fields before POSTing
+        # if the instance exists then just update
 
-        except:
-            # if a record with that vin isn't already in the database, just create it
-            return GetRecalls.objects.create(**validated_data)'''
+        vin = validated_data["vin"]
+        run_date = validated_data["run_date"]
+        check = validated_data["check"]
+
+        lookup = ShoppingList.objects.filter(vin=vin, run_date=run_date, check=check)
+
+        # if lookup exists then update that instance instead
+        if lookup:
+            print("Updating old record")
+            lookup.update(**validated_data)
+            lookup[0].save()
+            return lookup[0]  # need to return an instance not a whole queryset
+
         return ShoppingList.objects.create(**validated_data)
 
 

@@ -122,7 +122,9 @@ class AdesaRunList(viewsets.ModelViewSet):
         queryset = GetAdesaRunList.objects.all()
         record = get_object_or_404(queryset, vin__exact=pk)
         serializer = AdesaRunlistSerializer(record, data=request.data, partial=True)
-
+        print("REQUEST",request.data)
+        print("KWARGS", kwargs)
+        print("ARGS", args)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -273,6 +275,8 @@ class ShoppingListView(viewsets.ModelViewSet):
         print('RETRIEVE ONE')
 
         return Response(serializer.data)
+
+
 
     @action(methods=['GET'], detail=False, url_path='retrieve_by_rundate/(?P<pk>[^/.]+)')
     def retrieve_by_rundate(self, request, pk=None, *args, **kwargs):

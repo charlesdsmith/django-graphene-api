@@ -18,11 +18,12 @@ def authorize():
     }
 
 
-    response = requests.post('http://localhost:8080/o/token/', data=data, auth=(client_id, client_secret))
+    response = requests.post('http://127.0.0.1:8080/o/token/', data=data, auth=(client_id, client_secret))
     #heroku_response = requests.post('https://gsm-django.herokuapp.com/o/token/', data=data, auth=(client_id, client_secret))
 
     return response.text
 
+#posts to shopping list for testing
 def post_run_list():
 
     # example of test parameter
@@ -31,27 +32,28 @@ def post_run_list():
 
     headers = {
         'Content-Type': "application/json",
-        'Authorization': 'Bearer Vl1tcchRnhJcNeIz7ztJdQTrjGp0Qv',
+        'Authorization': 'Bearer fL0MdBXUCn8KGsmJA9dU5QAuWq3sWf',
     }
 
     data = {
         "vin": "123456",
         "img_url": "https://germanstarmotors.slack.com/messages/DE33RNUSHTEST2/",
-        "year": "1991",
-        "grade": "4",
+        "year": "1995",
+        "grade": "6",
         "run_date": "11-28-2018",
-        "lane": "2"
+        "lane": "9",
+        "check":"charles"
     }
 
     data = json.dumps(data)
     # response = requests.post('http://gsm-dango.herokuapp.com/api/v1/carfax/', headers=headers, cookies=cookies, data=data)
 
     try:
-        heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/shopping_list/', data=data, headers=headers)
-        #response = requests.post('http://127.0.0.1:8000/api/v1/adesa_run_list/', data=data, headers=headers)
+        #heroku_response = requests.post('https://gsm-django.herokuapp.com/api/v1/shopping_list/', data=data, headers=headers)
+        response = requests.post('http://127.0.0.1:8080/api/v1/shopping_list/', data=data, headers=headers)
         # print(json.dumps(response.json))
-        print(heroku_response.status_code)
-        return heroku_response.text
+        print(response.status_code)
+        return response.text
     except Exception as e:
 
         print(e)
@@ -60,7 +62,7 @@ def get_by_rundate():
 
     headers = {
         'Content-Type': "application/json",
-        'Authorization': 'Bearer I5RmXX9VBaLvAozrv7EkIQVL9GaEGY',
+        'Authorization': 'Bearer DvNeTUN2GkhMk9l1NMKUChVmYCT9ny',
     }
 
     try:
@@ -76,7 +78,7 @@ def update_runlist():
 
     headers = {
         'Content-Type': "application/json",
-        'Authorization': 'Bearer nOyAc2RdHnVGp8dPgf0UBL0fK7dWpL',
+        'Authorization': 'Bearer DvNeTUN2GkhMk9l1NMKUChVmYCT9ny',
     }
 
     data = {
@@ -95,9 +97,9 @@ def update_runlist():
 
 if __name__ == "__main__":
     #print(authorize())
-    #print(post_run_list())
+    print(post_run_list())
     #print(get_by_rundate())
-    print(update_runlist())
+    #print(update_runlist())
 
 
     '''def decorator(func):

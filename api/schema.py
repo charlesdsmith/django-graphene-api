@@ -233,7 +233,6 @@ class Query(graphene.ObjectType):
                 return current_page
 
             if items:
-                print("items2")
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
 
                 return all_adesa_runlist_objects
@@ -458,6 +457,8 @@ class UpdateShoppingList(graphene.Mutation):
 
             except ObjectDoesNotExist as error:
                 return error
+
+
 
 class DeleteShoppingList(graphene.Mutation):
 
