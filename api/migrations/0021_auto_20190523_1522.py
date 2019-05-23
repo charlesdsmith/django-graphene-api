@@ -10,15 +10,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='getadesarunlist',
-            name='total_damages',
-        ),
-        migrations.AddField(
-            model_name='getadesarunlist',
-            name='seller_announcements',
-            field=models.TextField(default='n/a'),
-        ),
         migrations.AlterField(
             model_name='shoppinglist',
             name='MMR',
