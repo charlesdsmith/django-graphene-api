@@ -89,7 +89,7 @@ class Query(graphene.ObjectType):
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
-    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String(), page_no=graphene.Int(required=False), items=graphene.Boolean(required=False))
+    adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String(), page_no=graphene.Int(required=False), distinct=graphene.Boolean(required=False))
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), run_date=graphene.String(), check=graphene.String())
 
@@ -173,7 +173,7 @@ class Query(graphene.ObjectType):
         run_date = kwargs.get('run_date')
         lane = kwargs.get('lane')
         page_no = kwargs.get('page_no')
-        items = kwargs.get('items')
+        distinct = kwargs.get('distinct')
 
 
         if vin is not None:
@@ -183,7 +183,7 @@ class Query(graphene.ObjectType):
         if auction_location == "all":
             all_adesa_runlist_objects = GetAdesaRunList.objects.all().distinct('auction_location')
 
-            if items:
+            if distinct:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.all()
                 return all_adesa_runlist_objects
 
@@ -207,8 +207,8 @@ class Query(graphene.ObjectType):
                 current_page = p.page(page_no)
                 return current_page
 
-            if items:
-                print("items")
+            if distinct:
+                print("distinct")
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).all()
                 return all_adesa_runlist_objects
 
@@ -227,19 +227,19 @@ class Query(graphene.ObjectType):
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('lane').distinct('lane')
 
-            if page_no is not None and items is not None:
+            if page_no is not None and distinct is not None:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
 
                 p = Paginator(all_adesa_runlist_objects, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            if page_no is not None and items is None:
+            if page_no is not None and distinct is None:
                 p = Paginator(all_adesa_runlist_objects, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            if page_no is None and items is not None:
+            if page_no is None and distinct is not None:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
 
                 return all_adesa_runlist_objects
