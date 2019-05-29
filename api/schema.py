@@ -227,12 +227,19 @@ class Query(graphene.ObjectType):
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('lane').distinct('lane')
 
-            if page_no is not None:
+            if page_no is not None and items is not None:
+                all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
+
                 p = Paginator(all_adesa_runlist_objects, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            if items:
+            if page_no is not None and items is None:
+                p = Paginator(all_adesa_runlist_objects, 20)
+                current_page = p.page(page_no)
+                return current_page
+
+            if page_no is None and items is not None:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
 
                 return all_adesa_runlist_objects
