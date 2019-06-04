@@ -97,7 +97,7 @@ def update_runlist():
 
 if __name__ == "__main__":
     #print(authorize())
-    print(post_run_list())
+    #print(post_run_list())
     #print(get_by_rundate())
     #print(update_runlist())
 
@@ -114,3 +114,22 @@ if __name__ == "__main__":
     my_get_text = decorator(get_text)
     print(my_get_text)
     print(get_text('charles'))'''
+
+    import operator
+    def sort_list(a):
+        splitA = a.split("-")
+        splitB = a.index() + 1
+
+        if splitA[0] > 'A':
+            return 1
+        #if splitA < splitB:
+            #return -1
+
+        return 0
+
+    test_list = [('A-1'), ('B-2'), ('A-2'), ('F-6'), ('B-3'), ('C-2'), ('AA-2')]
+    s = sorted(test_list, key=lambda x: x[0])
+
+    #1 if x.split('-')[0] > x.split('-')[1] -1 else x.split('-')[0] > x.split('-')[1])
+
+    print(s)

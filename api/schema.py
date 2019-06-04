@@ -11,6 +11,8 @@ from graphene_django.rest_framework.mutation import SerializerMutation
 # from types import ErrorType
 import http
 
+
+
 #### GraphQL ####
 #  https://docs.graphene-python.org/projects/django/en/latest/tutorial-plain/#introduction-tutorial-graphene-and-django
 
@@ -182,99 +184,109 @@ class Query(graphene.ObjectType):
 
         if auction_location == "all":
             all_adesa_runlist_objects = GetAdesaRunList.objects.all().distinct('auction_location')
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
-            if distinct:
+            if distinct is False:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.all()
-                return all_adesa_runlist_objects
+                s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+                return s
 
-            return all_adesa_runlist_objects
+            return s
 
         if run_date is not None and auction_location is None and lane is None:  # if run_date is only supplied
+            print("ONLY")
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None:
-                p = Paginator(all_adesa_runlist_objects, 20)
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            return all_adesa_runlist_objects
+            return s
 
         if auction_location is not None and run_date is None and lane is None:  # if auction_location is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).order_by('run_date').distinct('run_date')
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None:
                 p = Paginator(all_adesa_runlist_objects, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            if distinct:
+            if distinct is False:
                 print("distinct")
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).all()
                 return all_adesa_runlist_objects
 
-            return all_adesa_runlist_objects
+            return s
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None:
-                p = Paginator(all_adesa_runlist_objects, 20)
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            return all_adesa_runlist_objects
+            return s
 
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('lane').distinct('lane')
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None and distinct is False:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
-
-                p = Paginator(all_adesa_runlist_objects, 20)
+                s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            if page_no is not None and distinct is None:
-                p = Paginator(all_adesa_runlist_objects, 20)
+            if page_no is not None and distinct is True:
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
             if page_no is None and distinct is False:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
+                s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+                return s
 
-                return all_adesa_runlist_objects
-
-            return all_adesa_runlist_objects
+            return s
 
         if auction_location is not None and run_date is not None and lane is not None:  # if all three are supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date, auction_location__exact=auction_location, lane__exact=lane)
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None:
-                p = Paginator(all_adesa_runlist_objects, 20)
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            return all_adesa_runlist_objects
+            return s
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None:
-                p = Paginator(all_adesa_runlist_objects, 20)
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            return all_adesa_runlist_objects
+            return s
 
         if lane is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
+            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
 
             if page_no is not None:
-                p = Paginator(all_adesa_runlist_objects, 20)
+                p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
 
-            return all_adesa_runlist_objects
+            return s
 
         return None
 
@@ -514,3 +526,4 @@ class RecallsUnion(DjangoObjectType):
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation, types=[CarFaxType, RecallsType, SearchResult])
+
