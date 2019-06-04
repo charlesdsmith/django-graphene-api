@@ -5,12 +5,40 @@ from api.serializers import *
 from graphene import ObjectType, Node, Schema, relay
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+import operator
 from graphene_django.fields import DjangoConnectionField
 from django.shortcuts import get_object_or_404, get_list_or_404
 from graphene_django.rest_framework.mutation import SerializerMutation
 # from types import ErrorType
 import http
 
+def cmp_to_key(mycmp):
+    'Convert a cmp= function into a key= function'
+    class K(object):
+        def __init__(self, obj, *args):
+            self.obj = obj
+        def __lt__(self, other):
+            return mycmp(self.obj.run_no, other.obj.run_no) < 0
+        def __gt__(self, other):
+            return mycmp(self.obj.run_no, other.obj.run_no) > 0
+        def __eq__(self, other):
+            return mycmp(self.obj.run_no, other.obj.run_no) == 0
+        def __le__(self, other):
+            return mycmp(self.obj.run_no, other.obj.run_no) <= 0
+        def __ge__(self, other):
+            return mycmp(self.obj.run_no, other.obj.run_no) >= 0
+        def __ne__(self, other):
+            return mycmp(self.obj.run_no, other.obj.run_no) != 0
+    return K
+
+def runNo_sorter(a,b):
+    splitA = a.split("-")
+    splitB = b.split("-")
+    if splitA[0] > splitB[0]:
+        return 1
+    if (splitA[0] < splitB[0]):
+        return -1
+    return int(splitA[1]) - int(splitB[1])
 
 
 #### GraphQL ####
@@ -183,12 +211,13 @@ class Query(graphene.ObjectType):
             return all_adesa_runlist_objects
 
         if auction_location == "all":
-            all_adesa_runlist_objects = GetAdesaRunList.objects.all().distinct('auction_location')
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            print("ALL")
+            all_adesa_runlist_objects = GetAdesaRunList.objects.all()
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if distinct is False:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.all()
-                s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+                s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
                 return s
 
             return s
@@ -196,7 +225,7 @@ class Query(graphene.ObjectType):
         if run_date is not None and auction_location is None and lane is None:  # if run_date is only supplied
             print("ONLY")
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date)
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None:
                 p = Paginator(s, 20)
@@ -207,7 +236,7 @@ class Query(graphene.ObjectType):
 
         if auction_location is not None and run_date is None and lane is None:  # if auction_location is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location).order_by('run_date').distinct('run_date')
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None:
                 p = Paginator(all_adesa_runlist_objects, 20)
@@ -223,7 +252,7 @@ class Query(graphene.ObjectType):
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None:
                 p = Paginator(s, 20)
@@ -234,11 +263,11 @@ class Query(graphene.ObjectType):
 
         if auction_location is not None and run_date is not None and lane is None:  # if auction_location and run_date are only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).order_by('lane').distinct('lane')
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None and distinct is False:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
-                s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+                s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
                 p = Paginator(s, 20)
                 current_page = p.page(page_no)
                 return current_page
@@ -250,14 +279,14 @@ class Query(graphene.ObjectType):
 
             if page_no is None and distinct is False:
                 all_adesa_runlist_objects = GetAdesaRunList.objects.filter(auction_location__exact=auction_location, run_date__exact=run_date).all()
-                s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+                s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
                 return s
 
             return s
 
         if auction_location is not None and run_date is not None and lane is not None:  # if all three are supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(run_date__exact=run_date, auction_location__exact=auction_location, lane__exact=lane)
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None:
                 p = Paginator(s, 20)
@@ -268,7 +297,7 @@ class Query(graphene.ObjectType):
 
         if lane is not None and auction_location is None and run_date is None:  # if lane is only supplied
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None:
                 p = Paginator(s, 20)
@@ -279,7 +308,7 @@ class Query(graphene.ObjectType):
 
         if lane is not None:
             all_adesa_runlist_objects = GetAdesaRunList.objects.filter(lane__exact=lane)
-            s = sorted(all_adesa_runlist_objects, key=lambda obj: obj.run_no)
+            s = sorted(all_adesa_runlist_objects, key=cmp_to_key(runNo_sorter))
 
             if page_no is not None:
                 p = Paginator(s, 20)
