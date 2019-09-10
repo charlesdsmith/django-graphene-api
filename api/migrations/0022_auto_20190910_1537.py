@@ -25,9 +25,4 @@ class Migration(migrations.Migration):
                 ('date', models.CharField(default='Check Online', max_length=20)),
             ],
         ),
-        migrations.AddField(
-            model_name='getadesarunlist',
-            name='seller_announcements',
-            field=models.TextField(default='n/a'),
-        ),
     ]
