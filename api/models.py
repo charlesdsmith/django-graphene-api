@@ -108,6 +108,16 @@ class GetAdesaRunList(models.Model):
     '''class Meta:
         ordering = ['id']'''
 
+class DamageComparison(models.Model):
+    vin = models.CharField(max_length=20)
+    year = models.CharField(max_length=20, default="Check Online")
+    make = models.CharField(max_length=20, default="Check Online")
+    model = models.CharField(max_length=20, default="Check Online")
+    trim = models.CharField(max_length=60, default="Check Online")
+    adesa_announcements = models.TextField(default="n/a")
+    auction_location = models.CharField(max_length=50, default="n/a")
+    carfax = models.TextField(default="n/a")
+    date = models.CharField(max_length=20, default="Check Online")
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)

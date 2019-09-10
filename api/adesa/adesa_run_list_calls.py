@@ -129,9 +129,8 @@ if __name__ == "__main__":
 
     test_list = [('A-1'), ('B-2'), ('A-2'), ('F-6'), ('B-3'), ('C-2'), ('AA-2'), ('B-100')]
     s = sorted(test_list, key=lambda x: x[0])
-
     s2 = sorted(test_list, key=operator.itemgetter(1))
 
     #1 if x.split('-')[0] > x.split('-')[1] -1 else x.split('-')[0] > x.split('-')[1])
 
-    print(s2)
+    print(s)

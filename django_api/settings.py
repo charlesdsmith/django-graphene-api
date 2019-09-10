@@ -30,11 +30,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-'''import os
+import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
-import django
-django.setup()'''
 
+#import django
+#django.setup()
 
 
 CORS_ORIGIN_ALLOW_ALL=True
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'oauth2_provider',
+    #'provider',
+    #'provider.oauth2'
     'rest_framework',
     'rest_framework.authtoken',
     'graphene_django',
