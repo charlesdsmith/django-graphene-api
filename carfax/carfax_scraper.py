@@ -64,7 +64,8 @@ def get_carfax_infoMMC():
     # curated vin list that excludes vin that have been run already
     curated_vin_list = [row["VIN(17)"] for index, row in registrations_friday_df.iterrows() if pd.isna(row["Run"])]
 
-    print(curated_vin_list)
+    print("VIN LIST", vin_list)
+    print("CURATED VIN LIST", curated_vin_list)
     print("VIN LIST LENGTH:", len(vin_list))
     print("CURATED VIN LIST LENGTH:", len(curated_vin_list))
     # get carfax2 as dataframe
@@ -128,13 +129,32 @@ def get_carfax_infoMMC():
             recallValues=''
             countryOriginValues=''
 
-            totalLossCells = additionalHistoryTable.find_all("div", id=re.compile("^totalLossCol"))
-            frameDamageCells = additionalHistoryTable.find_all("div", id=re.compile("^frameDamageCol"))
-            airbagCells = additionalHistoryTable.find_all("div", id=re.compile("^airbagCol"))
-            odometerCells = additionalHistoryTable.find_all("div", id=re.compile("^odometerCol"))
-            accidentCheckCells = additionalHistoryTable.find_all("div", id=re.compile("^accidentCheckCol"))
-            recallCells = additionalHistoryTable.find_all("div", id=re.compile("^recallCol"))
+            totalLossCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^totalLossCol"))
+            totalLossCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^totalLossCol"))
+            totalLossCells = totalLossCellsDivs + totalLossCellsAs
+
+            frameDamageCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^frameDamageCol"))
+            frameDamageCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^frameDamageCol"))
+            frameDamageCells = frameDamageCellsDivs + frameDamageCellsAs
+
+            airbagCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^airbagCol"))
+            airbagCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^airbagCol"))
+            airbagCells = airbagCellsDivs + airbagCellsAs
+
+            odometerCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^odometerCol"))
+            odometerCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^odometerCol"))
+            odometerCells = odometerCellsDivs + odometerCellsAs
+
+            accidentCheckCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^accidentCheckCol"))
+            accidentCheckCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^accidentCheckCol"))
+            accidentCheckCells = accidentCheckCellsDivs + accidentCheckCellsAs
+
+            recallCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^recallCol"))
+            recallCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^recallCol"))
+            recallCells = recallCellsDivs + recallCellsAs
+
             countryOriginCells = soup.find_all("span", class_="vehicleRecordSource")
+
 
             for cell in countryOriginCells:  #if 'NICB' is not in the contents of the 'source' column return just that value
                 if 'NICB' not in cell.contents[0] and 'FCA' not in cell.contents[0] and 'OnStar' not in cell.contents[0] and "Dealer Inventory" not in cell.contents[0]:

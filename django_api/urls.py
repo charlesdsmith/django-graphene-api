@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/v1/carfax_bulk_upload/', views.CarFaxBulkUpload.as_view()),
     path('api/v1/recalls_bulk_upload/', views.RecallsBulkUpload.as_view()),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('graphqlui', views.GraphQLView.as_view(graphiql=True)),
     path('graphql', views.GraphQLView.as_view(graphiql=True)),
 
 ]

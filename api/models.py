@@ -109,6 +109,7 @@ class GetAdesaRunList(models.Model):
         ordering = ['id']'''
 
 class DamageComparison(models.Model):
+    id = models.BigIntegerField(default=0, max_length=None, primary_key=True)
     vin = models.CharField(max_length=20)
     year = models.CharField(max_length=20, default="Check Online")
     make = models.CharField(max_length=20, default="Check Online")
@@ -117,6 +118,7 @@ class DamageComparison(models.Model):
     adesa_announcements = models.TextField(default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
     carfax = models.TextField(default="n/a")
+    BlackList = models.BigIntegerField(default=0, max_length=None)
     date = models.CharField(max_length=20, default="Check Online")
 
 class ShoppingList(models.Model):

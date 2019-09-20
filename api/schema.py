@@ -1,6 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
-from api.models import CarFax, GetRecalls, GetAdesaRunList, GetAdesaPurchases
+from api.models import CarFax, GetRecalls, GetAdesaRunList, GetAdesaPurchases, DamageComparison
 from api.serializers import *
 from graphene import ObjectType, Node, Schema, relay
 from django.core.exceptions import ObjectDoesNotExist
@@ -69,6 +69,11 @@ class ShoppingListType(DjangoObjectType):
         model = ShoppingList
         interfaces = (Node, )
 
+class DamageComparisonType(DjangoObjectType):
+    class Meta:
+        model = DamageComparison
+        interfaces = (Node, )
+
 class CarFaxInput(graphene.InputObjectType):
     vin = graphene.String(required=True)
 
@@ -99,6 +104,10 @@ class ShoppingListUpdateInput(graphene.InputObjectType):
 class ShoppingListDeleteInput(graphene.InputObjectType):
     id = graphene.String(required=True)
 
+class DamageComparisonInput(graphene.InputObjectType):
+    id = graphene.String(required=True)
+    carfax = graphene.String(required=True)
+
 class SearchResult(graphene.Union):
     class Meta:
         types = (CarFaxType, RecallsType)
@@ -112,17 +121,16 @@ class Query(graphene.ObjectType):
     all_adesa_runlist_objects = graphene.List(AdesaRunListType)
     runlist_paginated = graphene.List(AdesaRunListType, page_no=graphene.Int())
     all_shopping_list_objects = graphene.List(ShoppingListType)
+    all_damage_comparison_objects = graphene.List(DamageComparisonType)
 
-
-
-### Retrieve ONE object fields ###
+    ### Retrieve ONE object fields ###
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
     recalls = graphene.Field(lambda: graphene.List(RecallsType), vin=graphene.String(), run_date=graphene.String())
     adesa_purchases = graphene.Field(lambda: graphene.List(AdesaPurchasesType), vin=graphene.String(), run_date=graphene.String())
     adesa_runlist = graphene.Field(lambda: graphene.List(AdesaRunListType), vin=graphene.String(), run_date=graphene.String(), auction_location=graphene.String(), lane=graphene.String(), page_no=graphene.Int(required=False), distinct=graphene.Boolean(required=False))
     shopping_list = graphene.Field(lambda: graphene.List(ShoppingListType), vin=graphene.String(), run_date=graphene.String())
     shopping_list_by_check = graphene.Field(lambda: graphene.List(ShoppingListType), run_date=graphene.String(), check=graphene.String())
-
+    damage_comparison_by_id = graphene.Field(lambda: graphene.List(DamageComparisonType), id=graphene.Int())
     search = graphene.List(SearchResult, q=graphene.String())
 
     ### Search fields ###
@@ -153,6 +161,9 @@ class Query(graphene.ObjectType):
 
     def resolve_all_shopping_list_objects(self, info, **kwargs):
         return ShoppingList.objects.all()
+
+    def resolve_all_damage_comparison_objects(self, info, **kwargs):
+        return DamageComparison.objects.all()
 
     ### Retrieve ONE object resolvers (endpoints) ###
     def resolve_carfax(self, info, **kwargs):
@@ -344,6 +355,16 @@ class Query(graphene.ObjectType):
 
         return None
 
+    def resolve_damage_comparison_by_id(self, info, **kwargs):
+        id = kwargs.get("id")
+
+        if id:
+            instance = DamageComparison.objects.filter(id=id)
+            if instance:
+                return instance
+
+        return None
+
 
 class CreateCarFax(graphene.Mutation):
     ## https://github.com/graphql-python/graphene/blob/master/UPGRADE-v2.0.md#clientidmutationmutate_and_get_payload
@@ -507,7 +528,6 @@ class UpdateShoppingList(graphene.Mutation):
                 return error
 
 
-
 class DeleteShoppingList(graphene.Mutation):
 
     class Arguments:
@@ -530,6 +550,31 @@ class DeleteShoppingList(graphene.Mutation):
                     return DeleteShoppingList(response="That record does not exist")
             except ObjectDoesNotExist:
                 return DeleteShoppingList(ok=False)
+
+class UpdateDamageComparison(graphene.Mutation):
+    class Arguments:
+        lookup_fields = DamageComparisonInput()
+
+    ok = graphene.Boolean()
+    response = graphene.String()
+
+    def mutate(root, info, **input):
+        id = input['lookup_fields']['id']
+        carfax = input['lookup_fields']['carfax']
+
+        if id and carfax:
+            instance = DamageComparison.objects.filter(id=id).first()
+            try:
+                if instance:
+                    instance.carfax = carfax
+                    instance.save()
+                    return UpdateDamageComparison(ok=True, response="Record with ID: %s has been updated" % id)
+                else:
+                    return UpdateDamageComparison(ok=False, response="That record does not exist")
+            except ObjectDoesNotExist:
+                return UpdateDamageComparison(ok=False)
+
+
 
 
 class Mutation(graphene.ObjectType):
