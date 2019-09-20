@@ -4,7 +4,7 @@
 import json
 import requests
 
-def post_graphql(query=None):
+def getAllDamageComparisons():
 
     headers = {
         'Authorization': 'Bearer jAL8mDIwpm7Pqk7BUtelsgW3jIFUkO',
@@ -23,10 +23,41 @@ def post_graphql(query=None):
 
     data = json.dumps(data)
 
-    response = requests.post("http://localhost:3000/graphql", headers=headers, data=data)
-    #response2 = requests.post("https://gsmauctionapp.herokuapp.com/graphql/", headers=headers, data=data)
+    #response = requests.post("http://localhost:3000/graphql", headers=headers, data=data)
+    response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
     #print(response.text)
 
     #print(response.status_code)
-    print(response.content)
-    return response
+    print(response2.content)
+    return response2
+
+
+def updateDamageComparisons(id, carfax):
+
+    headers = {
+        'Authorization': 'Bearer jAL8mDIwpm7Pqk7BUtelsgW3jIFUkO',
+        "Content-Type": "application/json",
+
+    }
+
+    data = {
+        "query": """mutation updateDamage($id:String!, $carfax:String!){
+  updateDamageComparison(id:$id, carfax:$carfax){
+      vin
+      carfax
+         }
+    }""",
+        "variables": {"id": "%d" % id, "carfax": "%s" % carfax},
+    }
+
+    data = json.dumps(data)
+    #response = requests.post("http://localhost:3000/graphql", headers=headers, data=data)
+    response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
+
+    print(response2.content)
+    return response2
+
+
+if __name__ == '__main__':
+    #getAllDamageComparisons()
+    updateDamageComparisons(2, "test_carfax")

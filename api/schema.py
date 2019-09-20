@@ -586,7 +586,7 @@ class Mutation(graphene.ObjectType):
     update_shoppinglist = UpdateShoppingList.Field()
     delete_shoppinglist = DeleteShoppingList.Field()
     delete_shoppinglist_by_id = DeleteShoppingListById.Field()
-
+    update_damage_comparison = UpdateDamageComparison.Field()
 
 
 
