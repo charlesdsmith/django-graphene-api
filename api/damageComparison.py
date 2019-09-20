@@ -43,8 +43,8 @@ def updateDamageComparisons(id, carfax):
     data = {
         "query": """mutation updateDamage($id:String!, $carfax:String!){
   updateDamageComparison(args:{id:$id, carfax:$carfax}){
-      vin
-      carfax
+      ok
+      response
          }
     }""",
         "variables": {"id": "%d" % id, "carfax": "%s" % carfax},

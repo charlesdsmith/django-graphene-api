@@ -559,8 +559,8 @@ class UpdateDamageComparison(graphene.Mutation):
     response = graphene.String()
 
     def mutate(root, info, **input):
-        id = input['lookup_fields']['id']
-        carfax = input['lookup_fields']['carfax']
+        id = input['args']['id']
+        carfax = input['args']['carfax']
 
         if id and carfax:
             instance = DamageComparison.objects.filter(id=id).first()
