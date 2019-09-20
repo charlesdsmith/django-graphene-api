@@ -553,7 +553,7 @@ class DeleteShoppingList(graphene.Mutation):
 
 class UpdateDamageComparison(graphene.Mutation):
     class Arguments:
-        lookup_fields = DamageComparisonInput()
+        args = DamageComparisonInput()
 
     ok = graphene.Boolean()
     response = graphene.String()
