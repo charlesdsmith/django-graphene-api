@@ -22,6 +22,8 @@ from inputToSheets import startRegistrationsFriday, startAuthorization,startCarf
 import numpy as np
 import datetime
 
+from api.damageComparison import getAllDamageComparisons
+
 # options to make browser headless
 '''options = Options()
 options.add_argument("--headless") # Runs Chrome in headless mode.
