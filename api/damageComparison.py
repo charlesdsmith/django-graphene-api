@@ -51,7 +51,7 @@ def updateDamageComparisons(car_info=None):
     test1 = [['RGFtYWdlQ29tcGFyaXNvblR5cGU6Mw==', ['5UXFG2C53BLX09045', 'No Issues Reported, ', 'No Issues Reported, ', 'No Issues Reported, ', 'Mileage Inconsistency, ', 'No Issues Reported, ', 'No Recalls Reported, ', '\n \n Service Facility\n \n ,\n \n \n Mississauga, ON\n \n \n \n \n ']], ['RGFtYWdlQ29tcGFyaXNvblR5cGU6NA==', ['WDCGG8HB4AF472595', 'No Issues Reported, ', 'No Issues Reported, ', 'No Issues Reported, ', 'No Issues Indicated, ', 'No Issues Reported, ', 'No Recalls Reported, ', '\n \n Quebec\n \n ,\n \n \n Motor Vehicle Dept.\n \n ,\n \n \n Sainte-Anne-des-Lacs, QC\n \n \n \n \n ']]]
 
     test = [['RGFtYWdlQ29tcGFyaXNvblR5cGU6MA==', ['1FTFW1EG4HFA67794', 'No Issues Reported, No Issues Reported, ', 'No Issues Reported, No Issues Reported, ', 'No Issues Reported, No Issues Reported, ', 'No Issues Indicated, No Issues Indicated, ', 'No Issues Reported, No Issues Reported, ', 'No New Recalls Reported, Recall Reported, ', '\n \n Sherlock\n \n ,\n \n \n Antitheft Marking\n \n ,\n \n \n \n sherlock.ca\n \n \n \n ']]]
-    for car in test:
+    for car in test1:
         car[0] = codecs.encode(car[0], encoding='ascii', errors='strict')
         car[0] = str(codecs.decode(car[0], encoding='base64', errors='strict'))
         car[0] = car[0].replace('b', '').replace("DamageComparisonType:", '').replace("'", "")
@@ -70,7 +70,7 @@ def updateDamageComparisons(car_info=None):
       response
          }
     }""",
-        "variables": {"car_info": test},
+        "variables": {"car_info": test1},
     }
 
     data = json.dumps(data)
