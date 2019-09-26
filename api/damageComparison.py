@@ -74,11 +74,11 @@ def updateDamageComparisons(car_info=None):
     }
 
     data = json.dumps(data)
-    response = requests.post("http://localhost:3000/graphqlui", headers=headers, data=data)
-    #response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
+    #response = requests.post("http://localhost:3000/graphqlui", headers=headers, data=data)
+    response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
 
-    print(response.content)
-    return response
+    print(response2.content)
+    return response2
 
 
 def get_carfax_infoMMC():

@@ -576,7 +576,7 @@ class UpdateDamageComparison(graphene.Mutation):
                     if instance:
                         instance.carfax = car[1]
                         instance.save()
-                        return UpdateDamageComparison(ok=True, response="Record with ID: %s has been updated" % id)
+                        return UpdateDamageComparison(ok=True, response="Record with ID: %s has been updated" % car[0])
                     else:
                         return UpdateDamageComparison(ok=False, response="That record does not exist")
                 except ObjectDoesNotExist:
