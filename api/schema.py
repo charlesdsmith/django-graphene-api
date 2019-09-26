@@ -5,6 +5,7 @@ from api.serializers import *
 from graphene import ObjectType, Node, Schema, relay
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+import json
 import operator
 from graphene_django.fields import DjangoConnectionField
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -105,8 +106,7 @@ class ShoppingListDeleteInput(graphene.InputObjectType):
     id = graphene.String(required=True)
 
 class DamageComparisonInput(graphene.InputObjectType):
-    id = graphene.String(required=True)
-    carfax = graphene.String(required=True)
+    car_info = graphene.List(graphene.List(graphene.String))
 
 class SearchResult(graphene.Union):
     class Meta:
@@ -559,20 +559,28 @@ class UpdateDamageComparison(graphene.Mutation):
     response = graphene.String()
 
     def mutate(root, info, **input):
-        id = input['args']['id']
-        carfax = input['args']['carfax']
+        print("INPUT", input)
+        car_info = input['args']['car_info']
 
-        if id and carfax:
-            instance = DamageComparison.objects.filter(id=id).first()
-            try:
-                if instance:
-                    instance.carfax = carfax
-                    instance.save()
-                    return UpdateDamageComparison(ok=True, response="Record with ID: %s has been updated" % id)
-                else:
-                    return UpdateDamageComparison(ok=False, response="That record does not exist")
-            except ObjectDoesNotExist:
-                return UpdateDamageComparison(ok=False)
+        cars = [car for car in car_info]
+        records = [record for record in cars]
+        if car_info:
+            #car_info = json.loads('{"info":%s}' % car_info)
+            print("HERE1", car_info)
+            for car in car_info:
+                print("HERE 1.5", car[1])
+                print("HERE 2", car[0])
+                instance = DamageComparison.objects.filter(id=car[0]).first()
+                print("HERE 3")
+                try:
+                    if instance:
+                        instance.carfax = car[1]
+                        instance.save()
+                        return UpdateDamageComparison(ok=True, response="Record with ID: %s has been updated" % id)
+                    else:
+                        return UpdateDamageComparison(ok=False, response="That record does not exist")
+                except ObjectDoesNotExist:
+                    return UpdateDamageComparison(ok=False)
 
 
 
