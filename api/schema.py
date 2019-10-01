@@ -570,11 +570,8 @@ class UpdateDamageComparison(graphene.Mutation):
                 instance = DamageComparison.objects.filter(id=car[0]).first()
                 try:
                     if instance:
-                        print("STEP 1")
                         instance.carfax = car[1]
-                        print("STEP 2", car[1])
                         instance.save()
-                        print("NEW INST", instance.carfax)
                         return UpdateDamageComparison(ok=True, response="Successfully updated DamageComparison table")
                     else:
                         return UpdateDamageComparison(ok=False, response="That record does not exist: %s" % car[0])
