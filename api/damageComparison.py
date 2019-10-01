@@ -51,7 +51,7 @@ def updateDamageComparisons(car_info=None):
     test1 = [['RGFtYWdlQ29tcGFyaXNvblR5cGU6Mw==', ['5UXFG2C53BLX09045', 'No Issues Reported, ', 'No Issues Reported, ', 'No Issues Reported, ', 'Mileage Inconsistency, ', 'No Issues Reported, ', 'No Recalls Reported, ', '\n \n Service Facility\n \n ,\n \n \n Mississauga, ON\n \n \n \n \n ']], ['RGFtYWdlQ29tcGFyaXNvblR5cGU6NA==', ['WDCGG8HB4AF472595', 'No Issues Reported, ', 'No Issues Reported, ', 'No Issues Reported, ', 'No Issues Indicated, ', 'No Issues Reported, ', 'No Recalls Reported, ', '\n \n Quebec\n \n ,\n \n \n Motor Vehicle Dept.\n \n ,\n \n \n Sainte-Anne-des-Lacs, QC\n \n \n \n \n ']]]
 
     test = [['RGFtYWdlQ29tcGFyaXNvblR5cGU6MA==', ['1FTFW1EG4HFA67794', 'No Issues Reported, No Issues Reported, ', 'No Issues Reported, No Issues Reported, ', 'No Issues Reported, No Issues Reported, ', 'No Issues Indicated, No Issues Indicated, ', 'No Issues Reported, No Issues Reported, ', 'No New Recalls Reported, Recall Reported, ', '\n \n Sherlock\n \n ,\n \n \n Antitheft Marking\n \n ,\n \n \n \n sherlock.ca\n \n \n \n ']]]
-    for car in test1:
+    for car in car_info:
         car[0] = codecs.encode(car[0], encoding='ascii', errors='strict')
         car[0] = str(codecs.decode(car[0], encoding='base64', errors='strict'))
         car[0] = car[0].replace('b', '').replace("DamageComparisonType:", '').replace("'", "")
@@ -70,15 +70,15 @@ def updateDamageComparisons(car_info=None):
       response
          }
     }""",
-        "variables": {"car_info": test1},
+        "variables": {"car_info": car_info},
     }
 
     data = json.dumps(data)
-    #response = requests.post("http://localhost:3000/graphqlui", headers=headers, data=data)
-    response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
+    response = requests.post("http://localhost:3000/graphqlui", headers=headers, data=data)
+    #response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
 
-    print(response2.content)
-    return response2
+    print(response.content)
+    return response
 
 
 def get_carfax_infoMMC():
@@ -100,9 +100,9 @@ def get_carfax_infoMMC():
     wait_for_dashboard = wait.until(EC.url_to_be("https://www.carfaxonline.com/"))
 
     # a list of lists that contain each car's id and vin
-    id_list = [car[1] for car in getAllDamageComparisons()]
+    id_list = [car[1] for car in getAllDamageComparisons()[:3]]
     # get list of vins of damaged cars
-    vin_list = [car[0] for car in getAllDamageComparisons()]
+    vin_list = [car[0] for car in getAllDamageComparisons()[:3]]
 
     print("ID LIST", id_list)
     print("VIN LIST", vin_list)
@@ -118,7 +118,6 @@ def get_carfax_infoMMC():
     try:
         print("INDEX OF VIN BEING PROCESSED: %s " % current_vin_location)
         for i, vin in enumerate(vin_list[int(current_vin_location):]):  # range(curated_vin_list[current_vin_location], len(curated_vin_list) - 1):
-            print("HERE", i)
 
             if type(vin) is not str or len(vin) < 17:
 
@@ -217,7 +216,7 @@ def get_carfax_infoMMC():
             # accidentCheckCells = additionalHistoryTable.find("div", id=re.compile("^accidentCheckCol")).text
             # recallCells = additionalHistoryTable.find("div", id=re.compile("^recallCol")).text
 
-            carfax_info = [vin, totalLossValues, frameDamageValues, airbagValues, odometerValues, accidentCheckValues, recallValues, countryOriginValues]
+            carfax_info = [vin, totalLossValues, frameDamageValues, airbagValues, odometerValues, accidentCheckValues, recallValues, countryOriginValues, carfax_html]
 
             print("carfax info", carfax_info)
             carfax_data.append([id_list[i], carfax_info])
@@ -260,5 +259,5 @@ def get_carfax_infoMMC():
 
 if __name__ == '__main__':
     #getAllDamageComparisons()
-    updateDamageComparisons()
-    #get_carfax_infoMMC()
+    #updateDamageComparisons()
+    get_carfax_infoMMC()
