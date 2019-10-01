@@ -569,7 +569,7 @@ class UpdateDamageComparison(graphene.Mutation):
             for car in car_info:
                 car[0] = int(car[0])
                 print("HERE3!!", car[0])
-                instance = DamageComparison.objects.filter(id=3).first()
+                instance = DamageComparison.objects.filter(id=3)
                 try:
                     if instance:
                         instance.carfax = car[1]
