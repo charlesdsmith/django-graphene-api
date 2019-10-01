@@ -55,6 +55,7 @@ def updateDamageComparisons(car_info=None):
         car[0] = codecs.encode(car[0], encoding='ascii', errors='strict')
         car[0] = str(codecs.decode(car[0], encoding='base64', errors='strict'))
         car[0] = car[0].replace('b', '').replace("DamageComparisonType:", '').replace("'", "")
+        print("CAR", car)
 
 
     headers = {
@@ -74,11 +75,11 @@ def updateDamageComparisons(car_info=None):
     }
 
     data = json.dumps(data)
-    #response = requests.post("http://localhost:3000/graphqlui", headers=headers, data=data)
-    response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
+    response = requests.post("http://localhost:3000/graphqlui", headers=headers, data=data)
+    #response2 = requests.post("https://gsm-django.herokuapp.com/graphqlui", headers=headers, data=data)
 
-    print(response2.content)
-    return response2
+    print(response.content)
+    return response
 
 
 def get_carfax_infoMMC():
@@ -100,9 +101,9 @@ def get_carfax_infoMMC():
     wait_for_dashboard = wait.until(EC.url_to_be("https://www.carfaxonline.com/"))
 
     # a list of lists that contain each car's id and vin
-    id_list = [car[1] for car in getAllDamageComparisons()[:3]]
+    id_list = [car[1] for car in getAllDamageComparisons()[:1]]
     # get list of vins of damaged cars
-    vin_list = [car[0] for car in getAllDamageComparisons()[:3]]
+    vin_list = [car[0] for car in getAllDamageComparisons()[:1]]
 
     print("ID LIST", id_list)
     print("VIN LIST", vin_list)
