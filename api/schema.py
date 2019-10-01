@@ -571,9 +571,9 @@ class UpdateDamageComparison(graphene.Mutation):
                 try:
                     if instance:
                         print("STEP 1")
-                        instance.carfax = "test carfax"
-                        print("STEP 2")
-                        instance.save()
+                        instance.carfax = car[1]
+                        print("STEP 2", car[1])
+                        #instance.save()
                         print("NEW INST", instance.carfax)
                         return UpdateDamageComparison(ok=True, response="Successfully updated DamageComparison table")
                     else:
