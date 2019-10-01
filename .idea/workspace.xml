@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cd5ae7e-4dfa-4ed3-a6a2-612c838ab5a7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/damageComparison.py" afterPath="$PROJECT_DIR$/api/damageComparison.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/schema.py" afterPath="$PROJECT_DIR$/api/schema.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/carfax/vin_location.txt" afterPath="$PROJECT_DIR$/carfax/vin_location.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,14 +19,14 @@
     <favorites_list name="gsm-django" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.46044394">
+    <splitter split-orientation="horizontal" split-proportion="0.41661924">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="schema.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/schema.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="528">
-                  <caret line="572" column="32" lean-forward="true" selection-start-line="572" selection-start-column="32" selection-end-line="572" selection-end-column="32" />
+                <state relative-caret-position="443">
+                  <caret line="567" column="36" lean-forward="true" selection-start-line="567" selection-start-column="36" selection-end-line="567" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
                   </folding>
@@ -97,10 +96,10 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="616">
+                <state relative-caret-position="565">
                   <caret line="107" column="18" lean-forward="true" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
                   <folding>
                     <element signature="e#24#63#0" expanded="true" />
@@ -119,11 +118,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="damageComparison.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="damageComparison.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/damageComparison.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="270">
-                  <caret line="60" column="38" lean-forward="false" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
+                <state relative-caret-position="225">
+                  <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
                   <folding>
                     <element signature="e#112#123#0" expanded="true" />
                   </folding>
@@ -271,9 +270,9 @@
         <option value="$PROJECT_DIR$/django_api/urls.py" />
         <option value="$PROJECT_DIR$/api/models.py" />
         <option value="$PROJECT_DIR$/carfax/carfax_scraper.py" />
-        <option value="$PROJECT_DIR$/api/schema.py" />
         <option value="$PROJECT_DIR$/carfax/vin_location.txt" />
         <option value="$PROJECT_DIR$/api/damageComparison.py" />
+        <option value="$PROJECT_DIR$/api/schema.py" />
       </list>
     </option>
   </component>
@@ -621,7 +620,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929292" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21666667" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21666667" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -993,16 +992,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/schema.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="572" column="32" lean-forward="true" selection-start-line="572" selection-start-column="32" selection-end-line="572" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/carfax/vin_location.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1011,9 +1000,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/damageComparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <folding>
+            <element signature="e#112#123#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
+        <state relative-caret-position="565">
           <caret line="107" column="18" lean-forward="true" selection-start-line="107" selection-start-column="18" selection-end-line="107" selection-end-column="18" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
@@ -1021,12 +1020,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/damageComparison.py">
+    <entry file="file://$PROJECT_DIR$/api/schema.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="60" column="38" lean-forward="false" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
+        <state relative-caret-position="443">
+          <caret line="567" column="36" lean-forward="true" selection-start-line="567" selection-start-column="36" selection-end-line="567" selection-end-column="36" />
           <folding>
-            <element signature="e#112#123#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
