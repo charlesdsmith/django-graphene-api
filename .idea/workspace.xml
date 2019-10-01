@@ -24,8 +24,8 @@
           <file leaf-file-name="schema.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/schema.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="412">
-                  <caret line="571" column="32" lean-forward="true" selection-start-line="571" selection-start-column="32" selection-end-line="571" selection-end-column="32" />
+                <state relative-caret-position="463">
+                  <caret line="574" column="37" lean-forward="false" selection-start-line="574" selection-start-column="37" selection-end-line="574" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
                   </folding>
@@ -120,8 +120,8 @@
           <file leaf-file-name="damageComparison.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/damageComparison.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-2526">
-                  <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+                <state relative-caret-position="228">
+                  <caret line="220" column="0" lean-forward="true" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
                   <folding>
                     <element signature="e#112#123#0" expanded="true" />
                   </folding>
@@ -1011,8 +1011,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/damageComparison.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2526">
-          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state relative-caret-position="228">
+          <caret line="220" column="0" lean-forward="true" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
           <folding>
             <element signature="e#112#123#0" expanded="true" />
           </folding>
@@ -1021,8 +1021,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/schema.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="571" column="32" lean-forward="true" selection-start-line="571" selection-start-column="32" selection-end-line="571" selection-end-column="32" />
+        <state relative-caret-position="463">
+          <caret line="574" column="37" lean-forward="false" selection-start-line="574" selection-start-column="37" selection-end-line="574" selection-end-column="37" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
