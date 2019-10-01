@@ -565,15 +565,11 @@ class UpdateDamageComparison(graphene.Mutation):
         cars = [car for car in car_info]
         if car_info:
             #car_info = json.loads('{"info":%s}' % car_info)
-            print("HERE1", car_info)
             for car in car_info:
                 car[0] = int(car[0])
-                print("HERE3!!", car[0])
                 instance = DamageComparison.objects.filter(id=car[0]).first()
-                print("HERE4!!", instance)
                 try:
                     if instance:
-                        print("INST INFO", instance.trim)
                         instance.carfax = car[1]
                         instance.save()
                         return UpdateDamageComparison(ok=True, response="Successfully updated DamageComparison table")
