@@ -216,7 +216,7 @@ def get_carfax_infoMMC():
             # accidentCheckCells = additionalHistoryTable.find("div", id=re.compile("^accidentCheckCol")).text
             # recallCells = additionalHistoryTable.find("div", id=re.compile("^recallCol")).text
 
-            carfax_info = [vin, totalLossValues, frameDamageValues, airbagValues, odometerValues, accidentCheckValues, recallValues, countryOriginValues, carfax_html]
+            carfax_info = [vin, totalLossValues, frameDamageValues, airbagValues, odometerValues, accidentCheckValues, recallValues, countryOriginValues]
 
             print("carfax info", carfax_info)
             carfax_data.append([id_list[i], carfax_info])
