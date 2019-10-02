@@ -120,6 +120,8 @@ class DamageComparison(models.Model):
     carfax = models.TextField(default="n/a")
     BlackList = models.BigIntegerField(default=0, max_length=None)
     date = models.CharField(max_length=20, default="Check Online")
+    analysis = models.TextField(default="n/a")
+    adesa_id = models.TextField(default="n/a")
 
 class ShoppingList(models.Model):
     vin = models.CharField(max_length=20)

@@ -99,26 +99,17 @@ def get_carfax_infoMMC():
     browser.find_element_by_id("login_button").click()
     wait = WebDriverWait(browser, 3)
     wait_for_dashboard = wait.until(EC.url_to_be("https://www.carfaxonline.com/"))
-
+    damageComparisonList = getAllDamageComparisons()[550:650]
     # a list of lists that contain each car's id and vin
-    id_list = [car[1] for car in getAllDamageComparisons()[:1]]
+    id_list = [car[1] for car in damageComparisonList]
     # get list of vins of damaged cars
-    vin_list = [car[0] for car in getAllDamageComparisons()[:1]]
-
-    print("ID LIST", id_list)
-    print("VIN LIST", vin_list)
+    vin_list = [car[0] for car in damageComparisonList]
     print("VIN LIST LENGTH:", len(vin_list))
 
-    vin_location_txt = r"C:\Users\User\Documents\Heroku\gsm-django\carfax\vin_location.txt"
-
-    current_vin_location = open(vin_location_txt, 'r').readlines()[0]
-    print(current_vin_location)
-    vin_counter = 0
     carfax_data = []  # this will store the 6 values and be returned by the function to use in api calls
 
     try:
-        print("INDEX OF VIN BEING PROCESSED: %s " % current_vin_location)
-        for i, vin in enumerate(vin_list[int(current_vin_location):]):  # range(curated_vin_list[current_vin_location], len(curated_vin_list) - 1):
+        for i, vin in enumerate(vin_list):
 
             if type(vin) is not str or len(vin) < 17:
 
@@ -144,117 +135,16 @@ def get_carfax_infoMMC():
 
             browser.get("https://www.carfaxonline.com/api/report?vin={0}".format(vin))
             carfax_html = browser.page_source  # get all html from page
-
-            soup = bs(carfax_html, features="lxml")
-
-            additionalHistoryTable = soup.find(id='otherInformationTable')
-            # table_body = additionalHistoryTable.find('tbody')
-            # print(table_body)
-            totalLossValues=''
-            frameDamageValues=''
-            airbagValues=''
-            odometerValues=''
-            accidentCheckValues=''
-            recallValues=''
-            countryOriginValues=''
-
-            totalLossCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^totalLossCol"))
-            totalLossCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^totalLossCol"))
-            totalLossCells = totalLossCellsDivs + totalLossCellsAs
-
-            frameDamageCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^frameDamageCol"))
-            frameDamageCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^frameDamageCol"))
-            frameDamageCells = frameDamageCellsDivs + frameDamageCellsAs
-
-            airbagCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^airbagCol"))
-            airbagCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^airbagCol"))
-            airbagCells = airbagCellsDivs + airbagCellsAs
-
-            odometerCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^odometerCol"))
-            odometerCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^odometerCol"))
-            odometerCells = odometerCellsDivs + odometerCellsAs
-
-            accidentCheckCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^accidentCheckCol"))
-            accidentCheckCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^accidentCheckCol"))
-            accidentCheckCells = accidentCheckCellsDivs + accidentCheckCellsAs
-
-            recallCellsDivs = additionalHistoryTable.find_all("div", id=re.compile("^recallCol"))
-            recallCellsAs = additionalHistoryTable.find_all("a", id=re.compile("^recallCol"))
-            recallCells = recallCellsDivs + recallCellsAs
-
-            countryOriginCells = soup.find_all("span", class_="vehicleRecordSource")
-
-
-            for cell in countryOriginCells:  #if 'NICB' is not in the contents of the 'source' column return just that value
-                if 'NICB' not in cell.contents[0] and 'FCA' not in cell.contents[0] and 'OnStar' not in cell.contents[0] and "Dealer Inventory" not in cell.contents[0]:
-                    print("TRUE")
-                    print(cell.contents[0])
-                    # create a list of items in the cell that are only of the type "NavigableString"
-                    test = [i for i in cell.contents if 'bs4.element.NavigableString' in str(type(i))]
-                    print(test)
-                    countryOriginValues += ','.join(test)
-                    break
-
-            for cell in totalLossCells:
-                # print(cell.contents)
-                totalLossValues = totalLossValues + cell.contents[0] + ', '
-            for cell in frameDamageCells:
-                frameDamageValues = frameDamageValues + cell.contents[0] + ', '
-            for cell in airbagCells:
-                airbagValues = airbagValues + cell.contents[0] + ', '
-            for cell in odometerCells:
-                odometerValues = odometerValues + cell.contents[0] + ', '
-            for cell in accidentCheckCells:
-                accidentCheckValues = accidentCheckValues + cell.contents[0] + ', '
-            for cell in recallCells:
-                recallValues = recallValues + cell.contents[0] + ', '
-
-
-            # totalLossCells = additionalHistoryTable.find("div", id=re.compile("^totalLossCol")).text
-            # frameDamageCells = additionalHistoryTable.find("div", id=re.compile("^frameDamageCol")).text
-            # airbagCells = additionalHistoryTable.find("div", id=re.compile("^airbagCol")).text
-            # odometerCells = additionalHistoryTable.find("div", id=re.compile("^odometerCol")).text
-            # accidentCheckCells = additionalHistoryTable.find("div", id=re.compile("^accidentCheckCol")).text
-            # recallCells = additionalHistoryTable.find("div", id=re.compile("^recallCol")).text
-
-            carfax_info = [vin, totalLossValues, frameDamageValues, airbagValues, odometerValues, accidentCheckValues, recallValues, countryOriginValues, carfax_html]
-
-            print("carfax info", carfax_info)
-            carfax_data.append([id_list[i], carfax_info])
-
-            #carfax_data = carfax_info  # set carfax_data equal to carfax_info so it can be passed to outer function
-
-            print("CARFAX DATA", carfax_data)
-
+            carfax_html.replace('opacity', 'margin')
+            carfax_info = carfax_html
             time.sleep(1)
             browser.get('https://www.carfaxonline.com/')
 
-
-            # current_vin_location = list(curated_vin_list).index(vin) # convert the vin ndarray to a list then retrieve index of current vin
-            current_vin_location = list(vin_list).index(vin)
-            vin_counter = current_vin_location
-
-        updateDamageComparisons(carfax_data) # after the loop has ended send the array to be update function
-        current_vin_location = 0  # if the try statement reaches the end of the list without fail, set the location back to 0
+            updateDamageComparisons([[id_list[i], carfax_info]]) # after the loop has ended send the array to be update function
 
     except Exception as error:
-        # if there is a problem update the dataframe with the values that have been found so far
         print(error)
-        print('Exception has occurred, saving the current vins location to continue from next time')
-        print("THE INDEX OF THE LAST SUCCESSFULLY PROCESSED VIN IS: %s " % current_vin_location)
-
-        with open(vin_location_txt, 'w') as file:
-
-            if vin_counter == len(list(vin_list)) - 1:  # if we reach the end of the list set the vin counter back to 0
-                vin_counter = 0
-                file.write(str(vin_counter))
-                file.close()
-            else:
-                file.write(str(vin_counter))  # write the last position of the vin before the crash
-                file.close()
-                time.sleep(15)
-                get_carfax_infoMMC()  # run the function again
-
+        get_carfax_infoMMC()  # run the function again
         time.sleep(5)
 
 
