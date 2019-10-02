@@ -118,7 +118,7 @@ class DamageComparison(models.Model):
     adesa_announcements = models.TextField(default="n/a")
     auction_location = models.CharField(max_length=50, default="n/a")
     carfax = models.TextField(default="n/a")
-    BlackList = models.BigIntegerField(default=0, max_length=None)
+    BlackList = models.BigIntegerField(default=000, max_length=None)
     date = models.CharField(max_length=20, default="Check Online")
     analysis = models.TextField(default="n/a")
     adesa_id = models.TextField(default="n/a")
