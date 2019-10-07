@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from django.core import serializers as django_serializer
 from django.http import HttpResponse
-from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList
+from .models import GetAdesaPurchases, CarFax, GetRecalls, GetAdesaRunList, ShoppingList, DamageComparison
 import json
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
@@ -160,3 +160,11 @@ class ShoppingListSerializer(serializers.ModelSerializer):
         return ShoppingList.objects.create(**validated_data)
 
 
+class DamageComparisonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DamageComparison
+        fields = ('id', 'vin', 'year', 'make', 'model', 'trim', 'adesa_announcements',
+                  'auction_location', 'carfax', 'date', 'BlackList', 'adesa_id', 'analysis')
+
+    def create(self, validated_data):
+        return DamageComparison.objects.create(**validated_data)

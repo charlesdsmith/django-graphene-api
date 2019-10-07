@@ -135,6 +135,9 @@ def get_carfax_infoMMC():
 
             browser.get("https://www.carfaxonline.com/api/report?vin={0}".format(vin))
             carfax_html = browser.page_source  # get all html from page
+            soup = bs(carfax_html)
+            [s.extract() for s in soup('script')]
+
             carfax_html.replace('opacity', 'margin')
             carfax_info = carfax_html
             time.sleep(1)

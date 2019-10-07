@@ -246,8 +246,8 @@ def get_carfax_infoMMC():
     set_with_dataframe(carfax_2_sheet, carfax_2_dataframe)
 
 
-    post_to_api = api_call(carfax_data)  # automatically POST the data we just scraped to the API
-    print(post_to_api.status_code)
+    #post_to_api = api_call(carfax_data)  # automatically POST the data we just scraped to the API
+    #print(post_to_api.status_code)
 
 
 def modifyCarfaxDataframe(dataframe, info_array):
