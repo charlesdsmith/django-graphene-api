@@ -164,7 +164,7 @@ class Query(graphene.ObjectType):
 
     def resolve_all_damage_comparison_objects(self, info, **kwargs):
 
-        if kwargs.get('clean') == True:
+        if kwargs.get('CLEAN') == True:
             return DamageComparison.objects.filter(analysis="Clean")
 
         return DamageComparison.objects.all()
