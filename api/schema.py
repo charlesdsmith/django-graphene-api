@@ -121,7 +121,7 @@ class Query(graphene.ObjectType):
     all_adesa_runlist_objects = graphene.List(AdesaRunListType)
     runlist_paginated = graphene.List(AdesaRunListType, page_no=graphene.Int())
     all_shopping_list_objects = graphene.List(ShoppingListType)
-    all_damage_comparison_objects = graphene.List(DamageComparisonType)
+    all_damage_comparison_objects = graphene.List(DamageComparisonType, clean=graphene.Boolean())
 
     ### Retrieve ONE object fields ###
     carfax = graphene.Field(lambda: graphene.List(CarFaxType), vin=graphene.String(), run_date=graphene.String())
@@ -163,6 +163,10 @@ class Query(graphene.ObjectType):
         return ShoppingList.objects.all()
 
     def resolve_all_damage_comparison_objects(self, info, **kwargs):
+
+        if kwargs.get('clean') == True:
+            return DamageComparison.objects.filter(analysis="Clean")
+
         return DamageComparison.objects.all()
 
     ### Retrieve ONE object resolvers (endpoints) ###
