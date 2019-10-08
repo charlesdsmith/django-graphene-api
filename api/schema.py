@@ -575,6 +575,7 @@ class UpdateDamageComparison(graphene.Mutation):
                 try:
                     if instance:
                         instance.carfax = car[1]
+                        instance.analysis = car[2]
                         instance.save()
                         return UpdateDamageComparison(ok=True, response="Successfully updated DamageComparison table")
                     else:
