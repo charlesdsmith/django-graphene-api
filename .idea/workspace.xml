@@ -24,8 +24,8 @@
           <file leaf-file-name="schema.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/api/schema.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="308">
-                  <caret line="159" column="44" lean-forward="true" selection-start-line="159" selection-start-column="44" selection-end-line="159" selection-end-column="44" />
+                <state relative-caret-position="444">
+                  <caret line="167" column="66" lean-forward="false" selection-start-line="167" selection-start-column="66" selection-end-line="167" selection-end-column="66" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
                   </folding>
@@ -1041,8 +1041,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/schema.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="159" column="44" lean-forward="true" selection-start-line="159" selection-start-column="44" selection-end-line="159" selection-end-column="44" />
+        <state relative-caret-position="444">
+          <caret line="167" column="66" lean-forward="false" selection-start-line="167" selection-start-column="66" selection-end-line="167" selection-end-column="66" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
