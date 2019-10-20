@@ -49,8 +49,8 @@ def get_carfax_infoMMC():
     username = browser.find_element_by_css_selector("input[type='text']")
     password = browser.find_element_by_css_selector("input[type='password']")
 
-    username.send_keys("sencoreent@gmail.com")
-    password.send_keys("7102677Se")
+    username.send_keys("***")
+    password.send_keys("***")
 
     browser.find_element_by_id("login_button").click()
     wait = WebDriverWait(browser, 3)
